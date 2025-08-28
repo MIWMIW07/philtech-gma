@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://miwmiw07.github.io/philtech-gma/sitemap.xml
+
+Crawl-delay: 1
