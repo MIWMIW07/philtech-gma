@@ -174,7 +174,7 @@ function initFormValidation() {
 function initScrollToTop() {
     const scrollBtn = document.createElement('button');
     scrollBtn.className = 'scroll-to-top';
-    scrollBtn.innerHTML = '↑';
+    scrollBtn.innerHTML = '🡅';
     scrollBtn.setAttribute('aria-label', 'Scroll to top');
     document.body.appendChild(scrollBtn);
     
@@ -287,3 +287,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Initialize events tab functionality
+function initEventsTabs() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    if (tabButtons.length > 0) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Hide all tab panes
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                // Show the selected tab pane
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    }
+}
+
