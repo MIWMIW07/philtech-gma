@@ -8,19 +8,23 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollToTop();
     initParticles();
     initTypingEffect();
+    initEventsTabs();
 });
 
-// Initialize navigation functionality
+// Enhanced navigation functionality
 function initNavigation() {
     const header = document.querySelector('.header');
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
     
     // Toggle mobile menu
     if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
-            menuToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            menuToggle.classList.toggle('active');
+            body.classList.toggle('nav-open');
         });
     }
     
@@ -28,9 +32,30 @@ function initNavigation() {
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
-            menuToggle.textContent = '☰';
+            menuToggle.classList.remove('active');
+            body.classList.remove('nav-open');
         });
     });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (navLinks.classList.contains('active') && 
+            !e.target.closest('.nav-links') && 
+            !e.target.closest('.menu-toggle')) {
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.classList.remove('nav-open');
+        }
+    });
+    
+    // Prevent scrolling when menu is open
+    if (navLinks) {
+        navLinks.addEventListener('touchmove', function(e) {
+            if (this.classList.contains('active')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
     
     // Header scroll effect
     window.addEventListener('scroll', function() {
@@ -38,6 +63,15 @@ function initNavigation() {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
+        }
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.classList.remove('nav-open');
         }
     });
 }
@@ -170,11 +204,11 @@ function initFormValidation() {
     }
 }
 
-// Initialize scroll to top button
+// Enhanced scroll to top button
 function initScrollToTop() {
     const scrollBtn = document.createElement('button');
     scrollBtn.className = 'scroll-to-top';
-    scrollBtn.innerHTML = '🡅';
+    scrollBtn.innerHTML = '↑';
     scrollBtn.setAttribute('aria-label', 'Scroll to top');
     document.body.appendChild(scrollBtn);
     
@@ -312,4 +346,3 @@ function initEventsTabs() {
         });
     }
 }
-
