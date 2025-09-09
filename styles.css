@@ -838,7 +838,7 @@ body {
     
     /* Improved Hero Section for Mobile */
     .hero {
-        padding-top: 80px;
+        padding-top: 110px;
         min-height: auto;
     }
     
@@ -1500,3 +1500,4 @@ body.nav-open {
         padding: 0.25rem 0.6rem;
     }
 }
+
