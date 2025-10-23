@@ -1796,7 +1796,7 @@ a:focus-visible {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Enhanced Services Section Styles */
+/* ===== ENHANCED SERVICES SECTION ===== */
 .services {
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
 }
@@ -1968,7 +1968,7 @@ a:focus-visible {
     margin: 0;
 }
 
-/* Enhanced Programs Section Styles */
+/* ===== ENHANCED PROGRAMS SECTION ===== */
 .programs {
     background: var(--light-bg);
 }
@@ -2311,7 +2311,7 @@ a:focus-visible {
     color: var(--maroon);
 }
 
-/* Responsive Design */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
     .services-grid,
     .programs-grid {
@@ -2371,6 +2371,5 @@ a:focus-visible {
         grid-template-columns: 1fr;
     }
 }
-
 
 
