@@ -346,3 +346,344 @@ function initEventsTabs() {
         });
     }
 }
+
+// Enhanced Contact Form with EmailJS
+function initContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+    
+    // EmailJS Configuration - REPLACE WITH YOUR ACTUAL CREDENTIALS
+    const EMAILJS_CONFIG = {
+        SERVICE_ID: 'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+        TEMPLATE_ID: 'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        PUBLIC_KEY: 'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+    };
+    
+    // Initialize EmailJS
+    (function() {
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+    })();
+    
+    // Character counter for message
+    const messageTextarea = document.getElementById('message');
+    const charCount = document.getElementById('charCount');
+    
+    if (messageTextarea && charCount) {
+        messageTextarea.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = length;
+            
+            if (length > 500) {
+                charCount.style.color = '#e74c3c';
+            } else if (length > 400) {
+                charCount.style.color = '#f39c12';
+            } else {
+                charCount.style.color = '#27ae60';
+            }
+        });
+    }
+    
+    // Enhanced form validation
+    function validateForm(formData) {
+        const errors = {};
+        
+        // Name validation
+        if (!formData.name.trim()) {
+            errors.name = 'Please enter your full name';
+        } else if (formData.name.trim().length < 2) {
+            errors.name = 'Name must be at least 2 characters long';
+        }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email.trim()) {
+            errors.email = 'Please enter your email address';
+        } else if (!emailRegex.test(formData.email)) {
+            errors.email = 'Please enter a valid email address';
+        }
+        
+        // Program validation
+        if (!formData.program) {
+            errors.program = 'Please select a program or service';
+        }
+        
+        // Message validation
+        if (!formData.message.trim()) {
+            errors.message = 'Please enter your message';
+        } else if (formData.message.trim().length < 10) {
+            errors.message = 'Message must be at least 10 characters long';
+        } else if (formData.message.trim().length > 500) {
+            errors.message = 'Message must not exceed 500 characters';
+        }
+        
+        return errors;
+    }
+    
+    // Display validation errors
+    function showErrors(errors) {
+        // Clear all previous errors
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.textContent = '';
+            el.style.display = 'none';
+        });
+        
+        // Show new errors
+        Object.keys(errors).forEach(field => {
+            const errorElement = document.getElementById(field + 'Error');
+            if (errorElement) {
+                errorElement.textContent = errors[field];
+                errorElement.style.display = 'block';
+                
+                // Add error class to input
+                const inputElement = document.getElementById(field);
+                if (inputElement) {
+                    inputElement.classList.add('error');
+                }
+            }
+        });
+    }
+    
+    // Clear errors when user starts typing
+    document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea').forEach(element => {
+        element.addEventListener('input', function() {
+            const fieldName = this.id;
+            const errorElement = document.getElementById(fieldName + 'Error');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+                this.classList.remove('error');
+            }
+        });
+    });
+    
+    // Form submission handler
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Honeypot check for spam
+            const honeypot = document.getElementById('website');
+            if (honeypot.value !== '') {
+                return; // Likely spam, don't submit
+            }
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                program: document.getElementById('program').value,
+                message: document.getElementById('message').value,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            // Validate form
+            const errors = validateForm(formData);
+            if (Object.keys(errors).length > 0) {
+                showErrors(errors);
+                return;
+            }
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            loadingSpinner.style.display = 'flex';
+            submitBtn.disabled = true;
+            
+            try {
+                // Send email using EmailJS
+                const response = await emailjs.send(
+                    EMAILJS_CONFIG.SERVICE_ID,
+                    EMAILJS_CONFIG.TEMPLATE_ID,
+                    formData
+                );
+                
+                // Success
+                showSuccessMessage();
+                contactForm.reset();
+                charCount.textContent = '0';
+                charCount.style.color = '#27ae60';
+                
+            } catch (error) {
+                console.error('Email sending failed:', error);
+                showErrorMessage();
+            } finally {
+                // Reset button state
+                btnText.style.display = 'block';
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    }
+    
+    function showSuccessMessage() {
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'flex';
+        
+        // Auto-hide success message after 5 seconds
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 5000);
+    }
+    
+    function showErrorMessage() {
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'flex';
+    }
+}
+
+// Enhanced navigation with smooth scrolling
+function initEnhancedNavigation() {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Active navigation highlighting
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+        
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 100)) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// Enhanced animations with Intersection Observer
+function initEnhancedAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                
+                // Stagger animation for child elements
+                if (entry.target.classList.contains('feature-cards')) {
+                    const cards = entry.target.querySelectorAll('.feature-card');
+                    cards.forEach((card, index) => {
+                        card.style.animationDelay = `${index * 0.1}s`;
+                    });
+                }
+                
+                if (entry.target.classList.contains('programs-grid')) {
+                    const cards = entry.target.querySelectorAll('.program-card');
+                    cards.forEach((card, index) => {
+                        card.style.animationDelay = `${index * 0.1}s`;
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all sections and animated elements
+    document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Enhanced mobile menu
+function initEnhancedMobileMenu() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+    
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            body.classList.toggle('nav-open');
+            
+            // Add backdrop when menu is open
+            if (navLinks.classList.contains('active')) {
+                createBackdrop();
+            } else {
+                removeBackdrop();
+            }
+        });
+        
+        // Close menu when clicking on links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+                body.classList.remove('nav-open');
+                removeBackdrop();
+            });
+        });
+    }
+    
+    function createBackdrop() {
+        if (!document.querySelector('.nav-backdrop')) {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'nav-backdrop';
+            backdrop.addEventListener('click', closeMobileMenu);
+            document.body.appendChild(backdrop);
+        }
+    }
+    
+    function removeBackdrop() {
+        const backdrop = document.querySelector('.nav-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    }
+    
+    function closeMobileMenu() {
+        navLinks.classList.remove('active');
+        menuToggle.classList.remove('active');
+        body.classList.remove('nav-open');
+        removeBackdrop();
+    }
+}
+
+// Initialize all enhanced functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing initializations
+    initNavigation();
+    initAnimations();
+    initCounters();
+    initFormValidation();
+    initScrollToTop();
+    initParticles();
+    initTypingEffect();
+    initEventsTabs();
+    
+    // New enhanced initializations
+    initContactForm();
+    initEnhancedNavigation();
+    initEnhancedAnimations();
+    initEnhancedMobileMenu();
+});
+
