@@ -356,9 +356,9 @@ function initContactForm() {
     
     // EmailJS Configuration - REPLACE WITH YOUR ACTUAL CREDENTIALS
     const EMAILJS_CONFIG = {
-        SERVICE_ID: 'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        TEMPLATE_ID: 'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        PUBLIC_KEY: 'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+        SERVICE_ID: 'service_s19nvd7', // Replace with your EmailJS service ID
+        TEMPLATE_ID: 'template_2f5ak5h', // Replace with your EmailJS template ID
+        PUBLIC_KEY: 'O8tfsHGNxzPo6tvKL' // Replace with your EmailJS public key
     };
     
     // Initialize EmailJS
@@ -686,4 +686,5 @@ document.addEventListener('DOMContentLoaded', function() {
     initEnhancedAnimations();
     initEnhancedMobileMenu();
 });
+
 
