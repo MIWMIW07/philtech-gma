@@ -687,4 +687,87 @@ document.addEventListener('DOMContentLoaded', function() {
     initEnhancedMobileMenu();
 });
 
+// Enhanced Programs Search and Filter
+function initProgramsSearch() {
+    const searchInput = document.getElementById('programSearch');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const programCards = document.querySelectorAll('.program-card, .shs-card');
+    const programCategories = document.querySelectorAll('.program-category');
+
+    // Search functionality
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            programCards.forEach(card => {
+                const programName = card.querySelector('h3').textContent.toLowerCase();
+                const programDescription = card.querySelector('p').textContent.toLowerCase();
+                
+                if (programName.includes(searchTerm) || programDescription.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.classList.add('search-match');
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('search-match');
+                }
+            });
+
+            // Show/hide categories based on visible cards
+            programCategories.forEach(category => {
+                const visibleCards = category.querySelectorAll('.program-card[style="display: block"], .shs-card[style="display: block"]');
+                category.style.display = visibleCards.length > 0 ? 'block' : 'none';
+            });
+        });
+    }
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter programs
+            programCategories.forEach(category => {
+                const categoryType = category.getAttribute('data-category');
+                
+                if (filter === 'all' || categoryType === filter) {
+                    category.style.display = 'block';
+                    category.querySelectorAll('.program-card, .shs-card').forEach(card => {
+                        card.style.display = 'block';
+                    });
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+        });
+    });
+}
+
+// Initialize programs search and filter
+document.addEventListener('DOMContentLoaded', function() {
+    initProgramsSearch();
+    
+    // Add to your existing initialization
+    const existingInitializations = [
+        'initNavigation',
+        'initAnimations', 
+        'initCounters',
+        'initFormValidation',
+        'initScrollToTop',
+        'initParticles',
+        'initTypingEffect',
+        'initEventsTabs',
+        'initContactForm'
+    ];
+    
+    // Initialize all functions that exist
+    existingInitializations.forEach(initFunc => {
+        if (typeof window[initFunc] === 'function') {
+            window[initFunc]();
+        }
+    });
+});
 
