@@ -754,82 +754,139 @@
         </div>
     </section>
     
-    <!-- CONTACT SECTION -->
-
-    <section id="contact" class="section contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title animated-title">Get in Touch<span class="gradient-text"></span></h2>
-                <p class="section-subtitle">Ready to start your journey with PHILTECH? Contact us today to learn more about our programs and admission requirements.</p>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-info fade-in-left">
-                    <h3>Contact Information</h3>
-                    <p>We're here to help you take the next step in your educational journey. Reach out to us through any of the following channels.</p>
-                    <div class="contact-item hover-lift">
-                        <div class="contact-icon pulse-animation">📍</div>
-                        <div>
-                            <h4>Address</h4>
-                            <p>2nd Floor CRDM Building Governor's Drive Baranggay Maderan, GMA, Cavite, General Mariano Alvarez, Philippines</p>
-                        </div>
-                    </div>
-                    <div class="contact-item hover-lift">
-                        <div class="contact-icon pulse-animation">📞</div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>0997 224 0222</p>
-                        </div>
-                    </div>
-                    <div class="contact-item hover-lift">
-                        <div class="contact-icon pulse-animation">✉️</div>
-                        <div>
-                            <h4>Email</h4>
-                            <p><a href="mailto:philtech.2013gma@gmail.com">philtech.2013gma@gmail.com</a></p>
-                        </div>
+    <!-- ENHANCED CONTACT SECTION -->
+<section id="contact" class="section contact">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title animated-title">Get in Touch<span class="gradient-text"></span></h2>
+            <p class="section-subtitle">Ready to start your journey with PHILTECH? Contact us today to learn more about our programs and admission requirements.</p>
+        </div>
+        
+        <div class="contact-grid">
+            <div class="contact-info fade-in-left">
+                <h3>Contact Information</h3>
+                <p>We're here to help you take the next step in your educational journey. Reach out to us through any of the following channels.</p>
+                
+                <div class="contact-item hover-lift">
+                    <div class="contact-icon pulse-animation">📍</div>
+                    <div>
+                        <h4>Address</h4>
+                        <p>2nd Floor CRDM Building Governor's Drive Baranggay Maderan, GMA, Cavite, General Mariano Alvarez, Philippines</p>
                     </div>
                 </div>
-                <div class="contact-form fade-in-right glow-effect">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" required>
+                
+                <div class="contact-item hover-lift">
+                    <div class="contact-icon pulse-animation">📞</div>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>0997 224 0222</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item hover-lift">
+                    <div class="contact-icon pulse-animation">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p><a href="mailto:philtech.2013gma@gmail.com">philtech.2013gma@gmail.com</a></p>
+                    </div>
+                </div>
+
+                <!-- Quick Response Info -->
+                <div class="response-info">
+                    <h4>🚀 Quick Response</h4>
+                    <p>We typically respond within 24 hours during business days</p>
+                </div>
+            </div>
+            
+            <div class="contact-form fade-in-right glow-effect">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+63 XXX XXX XXXX">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="program">Program/Service of Interest *</label>
+                        <select id="program" name="program" required>
+                            <option value="">Select an option</option>
+                            <optgroup label="College Programs">
+                                <option value="bscs">Bachelor of Science in Computer Science</option>
+                                <option value="bsoa">Bachelor of Science in Office Administration</option>
+                                <option value="btvted">Bachelor of Technical-Vocational Teacher Education</option>
+                            </optgroup>
+                            <optgroup label="Senior High School">
+                                <option value="humms">HUMMS</option>
+                                <option value="abm">ABM</option>
+                                <option value="he">Home Economics</option>
+                                <option value="ict">ICT</option>
+                            </optgroup>
+                            <optgroup label="Services">
+                                <option value="software">Software Development</option>
+                                <option value="ai">AI Solutions</option>
+                                <option value="consultancy">IT Consultancy</option>
+                            </optgroup>
+                            <option value="other">Other Inquiry</option>
+                        </select>
+                        <span class="error-message" id="programError"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Tell us about your inquiry or how we can help you..."></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span>/500 characters
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
+                        <span class="error-message" id="messageError"></span>
+                    </div>
+
+                    <!-- Hidden honeypot field for spam protection -->
+                    <div class="honeypot">
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary ripple-effect submit-btn" id="submitBtn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="loading-spinner" style="display: none;">
+                            <div class="spinner"></div>
+                            Sending...
+                        </span>
+                    </button>
+                </form>
+                
+                <!-- Success/Error Messages -->
+                <div id="formMessages">
+                    <div class="success-message" id="successMessage" style="display: none;">
+                        <div class="message-icon">✅</div>
+                        <div class="message-content">
+                            <h4>Message Sent Successfully!</h4>
+                            <p>Thank you for your inquiry. We'll get back to you within 24 hours.</p>
                         </div>
-                        <div class="form-group">
-                            <label for="program">Program/Service of Interest</label>
-                            <select id="program" name="program">
-                                <option value="">Select an option</option>
-                                <optgroup label="College Programs">
-                                    <option value="bscs">Bachelor of Science in Computer Science</option>
-                                    <option value="bsoa">Bachelor of Science in Office Administration</option>
-                                    <option value="btvted">Bachelor of Technical-Vocational Teacher Education</option>
-                                </optgroup>
-                                <optgroup label="Senior High School">
-                                    <option value="humms">HUMMS</option>
-                                    <option value="abm">ABM</option>
-                                    <option value="he">Home Economics</option>
-                                    <option value="ict">ICT</option>
-                                </optgroup>
-                                <optgroup label="Services">
-                                    <option value="software">Software Development</option>
-                                    <option value="ai">AI Solutions</option>
-                                    <option value="consultancy">IT Consultancy</option>
-                                </optgroup>
-                            </select>
+                    </div>
+                    
+                    <div class="error-message" id="errorMessage" style="display: none;">
+                        <div class="message-icon">❌</div>
+                        <div class="message-content">
+                            <h4>Error Sending Message</h4>
+                            <p>Please try again or contact us directly at philtech.2013gma@gmail.com</p>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5"></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary ripple-effect" style="width: 100%; justify-content: center;">Send Message</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer class="footer">
         <div class="container">
@@ -868,3 +925,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
