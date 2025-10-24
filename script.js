@@ -1,13 +1,17 @@
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all functionality
     initNavigation();
     initAnimations();
+    initCounters();
+    initFormValidation();
     initScrollToTop();
+    initParticles();
+    initTypingEffect();
     initEventsTabs();
-    initContactForm();
 });
 
-// ===== NAVIGATION =====
+// Enhanced navigation functionality
 function initNavigation() {
     const header = document.querySelector('.header');
     const menuToggle = document.querySelector('.menu-toggle');
@@ -44,6 +48,15 @@ function initNavigation() {
         }
     });
     
+    // Prevent scrolling when menu is open
+    if (navLinks) {
+        navLinks.addEventListener('touchmove', function(e) {
+            if (this.classList.contains('active')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+    
     // Header scroll effect
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
@@ -61,28 +74,11 @@ function initNavigation() {
             body.classList.remove('nav-open');
         }
     });
-    
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const headerOffset = 80;
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
 }
 
-// ===== ANIMATIONS =====
+// Initialize animations
 function initAnimations() {
+    // Intersection Observer for scroll animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -91,26 +87,125 @@ function initAnimations() {
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animated');
             }
         });
     }, observerOptions);
     
-    // Observe animated elements
-    document.querySelectorAll('.feature-card, .program-card, .service-card, .value-card, .team-member, .testimonial-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    // Observe elements that need animation
+    document.querySelectorAll('.counter-animation, .fade-in-left, .fade-in-right, .slide-in-up').forEach(el => {
         observer.observe(el);
     });
 }
 
-// ===== SCROLL TO TOP =====
-function initScrollToTop() {
-    // Check if button already exists
-    if (document.querySelector('.scroll-to-top')) return;
+// Initialize counter animations
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200;
     
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = Math.ceil(target / speed);
+        
+        if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(() => initCounters(), 1);
+        } else {
+            counter.innerText = target;
+        }
+    });
+}
+
+// Initialize form validation
+function initFormValidation() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple validation
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const program = document.getElementById('program');
+            const message = document.getElementById('message');
+            
+            let isValid = true;
+            
+            if (!name.value.trim()) {
+                showError(name, 'Please enter your name');
+                isValid = false;
+            } else {
+                clearError(name);
+            }
+            
+            if (!email.value.trim() || !isValidEmail(email.value)) {
+                showError(email, 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                clearError(email);
+            }
+            
+            if (isValid) {
+                // Simulate form submission
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '✓ Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                    }, 3000);
+                }, 1500);
+            }
+        });
+    }
+    
+    function showError(input, message) {
+        const formGroup = input.parentElement;
+        let errorDiv = formGroup.querySelector('.error-message');
+        
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            formGroup.appendChild(errorDiv);
+        }
+        
+        errorDiv.textContent = message;
+        input.style.borderColor = '#e74c3c';
+    }
+    
+    function clearError(input) {
+        const formGroup = input.parentElement;
+        const errorDiv = formGroup.querySelector('.error-message');
+        
+        if (errorDiv) {
+            errorDiv.remove();
+        }
+        
+        input.style.borderColor = '';
+    }
+    
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+}
+
+// Enhanced scroll to top button
+function initScrollToTop() {
     const scrollBtn = document.createElement('button');
     scrollBtn.className = 'scroll-to-top';
     scrollBtn.innerHTML = '↑';
@@ -133,7 +228,101 @@ function initScrollToTop() {
     });
 }
 
-// ===== EVENTS TABS =====
+// Initialize particle background
+function initParticles() {
+    const particlesContainer = document.getElementById('particles');
+    
+    if (particlesContainer) {
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = Math.random() * 5 + 2 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.background = i % 2 === 0 ? 'rgba(139, 21, 56, 0.3)' : 'rgba(218, 165, 32, 0.3)';
+            particle.style.borderRadius = '50%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animation = `float ${Math.random() * 6 + 4}s ease-in-out infinite`;
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            
+            particlesContainer.appendChild(particle);
+        }
+    }
+}
+
+// Initialize typing effect
+function initTypingEffect() {
+    const typingElement = document.querySelector('.typing-container');
+    
+    if (typingElement) {
+        const texts = [
+            "Shape Your Future",
+            "Build Your Career",
+            "Learn and Grow",
+            "Achieve Excellence"
+        ];
+        
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingDelay = 100;
+        let erasingDelay = 50;
+        let newTextDelay = 2000;
+        
+        function type() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingDelay = erasingDelay;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingDelay = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                typingDelay = newTextDelay;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typingDelay = 500;
+            }
+            
+            setTimeout(type, typingDelay);
+        }
+        
+        // Start the typing effect
+        setTimeout(type, 1000);
+    }
+}
+
+// Add ripple effect to buttons
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.ripple-effect').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const x = e.clientX - e.target.getBoundingClientRect().left;
+            const y = e.clientY - e.target.getBoundingClientRect().top;
+            
+            const ripples = document.createElement('span');
+            ripples.classList.add('ripple');
+            ripples.style.left = x + 'px';
+            ripples.style.top = y + 'px';
+            
+            this.appendChild(ripples);
+            
+            setTimeout(() => {
+                ripples.remove();
+            }, 600);
+        });
+    });
+});
+
+// Initialize events tab functionality
 function initEventsTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -157,165 +346,3 @@ function initEventsTabs() {
         });
     }
 }
-
-// ===== CONTACT FORM =====
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (!contactForm) return;
-    
-    // EmailJS Configuration
-    const EMAILJS_CONFIG = {
-        SERVICE_ID: 'service_s19nvd7',
-        TEMPLATE_ID: 'template_2f5ak5h',
-        PUBLIC_KEY: 'O8tfsHGNxzPo6tvKL'
-    };
-    
-    // Initialize EmailJS
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-    }
-    
-    // Form validation
-    function validateForm(formData) {
-        const errors = {};
-        
-        if (!formData.name.trim()) {
-            errors.name = 'Please enter your full name';
-        } else if (formData.name.trim().length < 2) {
-            errors.name = 'Name must be at least 2 characters long';
-        }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!formData.email.trim()) {
-            errors.email = 'Please enter your email address';
-        } else if (!emailRegex.test(formData.email)) {
-            errors.email = 'Please enter a valid email address';
-        }
-        
-        if (!formData.program) {
-            errors.program = 'Please select a program';
-        }
-        
-        if (!formData.message.trim()) {
-            errors.message = 'Please enter your message';
-        } else if (formData.message.trim().length < 10) {
-            errors.message = 'Message must be at least 10 characters long';
-        }
-        
-        return errors;
-    }
-    
-    // Form submission handler
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone') ? document.getElementById('phone').value : '',
-            program: document.getElementById('program').value,
-            message: document.getElementById('message').value,
-            timestamp: new Date().toLocaleString()
-        };
-        
-        // Validate form
-        const errors = validateForm(formData);
-        if (Object.keys(errors).length > 0) {
-            Object.keys(errors).forEach(field => {
-                const input = document.getElementById(field);
-                if (input) {
-                    input.style.borderColor = '#e74c3c';
-                    const errorMsg = document.createElement('span');
-                    errorMsg.className = 'error-message';
-                    errorMsg.textContent = errors[field];
-                    errorMsg.style.color = '#e74c3c';
-                    errorMsg.style.fontSize = '0.85rem';
-                    errorMsg.style.marginTop = '0.25rem';
-                    errorMsg.style.display = 'block';
-                    
-                    // Remove existing error message if any
-                    const existingError = input.parentElement.querySelector('.error-message');
-                    if (existingError) {
-                        existingError.remove();
-                    }
-                    
-                    input.parentElement.appendChild(errorMsg);
-                }
-            });
-            return;
-        }
-        
-        // Clear any existing errors
-        document.querySelectorAll('.error-message').forEach(el => el.remove());
-        document.querySelectorAll('input, select, textarea').forEach(el => {
-            el.style.borderColor = '';
-        });
-        
-        // Show loading state
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<span style="display:inline-block;animation:spin 1s linear infinite;border:2px solid rgba(255,255,255,0.3);border-top:2px solid white;border-radius:50%;width:16px;height:16px;"></span> Sending...';
-        submitBtn.disabled = true;
-        
-        try {
-            // Send email using EmailJS
-            if (typeof emailjs !== 'undefined') {
-                await emailjs.send(
-                    EMAILJS_CONFIG.SERVICE_ID,
-                    EMAILJS_CONFIG.TEMPLATE_ID,
-                    formData
-                );
-                
-                // Success
-                submitBtn.innerHTML = '✓ Message Sent!';
-                submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Reset button after 3 seconds
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.style.background = '';
-                }, 3000);
-                
-            } else {
-                throw new Error('EmailJS not loaded');
-            }
-            
-        } catch (error) {
-            console.error('Email sending failed:', error);
-            submitBtn.innerHTML = '✗ Error - Try Again';
-            submitBtn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.background = '';
-            }, 3000);
-        }
-    });
-    
-    // Clear error on input
-    document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea').forEach(element => {
-        element.addEventListener('input', function() {
-            this.style.borderColor = '';
-            const errorMsg = this.parentElement.querySelector('.error-message');
-            if (errorMsg) {
-                errorMsg.remove();
-            }
-        });
-    });
-}
-
-// Add spin animation for loading spinner
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-`;
-document.head.appendChild(style);
