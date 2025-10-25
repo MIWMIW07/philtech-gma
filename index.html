@@ -14,6 +14,15 @@
     <meta property="og:image" content="logo.jpg">
     <link rel="icon" href="logo.jpg" type="image/png">
     <link rel="stylesheet" href="styles.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Initialize EmailJS with your Public Key
+            emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace with your actual public key
+        })();
+    </script>
+    
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,8 +37,8 @@
         "addressRegion": "Cavite",
         "addressCountry": "Philippines"
       },
-      "telephone": "0998-929-1678",
-      "email": "learsi.gabriel07@gmail.com"
+      "telephone": "0997-224-0222",
+      "email": "philtech.2013gma@gmail.com"
     }
     </script>
 </head>
@@ -754,8 +763,7 @@
         </div>
     </section>
     
-    <!-- CONTACT SECTION -->
-
+    <!-- CONTACT SECTION - Updated Form -->
     <section id="contact" class="section contact">
         <div class="container">
             <div class="section-header">
@@ -791,16 +799,16 @@
                 <div class="contact-form fade-in-right glow-effect">
                     <form id="contactForm">
                         <div class="form-group">
-                            <label for="name">Full Name</label>
+                            <label for="name">Full Name *</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email Address</label>
+                            <label for="email">Email Address *</label>
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="program">Program/Service of Interest</label>
-                            <select id="program" name="program">
+                            <label for="program">Program/Service of Interest *</label>
+                            <select id="program" name="program" required>
                                 <option value="">Select an option</option>
                                 <optgroup label="College Programs">
                                     <option value="bscs">Bachelor of Science in Computer Science</option>
@@ -821,9 +829,10 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5"></textarea>
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
+                        <div id="formStatus" class="form-status"></div>
                         <button type="submit" class="btn-primary ripple-effect" style="width: 100%; justify-content: center;">Send Message</button>
                     </form>
                 </div>
@@ -868,3 +877,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
