@@ -117,7 +117,7 @@ function initCounters() {
     });
 }
 
-// Initialize form validation with EmailJS integration
+// Initialize form validation with EmailJS integration and Auto-Reply
 function initFormValidation() {
     const contactForm = document.getElementById('contactForm');
     
@@ -172,7 +172,7 @@ function initFormValidation() {
                 
                 // Check if EmailJS is loaded
                 if (typeof emailjs !== 'undefined') {
-                    // Prepare template parameters
+                    // Prepare template parameters for main email (to PHILTECH)
                     const templateParams = {
                         name: name.value,
                         email: email.value,
@@ -184,18 +184,29 @@ function initFormValidation() {
                         })
                     };
                     
-                    // Send email using EmailJS
-                    // IMPORTANT: Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs from EmailJS
-                    emailjs.send('service_4e2so76', 'template_fhr48dd', templateParams)
+                    // Send main email to PHILTECH
+                    emailjs.send('YOUR_SERVICE_ID', 'template_fhr48dd', templateParams)
                         .then(function(response) {
-                            console.log('SUCCESS!', response.status, response.text);
+                            console.log('Main email SUCCESS!', response.status, response.text);
+                            
+                            // Send auto-reply to the user
+                            const autoReplyParams = {
+                                to_name: name.value,
+                                to_email: email.value,
+                                program: program.options[program.selectedIndex].text
+                            };
+                            
+                            return emailjs.send('YOUR_SERVICE_ID', 'template_kzjvyo3', autoReplyParams);
+                        })
+                        .then(function(response) {
+                            console.log('Auto-reply SUCCESS!', response.status, response.text);
                             
                             // Show success message
                             submitBtn.innerHTML = '✓ Message Sent Successfully!';
                             submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
                             
                             // Show success notification
-                            showNotification('Thank you! Your inquiry has been sent. We\'ll get back to you soon.', 'success');
+                            showNotification('Thank you! Your inquiry has been sent. Check your email for confirmation!', 'success');
                             
                             // Reset form
                             contactForm.reset();
@@ -206,7 +217,8 @@ function initFormValidation() {
                                 submitBtn.disabled = false;
                                 submitBtn.style.background = '';
                             }, 5000);
-                        }, function(error) {
+                        })
+                        .catch(function(error) {
                             console.error('FAILED...', error);
                             
                             // Show error message
