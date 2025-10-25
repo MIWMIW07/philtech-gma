@@ -117,7 +117,7 @@ function initCounters() {
     });
 }
 
-// Initialize form validation
+// Initialize form validation with EmailJS integration
 function initFormValidation() {
     const contactForm = document.getElementById('contactForm');
     
@@ -125,7 +125,7 @@ function initFormValidation() {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simple validation
+            // Get form elements
             const name = document.getElementById('name');
             const email = document.getElementById('email');
             const program = document.getElementById('program');
@@ -133,6 +133,7 @@ function initFormValidation() {
             
             let isValid = true;
             
+            // Validation
             if (!name.value.trim()) {
                 showError(name, 'Please enter your name');
                 isValid = false;
@@ -147,28 +148,102 @@ function initFormValidation() {
                 clearError(email);
             }
             
+            if (!program.value) {
+                showError(program, 'Please select a program or service');
+                isValid = false;
+            } else {
+                clearError(program);
+            }
+            
+            if (!message.value.trim()) {
+                showError(message, 'Please enter your message');
+                isValid = false;
+            } else {
+                clearError(message);
+            }
+            
             if (isValid) {
-                // Simulate form submission
                 const submitBtn = contactForm.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
                 
+                // Disable button and show loading
                 submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
                 submitBtn.disabled = true;
                 
-                setTimeout(() => {
-                    submitBtn.innerHTML = '✓ Message Sent!';
-                    submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                // Check if EmailJS is loaded
+                if (typeof emailjs !== 'undefined') {
+                    // Prepare template parameters
+                    const templateParams = {
+                        name: name.value,
+                        email: email.value,
+                        program: program.options[program.selectedIndex].text,
+                        message: message.value,
+                        date: new Date().toLocaleString('en-US', { 
+                            dateStyle: 'full', 
+                            timeStyle: 'short' 
+                        })
+                    };
                     
-                    // Reset form
-                    contactForm.reset();
+                    // Send email using EmailJS
+                    // IMPORTANT: Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs from EmailJS
+                    emailjs.send('service_4e2so76', 'template_fhr48dd', templateParams)
+                        .then(function(response) {
+                            console.log('SUCCESS!', response.status, response.text);
+                            
+                            // Show success message
+                            submitBtn.innerHTML = '✓ Message Sent Successfully!';
+                            submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                            
+                            // Show success notification
+                            showNotification('Thank you! Your inquiry has been sent. We\'ll get back to you soon.', 'success');
+                            
+                            // Reset form
+                            contactForm.reset();
+                            
+                            // Reset button after 5 seconds
+                            setTimeout(() => {
+                                submitBtn.innerHTML = originalText;
+                                submitBtn.disabled = false;
+                                submitBtn.style.background = '';
+                            }, 5000);
+                        }, function(error) {
+                            console.error('FAILED...', error);
+                            
+                            // Show error message
+                            submitBtn.innerHTML = '✗ Failed to Send';
+                            submitBtn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                            
+                            // Show error notification
+                            showNotification('Oops! Something went wrong. Please try again or contact us directly at philtech.2013gma@gmail.com', 'error');
+                            
+                            // Reset button after 3 seconds
+                            setTimeout(() => {
+                                submitBtn.innerHTML = originalText;
+                                submitBtn.disabled = false;
+                                submitBtn.style.background = '';
+                            }, 3000);
+                        });
+                } else {
+                    // EmailJS not loaded - fallback simulation
+                    console.warn('EmailJS not loaded. Simulating form submission.');
                     
-                    // Reset button after 3 seconds
                     setTimeout(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                        submitBtn.style.background = '';
-                    }, 3000);
-                }, 1500);
+                        submitBtn.innerHTML = '✓ Message Received!';
+                        submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                        
+                        showNotification('Form submitted! (Note: EmailJS is not configured yet. Please set up EmailJS to receive emails.)', 'warning');
+                        
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Reset button after 3 seconds
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                            submitBtn.style.background = '';
+                        }, 3000);
+                    }, 1500);
+                }
             }
         });
     }
@@ -201,6 +276,31 @@ function initFormValidation() {
     function isValidEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
+    }
+    
+    function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <span class="notification-icon">${type === 'success' ? '✓' : type === 'error' ? '✗' : '⚠'}</span>
+                <span class="notification-message">${message}</span>
+            </div>
+            <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 10);
+        
+        // Auto remove after 8 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 8000);
     }
 }
 
