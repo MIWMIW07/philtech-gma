@@ -1501,3 +1501,251 @@ body.nav-open {
     }
 }
 
+/* ============================================
+   NOTIFICATION SYSTEM STYLES
+   Add this to the end of your styles.css file
+   ============================================ */
+
+/* Notification Container */
+.notification {
+    position: fixed;
+    top: -100px;
+    right: 20px;
+    min-width: 320px;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 10000;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-left: 4px solid;
+}
+
+.notification.show {
+    top: 90px;
+}
+
+/* Notification Types */
+.notification-success {
+    border-left-color: #28a745;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+}
+
+.notification-error {
+    border-left-color: #dc3545;
+    background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+}
+
+.notification-warning {
+    border-left-color: #ffc107;
+    background: linear-gradient(135deg, #ffffff 0%, #fffbf0 100%);
+}
+
+/* Notification Content */
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.notification-success .notification-icon {
+    background: #28a745;
+    color: white;
+}
+
+.notification-error .notification-icon {
+    background: #dc3545;
+    color: white;
+}
+
+.notification-warning .notification-icon {
+    background: #ffc107;
+    color: #333;
+}
+
+.notification-message {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* Close Button */
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+/* Error Message Styles (Form Inline Errors) */
+.error-message {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    animation: slideInUp 0.3s ease;
+}
+
+.error-message::before {
+    content: '⚠';
+    font-size: 1rem;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Input States */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--maroon);
+    box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+    outline: none;
+    background-color: white;
+}
+
+/* Button States */
+button[type="submit"]:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+button[type="submit"].success {
+    background: linear-gradient(135deg, #4CAF50, #45a049) !important;
+}
+
+button[type="submit"].error {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .notification {
+        top: -100px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+        max-width: none;
+        padding: 1rem;
+    }
+    
+    .notification.show {
+        top: 70px;
+    }
+    
+    .notification-message {
+        font-size: 0.875rem;
+    }
+    
+    .notification-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .notification {
+        padding: 0.875rem;
+    }
+    
+    .notification-content {
+        gap: 0.5rem;
+    }
+    
+    .notification-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 0.875rem;
+    }
+    
+    .notification-message {
+        font-size: 0.8125rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .notification,
+    .notification.show {
+        transition: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+        border-top-color: transparent;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .notification {
+        display: none;
+    }
+}
