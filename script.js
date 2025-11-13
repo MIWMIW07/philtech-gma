@@ -186,7 +186,7 @@ function initFormValidation() {
                     
                     // Send email using EmailJS
                     // IMPORTANT: Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs from EmailJS
-                    emailjs.send('O8tfsHGNxzPo6tvKL', 'template_fhr48dd', templateParams)
+                    emailjs.send('service_4e2so76', 'template_fhr48dd', templateParams)
                         .then(function(response) {
                             console.log('SUCCESS!', response.status, response.text);
                             
@@ -446,4 +446,5 @@ function initEventsTabs() {
         });
     }
 }
+
 
