@@ -1749,3 +1749,77 @@ button[type="submit"].error {
         display: none;
     }
 }
+
+/* Form Input States */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--maroon);
+    box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+    outline: none;
+    background-color: white;
+}
+
+/* Enhanced Select Dropdown Styling */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B1538' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25em;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-group select option {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: var(--text-dark);
+    background: white;
+}
+
+.form-group select optgroup {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--maroon);
+    background: var(--light-bg);
+    padding: 0.5rem;
+}
+
+.form-group select option:hover,
+.form-group select option:focus,
+.form-group select option:checked {
+    background: linear-gradient(135deg, rgba(139, 21, 56, 0.1), rgba(218, 165, 32, 0.1));
+    color: var(--maroon);
+}
+
+/* Custom Select Wrapper for Better Styling */
+.custom-select-wrapper {
+    position: relative;
+}
+
+.custom-select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--maroon);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.custom-select-wrapper select:focus ~ .custom-select-wrapper::after {
+    transform: translateY(-50%) rotate(180deg);
+}
