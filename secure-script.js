@@ -155,6 +155,18 @@ const InputValidator = {
             'software', 'ai', 'consultancy'
         ];
         return validPrograms.includes(program);
+    },
+
+    // NEW: Authentication validators
+    isValidUsername: function(username) {
+        if (!username || typeof username !== 'string') return false;
+        const usernameRegex = /^[a-zA-Z0-9._@-]{3,50}$/;
+        return usernameRegex.test(username);
+    },
+    
+    isValidPassword: function(password) {
+        if (!password || typeof password !== 'string') return false;
+        return password.length >= 8 && password.length <= 100;
     }
 };
 
@@ -469,6 +481,15 @@ function clearAllErrors() {
 // 11. NOTIFICATION SYSTEM
 // ============================================
 function showNotification(message, type = 'info') {
+    // Create notification container if it doesn't exist
+    let notificationContainer = document.getElementById('notification-container');
+    if (!notificationContainer) {
+        notificationContainer = document.createElement('div');
+        notificationContainer.id = 'notification-container';
+        notificationContainer.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 10001;';
+        document.body.appendChild(notificationContainer);
+    }
+
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.innerHTML = `
@@ -479,14 +500,18 @@ function showNotification(message, type = 'info') {
         <button class="notification-close" onclick="this.parentElement.remove()">×</button>
     `;
     
-    document.body.appendChild(notification);
+    notificationContainer.appendChild(notification);
     
+    // Add show class after a small delay
     setTimeout(() => notification.classList.add('show'), 10);
     
+    // Auto remove after 5 seconds
     setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-    }, 8000);
+        if (notification.parentElement) {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
 }
 
 function getNotificationIcon(type) {
@@ -723,7 +748,7 @@ function initEventsTabs() {
 // ============================================
 // 14. RIPPLE EFFECT
 // ============================================
-document.addEventListener('DOMContentLoaded', function() {
+function initRippleEffect() {
     document.querySelectorAll('.ripple-effect').forEach(button => {
         button.addEventListener('click', function(e) {
             const x = e.clientX - e.target.getBoundingClientRect().left;
@@ -741,31 +766,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 600);
         });
     });
-});
+}
 
 // ============================================
-// 15. INITIALIZATION (Main Entry Point)
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    // Security initialization
-    enforceHTTPS();
-    obfuscateEmails();
-    
-    // Feature initialization
-    initNavigation();
-    initAnimations();
-    initCounters();
-    initFormValidation(); // Enhanced with security
-    initScrollToTop();
-    initParticles();
-    initTypingEffect();
-    initEventsTabs();
-    
-    console.log('PHILTECH website loaded with enhanced security features');
-});
-
-// ============================================
-// SECURE AUTHENTICATION SYSTEM
+// 15. SECURE AUTHENTICATION SYSTEM
 // ============================================
 
 const AuthSystem = {
@@ -938,8 +942,33 @@ const AuthSystem = {
     }
 };
 
+// Mock user database (in real application, this would be on the server)
+const mockUsers = {
+    'admin@philtech.edu.ph': {
+        username: 'admin',
+        email: 'admin@philtech.edu.ph',
+        passwordHash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbddad8b9c8f2c5b6d6f1', // 'password' hashed
+        role: 'admin',
+        fullName: 'Administrator'
+    },
+    'student@philtech.edu.ph': {
+        username: 'student',
+        email: 'student@philtech.edu.ph',
+        passwordHash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbddad8b9c8f2c5b6d6f1',
+        role: 'student',
+        fullName: 'John Student'
+    },
+    'teacher@philtech.edu.ph': {
+        username: 'teacher',
+        email: 'teacher@philtech.edu.ph',
+        passwordHash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbddad8b9c8f2c5b6d6f1',
+        role: 'teacher',
+        fullName: 'Sarah Teacher'
+    }
+};
+
 // ============================================
-// LOGIN FORM HANDLING
+// LOGIN SYSTEM FUNCTIONS
 // ============================================
 
 function initLoginSystem() {
@@ -951,30 +980,19 @@ function initLoginSystem() {
     const logoutBtn = document.getElementById('logoutBtn');
     const userDashboard = document.getElementById('userDashboard');
 
-    // Mock user database (in real application, this would be on the server)
-    const mockUsers = {
-        'admin@philtech.edu.ph': {
-            username: 'admin',
-            email: 'admin@philtech.edu.ph',
-            passwordHash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbddad8b9c8f2c5b6d6f1', // 'password' hashed
-            role: 'admin',
-            fullName: 'Administrator'
-        },
-        'student@philtech.edu.ph': {
-            username: 'student',
-            email: 'student@philtech.edu.ph',
-            passwordHash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbddad8b9c8f2c5b6d6f1',
-            role: 'student',
-            fullName: 'John Student'
-        }
-    };
+    console.log('Initializing login system...');
+    console.log('Login button:', loginBtn);
+    console.log('Login modal:', loginModal);
 
     // Modal functionality
     if (loginBtn) {
         loginBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Login button clicked');
             showLoginModal();
         });
+    } else {
+        console.error('Login button not found!');
     }
 
     if (closeLogin) {
@@ -1022,6 +1040,8 @@ function initLoginSystem() {
             hideLoginModal();
         }
     });
+
+    console.log('Login system initialized successfully');
 }
 
 async function handleLoginSubmit() {
@@ -1172,7 +1192,6 @@ function checkExistingSession() {
 function updateUIForLoggedInUser(user) {
     const loginBtn = document.getElementById('loginBtn');
     const userDashboard = document.getElementById('userDashboard');
-    const userGreeting = document.getElementById('userGreeting');
 
     if (loginBtn) {
         loginBtn.textContent = `👋 ${user.username}`;
@@ -1183,14 +1202,10 @@ function updateUIForLoggedInUser(user) {
 
     if (userDashboard) {
         userDashboard.style.display = 'block';
+        updateDashboardContent(user);
     }
 
-    if (userGreeting) {
-        userGreeting.textContent = user.fullName || user.username;
-    }
-
-    // Update dashboard content based on user role
-    updateDashboardContent(user);
+    console.log('User logged in:', user.username);
 }
 
 function updateUIForLoggedOutUser() {
@@ -1229,7 +1244,25 @@ function updateDashboardContent(user) {
                     </div>
                     <div class="widget">
                         <h4>Recent Activity</h4>
-                        <p>Welcome to the admin dashboard.</p>
+                        <p>Welcome to the admin dashboard. You have full system access.</p>
+                    </div>
+                </div>
+            `;
+            break;
+        case 'teacher':
+            content = `
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h4>Teaching Tools</h4>
+                        <div class="widget-actions">
+                            <button class="btn-primary">Grade Students</button>
+                            <button class="btn-secondary">Upload Materials</button>
+                            <button class="btn-secondary">View Schedule</button>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <h4>My Classes</h4>
+                        <p>Access your teaching schedule and student records.</p>
                     </div>
                 </div>
             `;
@@ -1239,11 +1272,15 @@ function updateDashboardContent(user) {
                 <div class="dashboard-widgets">
                     <div class="widget">
                         <h4>My Courses</h4>
-                        <p>Access your enrolled courses and materials.</p>
+                        <p>Access your enrolled courses and learning materials.</p>
+                        <div class="widget-actions">
+                            <button class="btn-primary">View Grades</button>
+                            <button class="btn-secondary">Course Materials</button>
+                        </div>
                     </div>
                     <div class="widget">
                         <h4>Academic Progress</h4>
-                        <p>View your grades and progress reports.</p>
+                        <p>Track your grades and academic performance.</p>
                     </div>
                 </div>
             `;
@@ -1266,13 +1303,17 @@ function showLoginModal() {
     const loginModal = document.getElementById('loginModal');
     const usernameInput = document.getElementById('username');
     
-    loginModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    
-    // Clear form
-    clearAllErrors();
-    if (usernameInput) {
-        usernameInput.focus();
+    if (loginModal) {
+        loginModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Clear form
+        clearAllErrors();
+        if (usernameInput) {
+            usernameInput.focus();
+        }
+    } else {
+        console.error('Login modal not found!');
     }
 }
 
@@ -1280,64 +1321,27 @@ function hideLoginModal() {
     const loginModal = document.getElementById('loginModal');
     const form = document.getElementById('loginForm');
     
-    loginModal.style.display = 'none';
-    document.body.style.overflow = '';
-    
-    // Reset form
-    if (form) {
-        form.reset();
-        clearAllErrors();
+    if (loginModal) {
+        loginModal.style.display = 'none';
+        document.body.style.overflow = '';
+        
+        // Reset form
+        if (form) {
+            form.reset();
+            clearAllErrors();
+        }
     }
 }
 
 // ============================================
-// ENHANCED INPUT VALIDATION FOR AUTH
+// 16. INITIALIZATION (Main Entry Point)
 // ============================================
-
-// Extend the existing InputValidator
-Object.assign(InputValidator, {
-    isValidUsername: function(username) {
-        if (!username || typeof username !== 'string') return false;
-        
-        // Allow alphanumeric, dots, underscores, @ for emails
-        const usernameRegex = /^[a-zA-Z0-9._@-]{3,50}$/;
-        return usernameRegex.test(username);
-    },
-    
-    isValidPassword: function(password) {
-        if (!password || typeof password !== 'string') return false;
-        
-        return password.length >= AuthSystem.config.minPasswordLength && 
-               password.length <= AuthSystem.config.maxPasswordLength;
-    }
-});
-
-// ============================================
-// SECURITY HEADERS ENFORCEMENT
-// ============================================
-
-function enforceSecurityHeaders() {
-    // HTTPS enforcement is already in place
-    // Additional security measures
-    
-    // Prevent form caching for sensitive forms
-    const sensitiveForms = document.querySelectorAll('#loginForm, #contactForm');
-    sensitiveForms.forEach(form => {
-        form.setAttribute('autocomplete', 'on');
-        form.setAttribute('novalidate', 'novalidate');
-    });
-}
-
-// ============================================
-// INITIALIZATION
-// ============================================
-
-// Update the existing initialization function
 document.addEventListener('DOMContentLoaded', function() {
-    // Existing security initialization
+    console.log('PHILTECH website initializing...');
+    
+    // Security initialization
     enforceHTTPS();
     obfuscateEmails();
-    enforceSecurityHeaders();
     
     // Feature initialization
     initNavigation();
@@ -1348,13 +1352,33 @@ document.addEventListener('DOMContentLoaded', function() {
     initParticles();
     initTypingEffect();
     initEventsTabs();
+    initRippleEffect();
     
-    // New authentication system
+    // NEW: Authentication system initialization
     initLoginSystem();
     
     console.log('PHILTECH website loaded with enhanced security and authentication features');
+    
+    // Session activity tracking
+    document.addEventListener('mousemove', function() {
+        if (AuthSystem.session.isValid()) {
+            AuthSystem.session.updateActivity();
+        }
+    });
+    
+    document.addEventListener('keypress', function() {
+        if (AuthSystem.session.isValid()) {
+            AuthSystem.session.updateActivity();
+        }
+    });
 });
 
-// Session activity tracking
-document.addEventListener('mousemove', AuthSystem.session.updateActivity.bind(AuthSystem.session));
-document.addEventListener('keypress', AuthSystem.session.updateActivity.bind(AuthSystem.session));
+// Test credentials for login:
+// Username: admin / admin@philtech.edu.ph
+// Password: password
+// 
+// Username: student / student@philtech.edu.ph  
+// Password: password
+//
+// Username: teacher / teacher@philtech.edu.ph
+// Password: password
