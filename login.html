@@ -1134,75 +1134,44 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Hardcoded admin credentials
-        const ADMIN_CREDENTIALS = {
-            username: 'philtechadmin',
-            password: 'Philtech2025@Admin',
-            email: 'admin@philtech.edu.ph',
-            displayName: 'PHILTECH Administrator'
-        };
-
         // Modified handleLogin function with hardcoded admin check
         window.handleLogin = async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim(); // Add trim()
-    const password = document.getElementById('loginPassword').value;
-    const btn = document.getElementById('loginBtn');
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
 
-    console.log('Login attempt:', email); // Debug log
-
-    try {
-        btn.disabled = true;
-        btn.innerHTML = '<span class="loading-spinner"></span>Signing in...';
-        
-        // CHECK FOR HARDCODED ADMIN LOGIN (both username and email)
-        const isAdminUsername = (email.toLowerCase() === ADMIN_CREDENTIALS.username.toLowerCase() && 
-                                password === ADMIN_CREDENTIALS.password);
-        const isAdminEmail = (email.toLowerCase() === ADMIN_CREDENTIALS.email.toLowerCase() && 
-                             password === ADMIN_CREDENTIALS.password);
-        
-        console.log('Checking admin:', { isAdminUsername, isAdminEmail }); // Debug log
-        
-        if (isAdminUsername || isAdminEmail) {
-            console.log('Admin credentials matched!'); // Debug log
-            
-            // Store admin session
-            localStorage.setItem('isAdminLoggedIn', 'true');
-            localStorage.setItem('adminUser', JSON.stringify({
-                email: ADMIN_CREDENTIALS.email,
-                displayName: ADMIN_CREDENTIALS.displayName,
-                uid: 'admin-hardcoded-001',
-                isHardcodedAdmin: true
-            }));
-            
-            console.log('Admin session stored:', localStorage.getItem('isAdminLoggedIn')); // Debug log
-            
-            showNotification('Admin login successful! Redirecting to admin panel...', 'success');
-            
-            // Redirect to admin panel
-            setTimeout(() => {
-                console.log('Redirecting to admin.html'); // Debug log
-                window.location.href = 'admin.html';
-            }, 1500);
-            
-            return;
-        }
-        
-        console.log('Not admin, trying Firebase...'); // Debug log
-        
-        // Regular Firebase authentication
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        showNotification('Login successful! Welcome back.', 'success');
-        showDashboard(userCredential.user);
-        
-    } catch (error) {
-        console.error('Login error:', error); // Debug log
-        showNotification(getErrorMessage(error.code), 'error');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = 'Sign In';
-    }
-};
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading-spinner"></span>Signing in...';
+                
+                // Use Firebase authentication for ALL users (including admin)
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Check if user is admin
+                const adminEmails = ['admin@philtech.edu.ph', 'learsi.gabriel07@gmail.com'];
+                
+                if (adminEmails.includes(user.email)) {
+                    // Admin user - redirect to admin panel
+                    showNotification('Admin login successful! Redirecting to admin panel...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                } else {
+                    // Regular student - show student dashboard
+                    showNotification('Login successful! Welcome back.', 'success');
+                    showDashboard(user);
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification(getErrorMessage(error.code), 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Sign In';
+            }
+        };
 
         // Check auth state on load
         onAuthStateChanged(auth, (user) => {
