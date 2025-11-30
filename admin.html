@@ -654,43 +654,28 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-            onAuthStateChanged(auth, async (user) => {
-        // Check for hardcoded admin session
-        const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
-        const adminUser = localStorage.getItem('adminUser');
-        
-        if (isAdminLoggedIn === 'true' && adminUser) {
-            const admin = JSON.parse(adminUser);
-            if (admin.isHardcodedAdmin) {
-                // Hardcoded admin is logged in
-                loadDashboardStats();
-                loadAnnouncements();
-                loadStudents();
-                loadGradeRequests();
-                loadCurrentSchedule();
+        onAuthStateChanged(auth, async (user) => {
+            // Check if user is logged in via Firebase
+            if (!user) {
+                window.location.href = 'login.html';
                 return;
             }
-        }
-        
-        // Regular Firebase authentication check
-        if (!user) {
-            window.location.href = 'login.html';
-            return;
-        }
 
-        // Check if user is admin (Firebase authenticated users)
-        const adminEmails = ['admin@philtech.edu.ph', 'learsi.gabriel07@gmail.com'];
-        if (!adminEmails.includes(user.email)) {
-            alert('Access denied. Admin only.');
-            window.location.href = 'login.html';
-            return;
-        }
+            // Check if user is admin
+            const adminEmails = ['admin@philtech.edu.ph', 'learsi.gabriel07@gmail.com'];
+            if (!adminEmails.includes(user.email)) {
+                alert('Access denied. Admin only.');
+                window.location.href = 'login.html';
+                return;
+            }
 
-        loadDashboardStats();
-        loadAnnouncements();
-        loadStudents();
-        loadGradeRequests();
-        loadCurrentSchedule();
+            // User is authenticated admin - load admin functions
+            console.log('Admin authenticated:', user.email);
+            loadDashboardStats();
+            loadAnnouncements();
+            loadStudents();
+            loadGradeRequests();
+            loadCurrentSchedule();
         });
 
         // Load dashboard stats
@@ -1007,33 +992,19 @@
             }
         };
 
+        // Handle logout
         window.handleLogout = async function() {
-        if (!confirm('Are you sure you want to logout?')) return;
-        
-        try {
-            // Check if hardcoded admin
-            const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
-            const adminUserData = localStorage.getItem('adminUser');
+            if (!confirm('Are you sure you want to logout?')) return;
             
-            if (isAdminLoggedIn === 'true' && adminUserData) {
-                const admin = JSON.parse(adminUserData);
-                if (admin.isHardcodedAdmin) {
-                    localStorage.removeItem('isAdminLoggedIn');
-                    localStorage.removeItem('adminUser');
-                    alert('Logged out successfully!');
-                    window.location.href = 'login.html';
-                    return;
-                }
+            try {
+                await signOut(auth);
+                alert('Logged out successfully!');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Error logging out:', error);
+                alert('Error logging out. Please try again.');
             }
-            
-            // Regular Firebase logout
-            await signOut(auth);
-            window.location.href = 'login.html';
-        } catch (error) {
-            console.error('Error logging out:', error);
-            alert('Error logging out. Please try again.');
-        }
-    };
+        };
 
         // Close modal
         window.closeModal = function(modalId) {
