@@ -1134,17 +1134,15 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Check auth state on load
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                showDashboard(user);
-                loadStudentData(user);
-            } else {
-                showAuthForm();
-            }
-        });
+        // Hardcoded admin credentials
+        const ADMIN_CREDENTIALS = {
+            username: 'philtechadmin',
+            password: 'Philtech2025@Admin',
+            email: 'admin@philtech.edu.ph',
+            displayName: 'PHILTECH Administrator'
+        };
 
-        // Make functions global
+        // Modified handleLogin function with hardcoded admin check
         window.handleLogin = async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
@@ -1155,9 +1153,32 @@
                 btn.disabled = true;
                 btn.innerHTML = '<span class="loading-spinner"></span>Signing in...';
                 
+                // Check if it's the hardcoded admin login
+                if (email === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                    // Create a mock user session for admin
+                    localStorage.setItem('isAdminLoggedIn', 'true');
+                    localStorage.setItem('adminUser', JSON.stringify({
+                        email: ADMIN_CREDENTIALS.email,
+                        displayName: ADMIN_CREDENTIALS.displayName,
+                        uid: 'admin-hardcoded',
+                        isHardcodedAdmin: true
+                    }));
+                    
+                    showNotification('Admin login successful! Redirecting to admin panel...', 'success');
+                    
+                    // Redirect to admin panel after 1 second
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                    
+                    return;
+                }
+                
+                // Otherwise, use Firebase authentication
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 showNotification('Login successful! Welcome back.', 'success');
                 showDashboard(userCredential.user);
+                
             } catch (error) {
                 showNotification(getErrorMessage(error.code), 'error');
             } finally {
@@ -1165,6 +1186,16 @@
                 btn.innerHTML = 'Sign In';
             }
         };
+
+        // Check auth state on load
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                showDashboard(user);
+                loadStudentData(user);
+            } else {
+                showAuthForm();
+            }
+        });
 
         window.handleSignup = async (e) => {
             e.preventDefault();
