@@ -21,7 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: 2000px; margin: 0 auto; padding: 0 20px; }
 
 /* Header */
 .header {
@@ -1823,3 +1823,4 @@ button[type="submit"].error {
 .custom-select-wrapper select:focus ~ .custom-select-wrapper::after {
     transform: translateY(-50%) rotate(180deg);
 }
+
