@@ -654,26 +654,43 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // Check if user is admin
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                window.location.href = 'login.html';
+            onAuthStateChanged(auth, async (user) => {
+        // Check for hardcoded admin session
+        const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
+        const adminUser = localStorage.getItem('adminUser');
+        
+        if (isAdminLoggedIn === 'true' && adminUser) {
+            const admin = JSON.parse(adminUser);
+            if (admin.isHardcodedAdmin) {
+                // Hardcoded admin is logged in
+                loadDashboardStats();
+                loadAnnouncements();
+                loadStudents();
+                loadGradeRequests();
+                loadCurrentSchedule();
                 return;
             }
+        }
+        
+        // Regular Firebase authentication check
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
 
-            // Check if user is admin (you can customize this logic)
-            const adminEmails = ['admin@philtech.edu.ph', 'learsi.gabriel07@gmail.com'];
-            if (!adminEmails.includes(user.email)) {
-                alert('Access denied. Admin only.');
-                window.location.href = 'login.html';
-                return;
-            }
+        // Check if user is admin (Firebase authenticated users)
+        const adminEmails = ['admin@philtech.edu.ph', 'learsi.gabriel07@gmail.com'];
+        if (!adminEmails.includes(user.email)) {
+            alert('Access denied. Admin only.');
+            window.location.href = 'login.html';
+            return;
+        }
 
-            loadDashboardStats();
-            loadAnnouncements();
-            loadStudents();
-            loadGradeRequests();
-            loadCurrentSchedule();
+        loadDashboardStats();
+        loadAnnouncements();
+        loadStudents();
+        loadGradeRequests();
+        loadCurrentSchedule();
         });
 
         // Load dashboard stats
@@ -990,17 +1007,33 @@
             }
         };
 
-        // Logout
         window.handleLogout = async function() {
-            if (!confirm('Are you sure you want to logout?')) return;
+        if (!confirm('Are you sure you want to logout?')) return;
+        
+        try {
+            // Check if hardcoded admin
+            const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
+            const adminUserData = localStorage.getItem('adminUser');
             
-            try {
-                await signOut(auth);
-                window.location.href = 'login.html';
-            } catch (error) {
-                console.error('Error logging out:', error);
+            if (isAdminLoggedIn === 'true' && adminUserData) {
+                const admin = JSON.parse(adminUserData);
+                if (admin.isHardcodedAdmin) {
+                    localStorage.removeItem('isAdminLoggedIn');
+                    localStorage.removeItem('adminUser');
+                    alert('Logged out successfully!');
+                    window.location.href = 'login.html';
+                    return;
+                }
             }
-        };
+            
+            // Regular Firebase logout
+            await signOut(auth);
+            window.location.href = 'login.html';
+        } catch (error) {
+            console.error('Error logging out:', error);
+            alert('Error logging out. Please try again.');
+        }
+    };
 
         // Close modal
         window.closeModal = function(modalId) {
