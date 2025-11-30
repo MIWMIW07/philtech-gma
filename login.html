@@ -307,24 +307,41 @@
             }
         }
 
-        /* User Dashboard Styles */
+        /* User Dashboard Styles - LMS Theme */
         .dashboard {
             display: none;
-            max-width: 800px;
+            max-width: 1400px;
             width: 100%;
+            padding: 2rem;
         }
 
         .dashboard.active {
             display: block;
         }
 
-        .dashboard-header {
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .dashboard-sidebar {
             background: white;
-            padding: 2rem;
+            padding: 2rem 1rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(139, 21, 56, 0.1);
-            margin-bottom: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .user-profile {
             text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f3f4f6;
+            margin-bottom: 1.5rem;
         }
 
         .user-avatar {
@@ -338,47 +355,339 @@
             justify-content: center;
             font-size: 2rem;
             margin: 0 auto 1rem;
+            border: 3px solid #f3f4f6;
         }
 
-        .dashboard-actions {
+        .user-profile h3 {
+            font-size: 1rem;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-profile p {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(139, 21, 56, 0.05);
+            color: #8B1538;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #8B1538, #DAA520);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.25rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Main Content */
+        .dashboard-main {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(139, 21, 56, 0.1);
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .dashboard-header h2 {
+            font-size: 1.75rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: #9ca3af;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(139, 21, 56, 0.05), rgba(218, 165, 32, 0.05));
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(139, 21, 56, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 21, 56, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8B1538;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Course Cards */
+        .section-title {
+            font-size: 1.25rem;
+            color: #374151;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border: 2px solid #f3f4f6;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            border-color: #8B1538;
+            box-shadow: 0 10px 25px rgba(139, 21, 56, 0.15);
+        }
+
+        .course-thumbnail {
+            height: 150px;
+            background: linear-gradient(135deg, #8B1538, #DAA520);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .course-content {
+            padding: 1.25rem;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(139, 21, 56, 0.1);
+            color: #8B1538;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .course-title {
+            font-size: 1.1rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .course-progress {
+            flex: 1;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #8B1538, #DAA520);
+            transition: width 0.3s ease;
+        }
+
+        .course-action {
+            padding: 0.5rem 1rem;
+            background: #8B1538;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .course-action:hover {
+            background: #6B1028;
+        }
+
+        /* Announcements */
+        .announcements {
+            background: #fffbeb;
+            border-left: 4px solid #DAA520;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .announcement-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-icon {
+            font-size: 1.5rem;
+        }
+
+        .announcement-content h4 {
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        .announcement-content p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .announcement-date {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
         }
 
-        .action-card {
+        .quick-action-btn {
+            padding: 1rem;
             background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .action-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(139, 21, 56, 0.15);
+        .quick-action-btn:hover {
+            border-color: #8B1538;
+            background: rgba(139, 21, 56, 0.02);
         }
 
-        .action-icon {
+        .quick-action-btn .icon {
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
-        .logout-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
+        .quick-action-btn span {
+            display: block;
+            color: #6b7280;
+            font-size: 0.875rem;
             font-weight: 600;
-            margin-top: 1rem;
         }
 
-        .logout-btn:hover {
-            background: #dc2626;
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-sidebar {
+                position: static;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -413,13 +722,6 @@
                 </div>
                 <button type="submit" class="submit-btn" id="loginBtn">Sign In</button>
             </form>
-
-            <div class="divider"><span>OR</span></div>
-            <div class="social-login">
-                <button class="social-btn" onclick="handleGoogleLogin()">
-                    <span>🔍</span> Google
-                </button>
-            </div>
         </div>
 
         <!-- Signup Form -->
@@ -445,13 +747,6 @@
                 </div>
                 <button type="submit" class="submit-btn" id="signupBtn">Create Account</button>
             </form>
-
-            <div class="divider"><span>OR</span></div>
-            <div class="social-login">
-                <button class="social-btn" onclick="handleGoogleLogin()">
-                    <span>🔍</span> Google
-                </button>
-            </div>
         </div>
 
         <div class="back-home">
@@ -459,31 +754,450 @@
         </div>
     </div>
 
-    <!-- User Dashboard (Hidden by default) -->
+    <!-- User Dashboard - LMS Style -->
     <div class="dashboard" id="userDashboard">
-        <div class="dashboard-header">
-            <div class="user-avatar" id="userAvatar">U</div>
-            <h2 id="userName">Welcome Back!</h2>
-            <p id="userEmail"></p>
-            <button class="logout-btn" onclick="handleLogout()">Logout</button>
-        </div>
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <aside class="dashboard-sidebar">
+                <div class="user-profile">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <h3 id="userName">Student Name</h3>
+                    <p id="userEmail">email@example.com</p>
+                </div>
 
-        <div class="dashboard-actions">
-            <div class="action-card" onclick="window.location.href='index.html#programs'">
-                <div class="action-icon">📚</div>
-                <h3>My Programs</h3>
-                <p>View enrolled courses</p>
-            </div>
-            <div class="action-card" onclick="window.location.href='index.html#contact'">
-                <div class="action-icon">📧</div>
-                <h3>Contact</h3>
-                <p>Get support</p>
-            </div>
-            <div class="action-card" onclick="alert('Profile settings coming soon!')">
-                <div class="action-icon">⚙️</div>
-                <h3>Settings</h3>
-                <p>Manage account</p>
-            </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a class="nav-link active" onclick="showSection('overview')">
+                            <span class="nav-icon">🏠</span>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('courses')">
+                            <span class="nav-icon">📚</span>
+                            <span>My Courses</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('assignments')">
+                            <span class="nav-icon">📝</span>
+                            <span>Assignments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('grades')">
+                            <span class="nav-icon">📊</span>
+                            <span>Grades</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('schedule')">
+                            <span class="nav-icon">📅</span>
+                            <span>Schedule</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('resources')">
+                            <span class="nav-icon">📁</span>
+                            <span>Resources</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showSection('profile')">
+                            <span class="nav-icon">⚙️</span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <button class="logout-btn" onclick="handleLogout()">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </button>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="dashboard-main">
+                <!-- Overview Section -->
+                <div class="content-section active" id="overview">
+                    <div class="dashboard-header">
+                        <h2>Welcome Back, <span id="welcomeName">Student</span>! 👋</h2>
+                        <p>Here's what's happening with your courses today</p>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Active Courses</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Completed Tasks</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏰</div>
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Pending Tasks</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⭐</div>
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Average Grade</div>
+                        </div>
+                    </div>
+
+                    <!-- Announcements -->
+                    <div class="announcements">
+                        <h3 class="section-title">📢 Recent Announcements</h3>
+                        <div class="announcement-item">
+                            <div class="announcement-icon">🎓</div>
+                            <div class="announcement-content">
+                                <h4>Midterm Exinations Schedule Released</h4>
+                                <p>Check your email for the detailed examination schedule</p>
+                                <span class="announcement-date">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="announcement-item">
+                            <div class="announcement-icon">📅</div>
+                            <div class="announcement-content">
+                                <h4>New Assignment: Database Design Project</h4>
+                                <p>Due date: December 15, 2024</p>
+                                <span class="announcement-date">1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <h3 class="section-title">⚡ Quick Actions</h3>
+                    <div class="quick-actions">
+                        <div class="quick-action-btn" onclick="showSection('courses')">
+                            <div class="icon">📖</div>
+                            <span>Browse Courses</span>
+                        </div>
+                        <div class="quick-action-btn" onclick="showSection('assignments')">
+                            <div class="icon">📝</div>
+                            <span>View Tasks</span>
+                        </div>
+                        <div class="quick-action-btn" onclick="showSection('schedule')">
+                            <div class="icon">📅</div>
+                            <span>My Schedule</span>
+                        </div>
+                        <div class="quick-action-btn" onclick="window.location.href='index.html#contact'">
+                            <div class="icon">💬</div>
+                            <span>Contact Support</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courses Section -->
+                <div class="content-section" id="courses">
+                    <div class="dashboard-header">
+                        <h2>📚 My Courses</h2>
+                        <p>Continue your learning journey</p>
+                    </div>
+
+                    <div class="courses-grid">
+                        <div class="course-card">
+                            <div class="course-thumbnail">💻</div>
+                            <div class="course-content">
+                                <span class="course-badge">In Progress</span>
+                                <h3 class="course-title">Data Structures & Algorithms</h3>
+                                <p>Learn fundamental concepts of DSA</p>
+                                <div class="course-meta">
+                                    <div class="course-progress">
+                                        <small>Progress: 65%</small>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning →</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-thumbnail">🎨</div>
+                            <div class="course-content">
+                                <span class="course-badge">In Progress</span>
+                                <h3 class="course-title">Web Development Fundamentals</h3>
+                                <p>HTML, CSS, JavaScript basics</p>
+                                <div class="course-meta">
+                                    <div class="course-progress">
+                                        <small>Progress: 80%</small>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning →</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-thumbnail">🗄️</div>
+                            <div class="course-content">
+                                <span class="course-badge">In Progress</span>
+                                <h3 class="course-title">Database Management Systems</h3>
+                                <p>SQL and database design principles</p>
+                                <div class="course-meta">
+                                    <div class="course-progress">
+                                        <small>Progress: 45%</small>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning →</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-thumbnail">🤖</div>
+                            <div class="course-content">
+                                <span class="course-badge">Not Started</span>
+                                <h3 class="course-title">Introduction to AI</h3>
+                                <p>Artificial Intelligence fundamentals</p>
+                                <div class="course-meta">
+                                    <div class="course-progress">
+                                        <small>Progress: 0%</small>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Course →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignments Section -->
+                <div class="content-section" id="assignments">
+                    <div class="dashboard-header">
+                        <h2>📝 Assignments & Tasks</h2>
+                        <p>Keep track of your pending work</p>
+                    </div>
+
+                    <div class="announcements" style="background: #fef2f2; border-left-color: #ef4444;">
+                        <h3 class="section-title">🔴 Urgent Assignments</h3>
+                        <div class="announcement-item">
+                            <div class="announcement-icon">⚠️</div>
+                            <div class="announcement-content">
+                                <h4>Database Design Project</h4>
+                                <p>Due in 2 days - December 15, 2024</p>
+                                <button class="course-action" style="margin-top: 0.5rem;">Submit Assignment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <h3 class="section-title">📋 All Assignments</h3>
+                        <div class="courses-grid">
+                            <div class="course-card">
+                                <div class="course-content">
+                                    <span class="course-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">Pending</span>
+                                    <h3 class="course-title">Algorithm Analysis Report</h3>
+                                    <p>Data Structures & Algorithms</p>
+                                    <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.5rem;">Due: December 20, 2024</p>
+                                    <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Working →</button>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-content">
+                                    <span class="course-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Completed</span>
+                                    <h3 class="course-title">Responsive Website Project</h3>
+                                    <p>Web Development Fundamentals</p>
+                                    <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.5rem;">Submitted: December 1, 2024</p>
+                                    <button class="course-action" style="width: 100%; margin-top: 1rem; background: #10b981;">View Grade</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grades Section -->
+                <div class="content-section" id="grades">
+                    <div class="dashboard-header">
+                        <h2>📊 My Grades</h2>
+                        <p>Track your academic performance</p>
+                    </div>
+
+                    <div class="stats-grid" style="margin-bottom: 2rem;">
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Overall GPA</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-value">A</div>
+                            <div class="stat-label">Average Grade</div>
+                        </div>
+                    </div>
+
+                    <h3 class="section-title">📖 Course Grades</h3>
+                    <div class="courses-grid">
+                        <div class="course-card">
+                            <div class="course-content">
+                                <h3 class="course-title">Data Structures & Algorithms</h3>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                    <span style="color: #6b7280;">Current Grade:</span>
+                                    <span style="font-size: 1.5rem; font-weight: 700; color: #8B1538;">90%</span>
+                                </div>
+                                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f3f4f6;">
+                                    <small style="color: #6b7280;">Quizzes: 88% | Assignments: 92% | Midterm: 90%</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-content">
+                                <h3 class="course-title">Web Development Fundamentals</h3>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                    <span style="color: #6b7280;">Current Grade:</span>
+                                    <span style="font-size: 1.5rem; font-weight: 700; color: #8B1538;">95%</span>
+                                </div>
+                                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f3f4f6;">
+                                    <small style="color: #6b7280;">Projects: 98% | Assignments: 94% | Midterm: 93%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule Section -->
+                <div class="content-section" id="schedule">
+                    <div class="dashboard-header">
+                        <h2>📅 Class Schedule</h2>
+                        <p>Your weekly timetable</p>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #f3f4f6; border-radius: 15px; padding: 2rem;">
+                        <h3 style="color: #374151; margin-bottom: 1.5rem;">This Week's Classes</h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="padding: 1.25rem; background: rgba(139, 21, 56, 0.05); border-radius: 10px; border-left: 4px solid #8B1538;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                    <h4 style="color: #374151;">Data Structures & Algorithms</h4>
+                                    <span style="background: #8B1538; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem;">Monday</span>
+                                </div>
+                                <p style="color: #6b7280; font-size: 0.875rem;">⏰ 9:00 AM - 11:00 AM | 📍 Room 301</p>
+                            </div>
+
+                            <div style="padding: 1.25rem; background: rgba(218, 165, 32, 0.05); border-radius: 10px; border-left: 4px solid #DAA520;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                    <h4 style="color: #374151;">Web Development Fundamentals</h4>
+                                    <span style="background: #DAA520; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem;">Tuesday</span>
+                                </div>
+                                <p style="color: #6b7280; font-size: 0.875rem;">⏰ 1:00 PM - 3:00 PM | 📍 Computer Lab 1</p>
+                            </div>
+
+                            <div style="padding: 1.25rem; background: rgba(139, 21, 56, 0.05); border-radius: 10px; border-left: 4px solid #8B1538;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                    <h4 style="color: #374151;">Database Management Systems</h4>
+                                    <span style="background: #8B1538; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem;">Thursday</span>
+                                </div>
+                                <p style="color: #6b7280; font-size: 0.875rem;">⏰ 10:00 AM - 12:00 PM | 📍 Room 205</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Section -->
+                <div class="content-section" id="resources">
+                    <div class="dashboard-header">
+                        <h2>📁 Learning Resources</h2>
+                        <p>Access course materials and documents</p>
+                    </div>
+
+                    <div class="courses-grid">
+                        <div class="course-card">
+                            <div class="course-content">
+                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">📄</div>
+                                <h3 class="course-title">Lecture Notes</h3>
+                                <p>Download all lecture materials</p>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">View Files →</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-content">
+                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🎥</div>
+                                <h3 class="course-title">Video Tutorials</h3>
+                                <p>Watch recorded lectures</p>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Watch Now →</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-content">
+                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">📚</div>
+                                <h3 class="course-title">E-Books</h3>
+                                <p>Access digital library</p>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Browse Library →</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-content">
+                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💾</div>
+                                <h3 class="course-title">Code Samples</h3>
+                                <p>Download practice codes</p>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Get Code →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile/Settings Section -->
+                <div class="content-section" id="profile">
+                    <div class="dashboard-header">
+                        <h2>⚙️ Account Settings</h2>
+                        <p>Manage your profile and preferences</p>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #f3f4f6; border-radius: 15px; padding: 2rem;">
+                        <h3 style="color: #374151; margin-bottom: 1.5rem;">Profile Information</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div>
+                                <label style="display: block; color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Full Name</label>
+                                <input type="text" id="profileName" placeholder="Your Name" style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                            </div>
+                            <div>
+                                <label style="display: block; color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Email Address</label>
+                                <input type="email" id="profileEmail" placeholder="your.email@example.com" style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                            </div>
+                            <div>
+                                <label style="display: block; color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Student ID</label>
+                                <input type="text" value="2024-12345" readonly style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 10px; background: #f9fafb;">
+                            </div>
+                            <button class="course-action" style="width: fit-content; padding: 0.875rem 2rem;">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #f3f4f6; border-radius: 15px; padding: 2rem; margin-top: 2rem;">
+                        <h3 style="color: #374151; margin-bottom: 1rem;">Notifications</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 20px; height: 20px;">
+                                <span style="color: #374151;">Email notifications for new assignments</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 20px; height: 20px;">
+                                <span style="color: #374151;">Grade updates</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 20px; height: 20px;">
+                                <span style="color: #374151;">Weekly summary emails</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 
@@ -627,9 +1341,12 @@
             document.getElementById('userDashboard').classList.add('active');
             
             const name = user.displayName || user.email.split('@')[0];
-            document.getElementById('userName').textContent = `Welcome, ${name}!`;
+            document.getElementById('userName').textContent = name;
+            document.getElementById('welcomeName').textContent = name;
             document.getElementById('userEmail').textContent = user.email;
             document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+            document.getElementById('profileName').value = user.displayName || '';
+            document.getElementById('profileEmail').value = user.email;
         }
 
         function showAuthForm() {
@@ -695,6 +1412,25 @@
                 input.type = 'password';
                 button.textContent = '👁️';
             }
+        }
+
+        // Dashboard Navigation
+        function showSection(sectionId) {
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
         }
 
         // Notification styles
