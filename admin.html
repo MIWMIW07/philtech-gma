@@ -849,55 +849,53 @@
             document.getElementById('gradeModal').classList.add('active');
         };
 
-        // Submit grade
-        window.submitGrade = async function() {
-    const overall = document.getElementById('gradeOverall').value;
-    const breakdown = document.getElementById('gradeBreakdown').value;
-
-    if (!overall) {
-        alert('Please enter overall grade');
-        return;
-    }
-
-    // Validate grade is between 0-100
-    if (overall < 0 || overall > 100) {
-        alert('Grade must be between 0 and 100');
-        return;
-    }
-
-    try {
-        const { requestId, userId } = window.currentGradeRequest;
-
-        // Update grade request status
-        await updateDoc(doc(db, 'gradeRequests', requestId), {
-            status: 'completed',
-            grade: overall,
-            breakdown: breakdown,
-            completedAt: serverTimestamp()
-        });
-
-        // Add grade to user's grades collection with proper userId
-        await addDoc(collection(db, 'grades'), {
-            userId: userId,  // This is critical - ensures the grade is linked to the student
-            grade: overall,
-            breakdown: breakdown || 'No breakdown provided',
-            createdAt: serverTimestamp(),
-            submittedBy: auth.currentUser.email
-        });
-
-        alert('Grade submitted successfully!');
-        closeModal('gradeModal');
-        loadGradeRequests();
-        loadDashboardStats();
-        
-        // Clear form
-        document.getElementById('gradeOverall').value = '';
-        document.getElementById('gradeBreakdown').value = '';
-    } catch (error) {
-        console.error('Error submitting grade:', error);
-        alert('Error submitting grade: ' + error.message);
-    }
-};
+            // Submit grade
+            window.submitGrade = async function() {
+        const overall = document.getElementById('gradeOverall').value;
+        const breakdown = document.getElementById('gradeBreakdown').value;
+    
+        if (!overall) {
+            alert('Please enter overall grade');
+            return;
+        }
+    
+        if (overall < 0 || overall > 100) {
+            alert('Grade must be between 0 and 100');
+            return;
+        }
+    
+        try {
+            const { requestId, userId } = window.currentGradeRequest;
+    
+            // Update grade request
+            await updateDoc(doc(db, 'gradeRequests', requestId), {
+                status: 'completed',
+                grade: overall,
+                breakdown: breakdown,
+                completedAt: serverTimestamp()
+            });
+    
+            // Add grade to grades collection - THIS IS THE KEY FIX
+            await addDoc(collection(db, 'grades'), {
+                userId: userId,  // Make sure this matches the student's userId
+                grade: overall,
+                breakdown: breakdown || 'No breakdown provided',
+                createdAt: serverTimestamp(),
+                submittedBy: auth.currentUser.email
+            });
+    
+            alert('Grade submitted successfully!');
+            closeModal('gradeModal');
+            loadGradeRequests();
+            loadDashboardStats();
+            
+            document.getElementById('gradeOverall').value = '';
+            document.getElementById('gradeBreakdown').value = '';
+        } catch (error) {
+            console.error('Error submitting grade:', error);
+            alert('Error submitting grade: ' + error.message);
+        }
+    };
 
         // Preview schedule
         window.previewSchedule = function(event) {
@@ -1040,4 +1038,5 @@
     </script>
 </body>
 </html>
+
 
