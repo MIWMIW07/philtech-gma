@@ -1273,168 +1273,174 @@
         }
 
         // Load student data
-        async function loadStudentData(user) {
-            try {
-                // Load announcements
-                const announcementsQuery = query(
-                    collection(db, 'announcements'),
-                    orderBy('createdAt', 'desc'),
-                    limit(5)
-                );
-                const announcementsSnap = await getDocs(announcementsQuery);
-                const announcementsContainer = document.getElementById('studentAnnouncements');
-                
-                if (announcementsSnap.empty) {
-                    announcementsContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 1rem;">No announcements yet</p>';
-                } else {
-                    announcementsContainer.innerHTML = '';
-                    announcementsSnap.forEach((doc) => {
-                        const data = doc.data();
-                        const date = data.createdAt?.toDate().toLocaleDateString() || 'Just now';
-                        announcementsContainer.innerHTML += `
-                            <div class="announcement-item">
-                                <div class="announcement-icon">📢</div>
-                                <div class="announcement-content">
-                                    <h4>${data.title}</h4>
-                                    <p>${data.content}</p>
-                                    <span class="announcement-date">${date}</span>
+            async function loadStudentData(user) {
+                try {
+                    // Load announcements (KEEP THIS PART - lines 571-596)
+                    const announcementsQuery = query(
+                        collection(db, 'announcements'),
+                        orderBy('createdAt', 'desc'),
+                        limit(5)
+                    );
+                    const announcementsSnap = await getDocs(announcementsQuery);
+                    const announcementsContainer = document.getElementById('studentAnnouncements');
+                    
+                    if (announcementsSnap.empty) {
+                        announcementsContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 1rem;">No announcements yet</p>';
+                    } else {
+                        announcementsContainer.innerHTML = '';
+                        announcementsSnap.forEach((doc) => {
+                            const data = doc.data();
+                            const date = data.createdAt?.toDate().toLocaleDateString() || 'Just now';
+                            announcementsContainer.innerHTML += `
+                                <div class="announcement-item">
+                                    <div class="announcement-icon">📢</div>
+                                    <div class="announcement-content">
+                                        <h4>${data.title}</h4>
+                                        <p>${data.content}</p>
+                                        <span class="announcement-date">${date}</span>
+                                    </div>
                                 </div>
+                            `;
+                        });
+                    }
+            
+                    // ====== REPLACE THIS ENTIRE GRADES SECTION ======
+                    console.log('Loading grades for user:', user.uid);
+                    
+                    const gradesQuery = query(
+                        collection(db, 'grades'),
+                        where('userId', '==', user.uid),
+                        orderBy('createdAt', 'desc')
+                    );
+                    
+                    const gradesSnap = await getDocs(gradesQuery);
+                    const gradesContainer = document.getElementById('studentGrades');
+                    
+                    console.log('Grades found:', gradesSnap.size);
+                    
+                    if (gradesSnap.empty) {
+                        gradesContainer.innerHTML = `
+                            <div style="text-align: center; padding: 3rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                                <p style="color: #9ca3af; font-size: 1.1rem;">No grades available yet.</p>
+                                <p style="color: #9ca3af; font-size: 0.9rem; margin-top: 0.5rem;">Request your grades using the button above.</p>
                             </div>
                         `;
-                    });
-                }
-// ====== FIXED GRADES LOADING ======
-        console.log('Loading grades for user:', user.uid); // Debug log
-        
-        const gradesQuery = query(
-            collection(db, 'grades'),
-            where('userId', '==', user.uid),
-            orderBy('createdAt', 'desc')
-        );
-        
-        const gradesSnap = await getDocs(gradesQuery);
-        const gradesContainer = document.getElementById('studentGrades');
-        
-        console.log('Grades found:', gradesSnap.size); // Debug log
-        
-        if (gradesSnap.empty) {
-            gradesContainer.innerHTML = `
-                <div style="text-align: center; padding: 3rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
-                    <p style="color: #9ca3af; font-size: 1.1rem;">No grades available yet.</p>
-                    <p style="color: #9ca3af; font-size: 0.9rem; margin-top: 0.5rem;">Request your grades using the button above.</p>
-                </div>
-            `;
-        } else {
-            gradesContainer.innerHTML = '<div class="courses-grid">';
-            
-            gradesSnap.forEach((doc) => {
-                const data = doc.data();
-                const date = data.createdAt?.toDate().toLocaleDateString() || 'Recently';
-                
-                // Determine grade status and color
-                let gradeStatus = 'Excellent';
-                let gradeColor = '#10b981'; // Green
-                
-                if (data.grade >= 90) {
-                    gradeStatus = 'Excellent';
-                    gradeColor = '#10b981';
-                } else if (data.grade >= 80) {
-                    gradeStatus = 'Very Good';
-                    gradeColor = '#3b82f6';
-                } else if (data.grade >= 75) {
-                    gradeStatus = 'Good';
-                    gradeColor = '#f59e0b';
-                } else {
-                    gradeStatus = 'Needs Improvement';
-                    gradeColor = '#ef4444';
-                }
-                
-                gradesContainer.innerHTML += `
-                    <div class="course-card" style="animation: fadeIn 0.5s ease;">
-                        <div class="course-content">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <h3 class="course-title">Grade Report</h3>
-                                <span style="background: ${gradeColor}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${gradeStatus}</span>
-                            </div>
+                    } else {
+                        gradesContainer.innerHTML = '<div class="courses-grid">';
+                        
+                        gradesSnap.forEach((doc) => {
+                            const data = doc.data();
+                            const date = data.createdAt?.toDate().toLocaleDateString() || 'Recently';
                             
-                            <div style="background: linear-gradient(135deg, rgba(139, 21, 56, 0.05), rgba(218, 165, 32, 0.05)); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="color: #6b7280; font-weight: 600;">Overall Grade:</span>
-                                    <span style="font-size: 2.5rem; font-weight: 800; color: ${gradeColor};">${data.grade}%</span>
+                            let gradeStatus = 'Excellent';
+                            let gradeColor = '#10b981';
+                            
+                            if (data.grade >= 90) {
+                                gradeStatus = 'Excellent';
+                                gradeColor = '#10b981';
+                            } else if (data.grade >= 80) {
+                                gradeStatus = 'Very Good';
+                                gradeColor = '#3b82f6';
+                            } else if (data.grade >= 75) {
+                                gradeStatus = 'Good';
+                                gradeColor = '#f59e0b';
+                            } else {
+                                gradeStatus = 'Needs Improvement';
+                                gradeColor = '#ef4444';
+                            }
+                            
+                            gradesContainer.innerHTML += `
+                                <div class="course-card" style="animation: fadeIn 0.5s ease;">
+                                    <div class="course-content">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                            <h3 class="course-title">Grade Report</h3>
+                                            <span style="background: ${gradeColor}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${gradeStatus}</span>
+                                        </div>
+                                        
+                                        <div style="background: linear-gradient(135deg, rgba(139, 21, 56, 0.05), rgba(218, 165, 32, 0.05)); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span style="color: #6b7280; font-weight: 600;">Overall Grade:</span>
+                                                <span style="font-size: 2.5rem; font-weight: 800; color: ${gradeColor};">${data.grade}%</span>
+                                            </div>
+                                        </div>
+                                        
+                                        ${data.breakdown ? `
+                                            <div style="margin-top: 1rem; padding: 1rem; background: white; border: 2px solid #f3f4f6; border-radius: 10px;">
+                                                <h4 style="color: #374151; font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">📋 Grade Breakdown:</h4>
+                                                <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.6; white-space: pre-line;">${data.breakdown}</p>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f3f4f6;">
+                                            <small style="color: #9ca3af;">📅 Submitted: ${date}</small>
+                                            ${data.submittedBy ? `<br><small style="color: #9ca3af;">👤 By: ${data.submittedBy}</small>` : ''}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            ${data.breakdown ? `
-                                <div style="margin-top: 1rem; padding: 1rem; background: white; border: 2px solid #f3f4f6; border-radius: 10px;">
-                                    <h4 style="color: #374151; font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">📋 Grade Breakdown:</h4>
-                                    <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.6; white-space: pre-line;">${data.breakdown}</p>
+                            `;
+                        });
+                        
+                        gradesContainer.innerHTML += '</div>';
+                    }
+            
+                    // Check grade request status
+                    const requestQuery = query(
+                        collection(db, 'gradeRequests'),
+                        where('userId', '==', user.uid),
+                        orderBy('requestedAt', 'desc'),
+                        limit(1)
+                    );
+                    
+                    const requestSnap = await getDocs(requestQuery);
+                    const requestBtn = document.getElementById('requestGradeBtn');
+                    const requestStatus = document.getElementById('requestStatus');
+                    
+                    if (!requestSnap.empty) {
+                        const latestRequest = requestSnap.docs[0].data();
+                        
+                        if (latestRequest.status === 'pending') {
+                            requestBtn.disabled = true;
+                            requestBtn.textContent = 'Request Pending';
+                            requestBtn.style.background = '#9ca3af';
+                            requestStatus.innerHTML = `
+                                <div style="background: #fffbeb; border: 2px solid #fbbf24; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
+                                    <p style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
+                                        <span style="font-size: 1.5rem;">⏳</span>
+                                        <span>Your grade request is being processed. You'll be notified once completed.</span>
+                                    </p>
                                 </div>
-                            ` : ''}
-                            
-                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f3f4f6;">
-                                <small style="color: #9ca3af;">📅 Submitted: ${date}</small>
-                                ${data.submittedBy ? `<br><small style="color: #9ca3af;">👤 By: ${data.submittedBy}</small>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
+                            `;
+                        } else if (latestRequest.status === 'completed') {
+                            requestBtn.disabled = false;
+                            requestBtn.textContent = 'Request Grade Copy';
+                            requestBtn.style.background = '';
+                            requestStatus.innerHTML = '';
+                        }
+                    }
             
-            gradesContainer.innerHTML += '</div>';
-        }
-
-        // ====== CHECK GRADE REQUEST STATUS ======
-        const requestQuery = query(
-            collection(db, 'gradeRequests'),
-            where('userId', '==', user.uid),
-            orderBy('requestedAt', 'desc'),
-            limit(1)
-        );
-        
-        const requestSnap = await getDocs(requestQuery);
-        const requestBtn = document.getElementById('requestGradeBtn');
-        const requestStatus = document.getElementById('requestStatus');
-        
-        if (!requestSnap.empty) {
-            const latestRequest = requestSnap.docs[0].data();
-            
-            if (latestRequest.status === 'pending') {
-                requestBtn.disabled = true;
-                requestBtn.textContent = 'Request Pending';
-                requestBtn.style.background = '#9ca3af';
-                requestStatus.innerHTML = `
-                    <div style="background: #fffbeb; border: 2px solid #fbbf24; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
-                        <p style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.5rem;">⏳</span>
-                            <span>Your grade request is being processed. You'll be notified once completed.</span>
-                        </p>
-                    </div>
-                `;
-            } else if (latestRequest.status === 'completed') {
-                requestBtn.disabled = false;
-                requestBtn.textContent = 'Request Grade Copy';
-                requestBtn.style.background = '';
-                requestStatus.innerHTML = '';
-            }
-        }
-
-                // Load schedule
-                const scheduleSnap = await getDocs(collection(db, 'schedule'));
-                const scheduleContainer = document.getElementById('studentSchedule');
-                
-                if (scheduleSnap.empty) {
-                    scheduleContainer.innerHTML = '<p style="color: #9ca3af;">No schedule available yet</p>';
-                } else {
-                    const scheduleDoc = scheduleSnap.docs[0];
-                    const scheduleData = scheduleDoc.data();
-                    scheduleContainer.innerHTML = `<img src="${scheduleData.imageUrl}" style="max-width: 100%; border-radius: 10px;" alt="Class Schedule">`;
+                    // Load schedule (KEEP THIS PART)
+                    const scheduleSnap = await getDocs(collection(db, 'schedule'));
+                    const scheduleContainer = document.getElementById('studentSchedule');
+                    
+                    if (scheduleSnap.empty) {
+                        scheduleContainer.innerHTML = '<p style="color: #9ca3af;">No schedule available yet</p>';
+                    } else {
+                        const scheduleDoc = scheduleSnap.docs[0];
+                        const scheduleData = scheduleDoc.data();
+                        scheduleContainer.innerHTML = `<img src="${scheduleData.imageUrl}" style="max-width: 100%; border-radius: 10px;" alt="Class Schedule">`;
+                    }
+                    
+                } catch (error) {
+                    console.error('Error loading student data:', error);
+                    
+                    if (error.code === 'permission-denied') {
+                        alert('Permission denied. Please make sure you are logged in.');
+                    } else {
+                        console.error('Full error:', error);
+                    }
                 }
-                
-            } catch (error) {
-                console.error('Error loading student data:', error);
             }
-        }
 
         // Request grade
         window.requestGrade = async function() {
