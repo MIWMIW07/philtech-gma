@@ -5,26 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PHILTECH</title>
     <style>
+        /* ===== RESET & BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #8B1538;
+            --primary-light: rgba(139, 21, 56, 0.05);
+            --secondary-color: #DAA520;
+            --secondary-light: rgba(218, 165, 32, 0.05);
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --bg-white: #FFFFFF;
+            --bg-light: #F9FAFB;
+            --border-light: #E5E7EB;
+            --success-color: #10B981;
+            --error-color: #EF4444;
+            --warning-color: #F59E0B;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(139, 21, 56, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #FEFEFE 0%, #F8F8F8 50%, #FDF5E6 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #FDF5E6 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            color: var(--text-primary);
         }
 
+        /* ===== AUTHENTICATION CONTAINER ===== */
         .auth-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(139, 21, 56, 0.15);
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
             max-width: 450px;
             width: 100%;
             padding: 3rem 2.5rem;
@@ -39,7 +65,7 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(135deg, #8B1538, #DAA520);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
 
         .logo-section {
@@ -52,47 +78,57 @@
             height: 80px;
             border-radius: 50%;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
+            object-fit: cover;
         }
 
         .logo-section h1 {
-            color: #8B1538;
+            color: var(--primary-color);
             font-size: 1.75rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
         }
 
         .logo-section p {
-            color: #6b7280;
+            color: var(--text-secondary);
             font-size: 0.95rem;
         }
 
+        /* ===== TABS ===== */
         .tab-buttons {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 2rem;
-            background: #f3f4f6;
+            background: var(--bg-light);
             padding: 0.25rem;
-            border-radius: 12px;
+            border-radius: var(--radius-md);
         }
 
         .tab-btn {
             flex: 1;
-            padding: 0.75rem;
+            padding: 0.75rem 1rem;
             border: none;
             background: transparent;
-            color: #6b7280;
+            color: var(--text-secondary);
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(139, 21, 56, 0.05);
         }
 
         .tab-btn.active {
-            background: white;
-            color: #8B1538;
-            box-shadow: 0 2px 8px rgba(139, 21, 56, 0.15);
+            background: var(--bg-white);
+            color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
         }
 
+        /* ===== FORMS ===== */
         .form-section {
             display: none;
         }
@@ -114,33 +150,34 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #374151;
+            color: var(--text-primary);
             font-weight: 500;
             font-size: 0.9rem;
         }
 
-        .form-group input {
+        .form-control {
             width: 100%;
             padding: 0.875rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-sm);
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            background: var(--bg-white);
         }
 
-        .form-group input:focus {
+        .form-control:focus {
             outline: none;
-            border-color: #8B1538;
+            border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
         }
 
-        .form-group input.error {
-            border-color: #ef4444;
-            background-color: #fef2f2;
+        .form-control.error {
+            border-color: var(--error-color);
+            background-color: rgba(239, 68, 68, 0.02);
         }
 
         .error-message {
-            color: #ef4444;
+            color: var(--error-color);
             font-size: 0.875rem;
             margin-top: 0.5rem;
             display: flex;
@@ -152,7 +189,7 @@
             position: relative;
         }
 
-        .password-toggle input {
+        .password-toggle .form-control {
             padding-right: 3rem;
         }
 
@@ -164,41 +201,74 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: #6b7280;
-            font-size: 1.25rem;
+            color: var(--text-tertiary);
             padding: 0.25rem;
+            transition: var(--transition);
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #8B1538, #DAA520);
-            color: white;
+        .toggle-password:hover {
+            color: var(--primary-color);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
             border: none;
-            border-radius: 10px;
-            font-size: 1rem;
+            border-radius: var(--radius-sm);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
 
-        .submit-btn:hover {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-white);
+            width: 100%;
+            padding: 1rem;
+        }
+
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 21, 56, 0.3);
+            box-shadow: var(--shadow-lg);
         }
 
-        .submit-btn:disabled {
+        .btn-primary:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
+        .btn-outline {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: var(--bg-white);
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        /* ===== SOCIAL LOGIN ===== */
         .divider {
             display: flex;
             align-items: center;
             margin: 1.5rem 0;
-            color: #9ca3af;
+            color: var(--text-tertiary);
             font-size: 0.875rem;
         }
 
@@ -207,7 +277,7 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: #e5e7eb;
+            background: var(--border-light);
         }
 
         .divider span {
@@ -222,49 +292,39 @@
         .social-btn {
             flex: 1;
             padding: 0.875rem;
-            border: 2px solid #e5e7eb;
-            background: white;
-            border-radius: 10px;
+            border: 2px solid var(--border-light);
+            background: var(--bg-white);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             font-weight: 500;
-            color: #374151;
+            color: var(--text-primary);
         }
 
         .social-btn:hover {
-            border-color: #8B1538;
-            background: rgba(139, 21, 56, 0.05);
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+
+        /* ===== LINKS ===== */
+        .link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .link:hover {
+            text-decoration: underline;
         }
 
         .forgot-password {
             text-align: right;
             margin-top: 0.5rem;
-        }
-
-        .forgot-password a {
-            color: #8B1538;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
-
-        .success-message {
-            background: #ecfdf5;
-            color: #059669;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .back-home {
@@ -273,41 +333,31 @@
         }
 
         .back-home a {
-            color: #6b7280;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
         }
 
         .back-home a:hover {
-            color: #8B1538;
+            color: var(--primary-color);
         }
 
+        /* ===== LOADING ===== */
         .loading-spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: #fff;
+            border-top-color: var(--bg-white);
             animation: spin 0.8s linear infinite;
-            margin-right: 0.5rem;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        @media (max-width: 480px) {
-            .auth-container {
-                padding: 2rem 1.5rem;
-            }
-
-            .logo-section h1 {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* User Dashboard Styles - LMS Theme */
+        /* ===== DASHBOARD STYLES ===== */
         .dashboard {
             display: none;
             max-width: 1400px;
@@ -317,6 +367,7 @@
 
         .dashboard.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
         .dashboard-container {
@@ -326,12 +377,12 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
+        /* ===== SIDEBAR ===== */
         .dashboard-sidebar {
-            background: white;
+            background: var(--bg-white);
             padding: 2rem 1rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(139, 21, 56, 0.1);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
             height: fit-content;
             position: sticky;
             top: 2rem;
@@ -340,7 +391,7 @@
         .user-profile {
             text-align: center;
             padding-bottom: 1.5rem;
-            border-bottom: 2px solid #f3f4f6;
+            border-bottom: 2px solid var(--border-light);
             margin-bottom: 1.5rem;
         }
 
@@ -348,27 +399,30 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #8B1538, #DAA520);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-white);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
+            font-weight: 600;
             margin: 0 auto 1rem;
-            border: 3px solid #f3f4f6;
+            border: 4px solid var(--bg-white);
+            box-shadow: var(--shadow-md);
         }
 
         .user-profile h3 {
             font-size: 1rem;
-            color: #374151;
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
 
         .user-profile p {
             font-size: 0.8rem;
-            color: #9ca3af;
+            color: var(--text-tertiary);
         }
 
+        /* ===== NAVIGATION ===== */
         .nav-menu {
             list-style: none;
         }
@@ -382,290 +436,57 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.875rem 1rem;
-            border-radius: 10px;
-            color: #6b7280;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             cursor: pointer;
+            font-weight: 500;
         }
 
         .nav-link:hover {
-            background: rgba(139, 21, 56, 0.05);
-            color: #8B1538;
+            background: var(--primary-light);
+            color: var(--primary-color);
         }
 
         .nav-link.active {
-            background: linear-gradient(135deg, #8B1538, #DAA520);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-white);
         }
 
         .nav-icon {
-            font-size: 1.25rem;
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
         }
 
-        .logout-btn {
-            width: 100%;
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.875rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: #dc2626;
-        }
-
-        /* Main Content */
+        /* ===== MAIN CONTENT ===== */
         .dashboard-main {
-            background: white;
+            background: var(--bg-white);
             padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(139, 21, 56, 0.1);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
         }
 
         .dashboard-header {
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 2px solid #f3f4f6;
+            border-bottom: 2px solid var(--border-light);
         }
 
         .dashboard-header h2 {
             font-size: 1.75rem;
-            color: #374151;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
 
         .dashboard-header p {
-            color: #9ca3af;
+            color: var(--text-secondary);
         }
 
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, rgba(139, 21, 56, 0.05), rgba(218, 165, 32, 0.05));
-            padding: 1.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(139, 21, 56, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(139, 21, 56, 0.15);
-        }
-
-        .stat-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #8B1538;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        /* Course Cards */
-        .section-title {
-            font-size: 1.25rem;
-            color: #374151;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .course-card {
-            background: white;
-            border: 2px solid #f3f4f6;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .course-card:hover {
-            border-color: #8B1538;
-            box-shadow: 0 10px 25px rgba(139, 21, 56, 0.15);
-        }
-
-        .course-thumbnail {
-            height: 150px;
-            background: linear-gradient(135deg, #8B1538, #DAA520);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-        }
-
-        .course-content {
-            padding: 1.25rem;
-        }
-
-        .course-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(139, 21, 56, 0.1);
-            color: #8B1538;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .course-title {
-            font-size: 1.1rem;
-            color: #374151;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .course-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #f3f4f6;
-        }
-
-        .course-progress {
-            flex: 1;
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: #f3f4f6;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #8B1538, #DAA520);
-            transition: width 0.3s ease;
-        }
-
-        .course-action {
-            padding: 0.5rem 1rem;
-            background: #8B1538;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .course-action:hover {
-            background: #6B1028;
-        }
-
-        /* Announcements */
-        .announcements {
-            background: #fffbeb;
-            border-left: 4px solid #DAA520;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-        }
-
-        .announcement-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(218, 165, 32, 0.2);
-        }
-
-        .announcement-item:last-child {
-            border-bottom: none;
-        }
-
-        .announcement-icon {
-            font-size: 1.5rem;
-        }
-
-        .announcement-content h4 {
-            color: #374151;
-            margin-bottom: 0.25rem;
-        }
-
-        .announcement-content p {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        .announcement-date {
-            font-size: 0.75rem;
-            color: #9ca3af;
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .quick-action-btn {
-            padding: 1rem;
-            background: white;
-            border: 2px solid #f3f4f6;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .quick-action-btn:hover {
-            border-color: #8B1538;
-            background: rgba(139, 21, 56, 0.02);
-        }
-
-        .quick-action-btn .icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .quick-action-btn span {
-            display: block;
-            color: #6b7280;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        /* Content Sections */
+        /* ===== SECTIONS ===== */
         .content-section {
             display: none;
         }
@@ -675,17 +496,338 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== ANNOUNCEMENTS ===== */
+        .announcements {
+            background: #FFFBEB;
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+        }
+
+        .announcement-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .announcement-content h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .announcement-content p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .announcement-date {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: 0.25rem;
+        }
+
+        /* ===== GRID LAYOUTS ===== */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* ===== QUICK ACTIONS ===== */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-action-btn {
+            padding: 1.5rem 1rem;
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quick-action-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .quick-action-btn .icon {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            margin: 0 auto 0.5rem;
+            display: block;
+        }
+
+        .quick-action-btn span {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* ===== COURSE CARDS ===== */
+        .course-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .course-thumbnail {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .course-thumbnail img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .course-content {
+            padding: 1.25rem;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .course-title {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .course-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .course-progress {
+            flex: 1;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        .course-action {
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: var(--bg-white);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .course-action:hover {
+            background: #6B1028;
+            transform: translateY(-1px);
+        }
+
+        /* ===== NOTIFICATIONS ===== */
+        .notification {
+            position: fixed;
+            top: -100px;
+            right: 20px;
+            min-width: 320px;
+            max-width: 500px;
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            z-index: 10000;
+            transition: var(--transition);
+            border-left: 4px solid;
+        }
+        
+        .notification.show { top: 20px; }
+        .notification-success { border-left-color: var(--success-color); }
+        .notification-error { border-left-color: var(--error-color); }
+        .notification-content { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.75rem; 
+            flex: 1; 
+        }
+        
+        .notification-icon { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            font-size: 1.25rem; 
+            font-weight: bold;
+            color: var(--bg-white);
+        }
+        
+        .notification-success .notification-icon { background: var(--success-color); }
+        .notification-error .notification-icon { background: var(--error-color); }
+        .notification-message { color: var(--text-primary); font-size: 0.95rem; }
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            padding: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .notification-close:hover { 
+            background: rgba(0,0,0,0.05); 
+            color: var(--text-primary); 
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
-
+            
             .dashboard-sidebar {
                 position: static;
+                padding: 1.5rem;
             }
+            
+            .auth-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .logo-section h1 {
+                font-size: 1.5rem;
+            }
+            
+            .grid-cols-2,
+            .grid-cols-3,
+            .grid-cols-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
-            .courses-grid {
+        @media (max-width: 480px) {
+            .dashboard-main,
+            .auth-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .quick-actions {
                 grid-template-columns: 1fr;
             }
         }
@@ -710,25 +852,20 @@
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="loginEmail" required placeholder="your.email@example.com">
+                    <input type="email" class="form-control" id="loginEmail" required placeholder="your.email@example.com">
                 </div>
                 <div class="form-group password-toggle">
                     <label>Password</label>
-                    <input type="password" id="loginPassword" required placeholder="Enter your password">
-                    <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">👁️</button>
+                    <input type="password" class="form-control" id="loginPassword" required placeholder="Enter your password">
+                    <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                        <img src="assets/icons/eye.svg" alt="Show password" class="icon">
+                    </button>
                 </div>
                 <div class="forgot-password">
-                    <a href="#" onclick="handleForgotPassword(); return false;">Forgot Password?</a>
+                    <a href="#" class="link" onclick="handleForgotPassword(); return false;">Forgot Password?</a>
                 </div>
-                <button type="submit" class="submit-btn" id="loginBtn">Sign In</button>
+                <button type="submit" class="btn btn-primary" id="loginBtn">Sign In</button>
             </form>
-
-            <div class="divider"><span>OR</span></div>
-            <div class="social-login">
-                <button class="social-btn" onclick="handleGoogleLogin()">
-                    <span>🔍</span> Google
-                </button>
-            </div>
         </div>
 
         <!-- Signup Form -->
@@ -736,39 +873,36 @@
             <form onsubmit="handleSignup(event)">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" id="signupName" required placeholder="Juan Dela Cruz">
+                    <input type="text" class="form-control" id="signupName" required placeholder="Juan Dela Cruz">
                 </div>
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="signupEmail" required placeholder="your.email@example.com">
+                    <input type="email" class="form-control" id="signupEmail" required placeholder="your.email@example.com">
                 </div>
                 <div class="form-group password-toggle">
                     <label>Password</label>
-                    <input type="password" id="signupPassword" required placeholder="Minimum 6 characters">
-                    <button type="button" class="toggle-password" onclick="togglePassword('signupPassword')">👁️</button>
+                    <input type="password" class="form-control" id="signupPassword" required placeholder="Minimum 6 characters">
+                    <button type="button" class="toggle-password" onclick="togglePassword('signupPassword')">
+                        <img src="assets/icons/eye.svg" alt="Show password" class="icon">
+                    </button>
                 </div>
                 <div class="form-group password-toggle">
                     <label>Confirm Password</label>
-                    <input type="password" id="signupConfirmPassword" required placeholder="Re-enter password">
-                    <button type="button" class="toggle-password" onclick="togglePassword('signupConfirmPassword')">👁️</button>
+                    <input type="password" class="form-control" id="signupConfirmPassword" required placeholder="Re-enter password">
+                    <button type="button" class="toggle-password" onclick="togglePassword('signupConfirmPassword')">
+                        <img src="assets/icons/eye.svg" alt="Show password" class="icon">
+                    </button>
                 </div>
-                <button type="submit" class="submit-btn" id="signupBtn">Create Account</button>
+                <button type="submit" class="btn btn-primary" id="signupBtn">Create Account</button>
             </form>
-
-            <div class="divider"><span>OR</span></div>
-            <div class="social-login">
-                <button class="social-btn" onclick="handleGoogleLogin()">
-                    <span>🔍</span> Google
-                </button>
-            </div>
         </div>
 
         <div class="back-home">
-            <a href="index.html">← Back to Home</a>
+            <a href="index.html" class="link">← Back to Home</a>
         </div>
     </div>
 
-    <!-- User Dashboard - LMS Style -->
+    <!-- User Dashboard -->
     <div class="dashboard" id="userDashboard">
         <div class="dashboard-container">
             <!-- Sidebar -->
@@ -782,32 +916,32 @@
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a class="nav-link active" onclick="showSection('overview')">
-                            <span class="nav-icon">🏠</span>
+                            <img src="assets/icons/dashboard.svg" alt="Dashboard" class="nav-icon">
                             <span>Overview</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="showSection('grades')">
-                            <span class="nav-icon">📊</span>
+                            <img src="assets/icons/grades.svg" alt="Grades" class="nav-icon">
                             <span>My Grades</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="showSection('schedule')">
-                            <span class="nav-icon">📅</span>
+                            <img src="assets/icons/schedule.svg" alt="Schedule" class="nav-icon">
                             <span>Schedule</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="showSection('profile')">
-                            <span class="nav-icon">⚙️</span>
+                            <img src="assets/icons/settings.svg" alt="Settings" class="nav-icon">
                             <span>Settings</span>
                         </a>
                     </li>
                 </ul>
 
-                <button class="logout-btn" onclick="handleLogout()">
-                    <span>🚪</span>
+                <button class="btn btn-danger" onclick="handleLogout()" style="width: 100%; margin-top: 2rem;">
+                    <img src="assets/icons/logout.svg" alt="Logout" class="nav-icon">
                     <span>Logout</span>
                 </button>
             </aside>
@@ -817,36 +951,15 @@
                 <!-- Overview Section -->
                 <div class="content-section active" id="overview">
                     <div class="dashboard-header">
-                        <h2>Welcome Back, <span id="welcomeName">Student</span>! 👋</h2>
+                        <h2>Welcome Back, <span id="welcomeName">Student</span>!</h2>
                         <p>Stay updated with the latest announcements</p>
                     </div>
 
                     <!-- Announcements -->
                     <div class="announcements">
-                        <h3 class="section-title">📢 Recent Announcements</h3>
+                        <h3 class="card-title">Recent Announcements</h3>
                         <div id="studentAnnouncements">
-                            <p style="color: #9ca3af; text-align: center; padding: 1rem;">Loading announcements...</p>
-                        </div>
-                    </div>
-
-                    <!-- Quick Actions -->
-                    <h3 class="section-title" style="margin-top: 2rem;">⚡ Quick Actions</h3>
-                    <div class="quick-actions">
-                        <div class="quick-action-btn" onclick="showSection('grades')">
-                            <div class="icon">📊</div>
-                            <span>View Grades</span>
-                        </div>
-                        <div class="quick-action-btn" onclick="showSection('schedule')">
-                            <div class="icon">📅</div>
-                            <span>Check Schedule</span>
-                        </div>
-                        <div class="quick-action-btn" onclick="window.location.href='index.html#contact'">
-                            <div class="icon">💬</div>
-                            <span>Contact Support</span>
-                        </div>
-                        <div class="quick-action-btn" onclick="showSection('profile')">
-                            <div class="icon">⚙️</div>
-                            <span>Settings</span>
+                            <p style="color: var(--text-tertiary); text-align: center; padding: 1rem;">Loading announcements...</p>
                         </div>
                     </div>
                 </div>
@@ -854,17 +967,19 @@
                 <!-- Courses Section -->
                 <div class="content-section" id="courses">
                     <div class="dashboard-header">
-                        <h2>📚 My Courses</h2>
+                        <h2>My Courses</h2>
                         <p>Continue your learning journey</p>
                     </div>
 
-                    <div class="courses-grid">
+                    <div class="grid grid-cols-2">
                         <div class="course-card">
-                            <div class="course-thumbnail">💻</div>
+                            <div class="course-thumbnail">
+                                <img src="assets/icons/code.svg" alt="Data Structures">
+                            </div>
                             <div class="course-content">
                                 <span class="course-badge">In Progress</span>
                                 <h3 class="course-title">Data Structures & Algorithms</h3>
-                                <p>Learn fundamental concepts of DSA</p>
+                                <p class="course-description">Learn fundamental concepts of DSA</p>
                                 <div class="course-meta">
                                     <div class="course-progress">
                                         <small>Progress: 65%</small>
@@ -873,16 +988,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning →</button>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning</button>
                             </div>
                         </div>
 
                         <div class="course-card">
-                            <div class="course-thumbnail">🎨</div>
+                            <div class="course-thumbnail">
+                                <img src="assets/icons/web.svg" alt="Web Development">
+                            </div>
                             <div class="course-content">
                                 <span class="course-badge">In Progress</span>
                                 <h3 class="course-title">Web Development Fundamentals</h3>
-                                <p>HTML, CSS, JavaScript basics</p>
+                                <p class="course-description">HTML, CSS, JavaScript basics</p>
                                 <div class="course-meta">
                                     <div class="course-progress">
                                         <small>Progress: 80%</small>
@@ -891,16 +1008,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning →</button>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning</button>
                             </div>
                         </div>
 
                         <div class="course-card">
-                            <div class="course-thumbnail">🗄️</div>
+                            <div class="course-thumbnail">
+                                <img src="assets/icons/database.svg" alt="Database">
+                            </div>
                             <div class="course-content">
                                 <span class="course-badge">In Progress</span>
                                 <h3 class="course-title">Database Management Systems</h3>
-                                <p>SQL and database design principles</p>
+                                <p class="course-description">SQL and database design principles</p>
                                 <div class="course-meta">
                                     <div class="course-progress">
                                         <small>Progress: 45%</small>
@@ -909,16 +1028,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning →</button>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning</button>
                             </div>
                         </div>
 
                         <div class="course-card">
-                            <div class="course-thumbnail">🤖</div>
+                            <div class="course-thumbnail">
+                                <img src="assets/icons/ai.svg" alt="AI">
+                            </div>
                             <div class="course-content">
                                 <span class="course-badge">Not Started</span>
                                 <h3 class="course-title">Introduction to AI</h3>
-                                <p>Artificial Intelligence fundamentals</p>
+                                <p class="course-description">Artificial Intelligence fundamentals</p>
                                 <div class="course-meta">
                                     <div class="course-progress">
                                         <small>Progress: 0%</small>
@@ -927,7 +1048,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Course →</button>
+                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Course</button>
                             </div>
                         </div>
                     </div>
@@ -936,14 +1057,14 @@
                 <!-- Assignments Section -->
                 <div class="content-section" id="assignments">
                     <div class="dashboard-header">
-                        <h2>📝 Assignments & Tasks</h2>
+                        <h2>Assignments & Tasks</h2>
                         <p>Keep track of your pending work</p>
                     </div>
 
-                    <div class="announcements" style="background: #fef2f2; border-left-color: #ef4444;">
-                        <h3 class="section-title">🔴 Urgent Assignments</h3>
+                    <div class="announcements" style="background: #FEF2F2; border-left-color: var(--error-color);">
+                        <h3 class="card-title">Urgent Assignments</h3>
                         <div class="announcement-item">
-                            <div class="announcement-icon">⚠️</div>
+                            <img src="assets/icons/urgent.svg" alt="Urgent" class="announcement-icon">
                             <div class="announcement-content">
                                 <h4>Database Design Project</h4>
                                 <p>Due in 2 days - December 15, 2024</p>
@@ -953,25 +1074,25 @@
                     </div>
 
                     <div style="margin-top: 2rem;">
-                        <h3 class="section-title">📋 All Assignments</h3>
-                        <div class="courses-grid">
+                        <h3 class="card-title">All Assignments</h3>
+                        <div class="grid grid-cols-2">
                             <div class="course-card">
                                 <div class="course-content">
-                                    <span class="course-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">Pending</span>
+                                    <span class="course-badge" style="background: rgba(239, 68, 68, 0.1); color: var(--error-color);">Pending</span>
                                     <h3 class="course-title">Algorithm Analysis Report</h3>
-                                    <p>Data Structures & Algorithms</p>
-                                    <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.5rem;">Due: December 20, 2024</p>
-                                    <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Working →</button>
+                                    <p class="course-description">Data Structures & Algorithms</p>
+                                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">Due: December 20, 2024</p>
+                                    <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Working</button>
                                 </div>
                             </div>
 
                             <div class="course-card">
                                 <div class="course-content">
-                                    <span class="course-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Completed</span>
+                                    <span class="course-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">Completed</span>
                                     <h3 class="course-title">Responsive Website Project</h3>
-                                    <p>Web Development Fundamentals</p>
-                                    <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.5rem;">Submitted: December 1, 2024</p>
-                                    <button class="course-action" style="width: 100%; margin-top: 1rem; background: #10b981;">View Grade</button>
+                                    <p class="course-description">Web Development Fundamentals</p>
+                                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">Submitted: December 1, 2024</p>
+                                    <button class="course-action" style="width: 100%; margin-top: 1rem; background: var(--success-color);">View Grade</button>
                                 </div>
                             </div>
                         </div>
@@ -981,79 +1102,33 @@
                 <!-- Grades Section -->
                 <div class="content-section" id="grades">
                     <div class="dashboard-header">
-                        <h2>📊 My Grades</h2>
+                        <h2>My Grades</h2>
                         <p>Request and view your academic performance</p>
                     </div>
 
-                    <div style="background: #fffbeb; border-left: 4px solid #DAA520; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
-                        <h3 style="color: #374151; margin-bottom: 1rem;">Request Grade Copy</h3>
-                        <p style="color: #6b7280; margin-bottom: 1rem;">Click the button below to request a copy of your grades from the admin. You will be notified once your request is processed.</p>
+                    <div class="card" style="background: var(--bg-light); margin-bottom: 2rem;">
+                        <h3 class="card-title">Request Grade Copy</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click the button below to request a copy of your grades from the admin. You will be notified once your request is processed.</p>
                         <button class="course-action" onclick="requestGrade()" id="requestGradeBtn">Request Grade Copy</button>
                         <div id="requestStatus" style="margin-top: 1rem;"></div>
                     </div>
 
-                    <h3 class="section-title">📖 My Grade Records</h3>
+                    <h3 class="card-title">My Grade Records</h3>
                     <div id="studentGrades">
-                        <p style="color: #9ca3af; text-align: center; padding: 2rem;">No grades available yet. Request your grades above.</p>
+                        <p style="color: var(--text-tertiary); text-align: center; padding: 2rem;">No grades available yet. Request your grades above.</p>
                     </div>
                 </div>
 
                 <!-- Schedule Section -->
                 <div class="content-section" id="schedule">
                     <div class="dashboard-header">
-                        <h2>📅 Class Schedule</h2>
+                        <h2>Class Schedule</h2>
                         <p>View your weekly timetable</p>
                     </div>
 
-                    <div style="background: white; border: 2px solid #f3f4f6; border-radius: 15px; padding: 2rem; text-align: center;">
+                    <div class="card">
                         <div id="studentSchedule">
-                            <p style="color: #9ca3af;">Loading schedule...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Resources Section -->
-                <div class="content-section" id="resources">
-                    <div class="dashboard-header">
-                        <h2>📁 Learning Resources</h2>
-                        <p>Access course materials and documents</p>
-                    </div>
-
-                    <div class="courses-grid">
-                        <div class="course-card">
-                            <div class="course-content">
-                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">📄</div>
-                                <h3 class="course-title">Lecture Notes</h3>
-                                <p>Download all lecture materials</p>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">View Files →</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-content">
-                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🎥</div>
-                                <h3 class="course-title">Video Tutorials</h3>
-                                <p>Watch recorded lectures</p>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Watch Now →</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-content">
-                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">📚</div>
-                                <h3 class="course-title">E-Books</h3>
-                                <p>Access digital library</p>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Browse Library →</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-content">
-                                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💾</div>
-                                <h3 class="course-title">Code Samples</h3>
-                                <p>Download practice codes</p>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Get Code →</button>
-                            </div>
+                            <p style="color: var(--text-tertiary); text-align: center; padding: 2rem;">Loading schedule...</p>
                         </div>
                     </div>
                 </div>
@@ -1061,20 +1136,20 @@
                 <!-- Profile/Settings Section -->
                 <div class="content-section" id="profile">
                     <div class="dashboard-header">
-                        <h2>⚙️ Account Settings</h2>
+                        <h2>Account Settings</h2>
                         <p>Manage your profile information</p>
                     </div>
 
-                    <div style="background: white; border: 2px solid #f3f4f6; border-radius: 15px; padding: 2rem;">
-                        <h3 style="color: #374151; margin-bottom: 1.5rem;">Profile Information</h3>
+                    <div class="card">
+                        <h3 class="card-title">Profile Information</h3>
                         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                             <div>
-                                <label style="display: block; color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Full Name</label>
-                                <input type="text" id="profileName" placeholder="Your Name" style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 10px;">
+                                <label style="display: block; color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Full Name</label>
+                                <input type="text" class="form-control" id="profileName" placeholder="Your Name">
                             </div>
                             <div>
-                                <label style="display: block; color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Email Address</label>
-                                <input type="email" id="profileEmail" placeholder="your.email@example.com" readonly style="width: 100%; padding: 0.875rem; border: 2px solid #e5e7eb; border-radius: 10px; background: #f9fafb;">
+                                <label style="display: block; color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Email Address</label>
+                                <input type="email" class="form-control" id="profileEmail" placeholder="your.email@example.com" readonly>
                             </div>
                             <button class="course-action" style="width: fit-content; padding: 0.875rem 2rem;" onclick="updateProfile()">Save Changes</button>
                         </div>
@@ -1088,9 +1163,6 @@
         // ==========================================
         // FIREBASE CONFIGURATION
         // ==========================================
-        // Replace these with your actual Firebase config
-        // Get this from: https://console.firebase.google.com/
-        
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { 
             getAuth, 
@@ -1117,7 +1189,6 @@
             serverTimestamp
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // YOUR FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyCeZi1JCg8Lrq7PYkE-pZ5R7CmWi3-Sf7E",
             authDomain: "philtech-82979.firebaseapp.com",
@@ -1128,13 +1199,11 @@
             measurementId: "G-NK2YTBYFYB"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Modified handleLogin function with hardcoded admin check
         window.handleLogin = async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -1145,21 +1214,17 @@
                 btn.disabled = true;
                 btn.innerHTML = '<span class="loading-spinner"></span>Signing in...';
                 
-                // Use Firebase authentication for ALL users (including admin)
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 
-                // Check if user is admin
                 const adminEmails = ['admin@philtech.edu.ph', 'learsi.gabriel07@gmail.com'];
                 
                 if (adminEmails.includes(user.email)) {
-                    // Admin user - redirect to admin panel
                     showNotification('Admin login successful! Redirecting to admin panel...', 'success');
                     setTimeout(() => {
                         window.location.href = 'admin.html';
                     }, 1000);
                 } else {
-                    // Regular student - show student dashboard
                     showNotification('Login successful! Welcome back.', 'success');
                     showDashboard(user);
                 }
@@ -1173,7 +1238,6 @@
             }
         };
 
-        // Check auth state on load
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 showDashboard(user);
@@ -1208,7 +1272,6 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 await updateProfile(userCredential.user, { displayName: name });
                 
-                // Save user to Firestore
                 await setDoc(doc(db, 'users', userCredential.user.uid), {
                     displayName: name,
                     email: email,
@@ -1259,7 +1322,6 @@
         };
 
         function showDashboard(user) {
-            document.getElementById('authContainer').classList.remove('active');
             document.getElementById('authContainer').style.display = 'none';
             document.getElementById('userDashboard').classList.add('active');
             
@@ -1272,326 +1334,221 @@
             document.getElementById('profileEmail').value = user.email;
         }
 
-        // Load student data - FIXED VERSION WITH DEBUGGING
         async function loadStudentData(user) {
-            console.log('=== 🔄 LOADING STUDENT DATA ===');
-            console.log('👤 User ID:', user.uid);
-            console.log('📧 User Email:', user.email);
-            console.log('📝 Display Name:', user.displayName);
-            
             try {
-                // ===== LOAD ANNOUNCEMENTS =====
-                console.log('\n📢 Loading announcements...');
-                try {
-                    const announcementsQuery = query(
-                        collection(db, 'announcements'),
-                        orderBy('createdAt', 'desc'),
-                        limit(5)
-                    );
-                    const announcementsSnap = await getDocs(announcementsQuery);
-                    const announcementsContainer = document.getElementById('studentAnnouncements');
+                // Load announcements
+                const announcementsQuery = query(
+                    collection(db, 'announcements'),
+                    orderBy('createdAt', 'desc'),
+                    limit(5)
+                );
+                const announcementsSnap = await getDocs(announcementsQuery);
+                const announcementsContainer = document.getElementById('studentAnnouncements');
+                
+                if (announcementsSnap.empty) {
+                    announcementsContainer.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; padding: 1rem;">No announcements yet</p>';
+                } else {
+                    announcementsContainer.innerHTML = '';
+                    announcementsSnap.forEach((doc) => {
+                        const data = doc.data();
+                        const date = data.createdAt?.toDate().toLocaleDateString() || 'Just now';
+                        announcementsContainer.innerHTML += `
+                            <div class="announcement-item">
+                                <img src="assets/icons/announcement.svg" alt="Announcement" class="announcement-icon">
+                                <div class="announcement-content">
+                                    <h4>${data.title}</h4>
+                                    <p>${data.content}</p>
+                                    <span class="announcement-date">${date}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Load grades
+                const gradesQuery = query(
+                    collection(db, 'grades'),
+                    where('userId', '==', user.uid)
+                );
+                
+                const gradesSnap = await getDocs(gradesQuery);
+                const gradesContainer = document.getElementById('studentGrades');
+                
+                if (gradesSnap.empty) {
+                    gradesContainer.innerHTML = `
+                        <div style="text-align: center; padding: 3rem;">
+                            <img src="assets/icons/grades-empty.svg" alt="No grades" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                            <p style="color: var(--text-tertiary);">No grades available yet.</p>
+                            <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 0.5rem;">Request your grades using the button above.</p>
+                        </div>
+                    `;
+                } else {
+                    gradesContainer.innerHTML = '<div class="grid grid-cols-2">';
                     
-                    console.log('✅ Announcements found:', announcementsSnap.size);
-                    
-                    if (announcementsSnap.empty) {
-                        announcementsContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 1rem;">No announcements yet</p>';
-                    } else {
-                        announcementsContainer.innerHTML = '';
-                        announcementsSnap.forEach((doc) => {
-                            const data = doc.data();
-                            const date = data.createdAt?.toDate().toLocaleDateString() || 'Just now';
-                            announcementsContainer.innerHTML += `
-                                <div class="announcement-item">
-                                    <div class="announcement-icon">📢</div>
-                                    <div class="announcement-content">
-                                        <h4>${data.title}</h4>
-                                        <p>${data.content}</p>
-                                        <span class="announcement-date">${date}</span>
+                    gradesSnap.forEach((doc) => {
+                        const data = doc.data();
+                        const date = data.createdAt?.toDate().toLocaleDateString() || 'Recently';
+                        
+                        let gradeStatus = 'Excellent';
+                        let gradeColor = '#10B981';
+                        
+                        const gradeValue = parseFloat(data.grade);
+                        
+                        if (gradeValue >= 90) {
+                            gradeStatus = 'Excellent';
+                            gradeColor = '#10B981';
+                        } else if (gradeValue >= 80) {
+                            gradeStatus = 'Very Good';
+                            gradeColor = '#3B82F6';
+                        } else if (gradeValue >= 75) {
+                            gradeStatus = 'Good';
+                            gradeColor = '#F59E0B';
+                        } else {
+                            gradeStatus = 'Needs Improvement';
+                            gradeColor = '#EF4444';
+                        }
+                        
+                        gradesContainer.innerHTML += `
+                            <div class="course-card">
+                                <div class="course-content">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <h3 class="course-title">Grade Report</h3>
+                                        <span style="background: ${gradeColor}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${gradeStatus}</span>
+                                    </div>
+                                    
+                                    <div style="background: var(--primary-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="color: var(--text-secondary); font-weight: 600;">Overall Grade:</span>
+                                            <span style="font-size: 2.5rem; font-weight: 800; color: ${gradeColor};">${gradeValue}%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    ${data.breakdown ? `
+                                        <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-light); border-radius: var(--radius-sm);">
+                                            <h4 style="color: var(--text-primary); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Grade Breakdown:</h4>
+                                            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">${data.breakdown}</p>
+                                        </div>
+                                    ` : ''}
+                                    
+                                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-light);">
+                                        <small style="color: var(--text-tertiary);">Submitted: ${date}</small>
+                                        ${data.submittedBy ? `<br><small style="color: var(--text-tertiary);">By: ${data.submittedBy}</small>` : ''}
                                     </div>
                                 </div>
-                            `;
-                        });
-                    }
-                } catch (announcementError) {
-                    console.error('❌ Error loading announcements:', announcementError);
-                    document.getElementById('studentAnnouncements').innerHTML = 
-                        '<p style="color: #ef4444;">Error loading announcements. Check console.</p>';
+                            </div>
+                        `;
+                    });
+                    
+                    gradesContainer.innerHTML += '</div>';
                 }
-        
-                // ===== LOAD GRADES =====
-                console.log('\n📊 Loading grades...');
-                console.log('🔍 Querying grades with userId:', user.uid);
+
+                // Check grade request status
+                const requestQuery = query(
+                    collection(db, 'gradeRequests'),
+                    where('userId', '==', user.uid),
+                    orderBy('requestedAt', 'desc'),
+                    limit(1)
+                );
                 
-                try {
-                    // First, let's check if ANY grades exist
-                    const allGradesSnap = await getDocs(collection(db, 'grades'));
-                    console.log('📋 Total grades in database:', allGradesSnap.size);
+                const requestSnap = await getDocs(requestQuery);
+                const requestBtn = document.getElementById('requestGradeBtn');
+                const requestStatus = document.getElementById('requestStatus');
+                
+                if (!requestSnap.empty) {
+                    const latestRequest = requestSnap.docs[0].data();
                     
-                    if (allGradesSnap.size > 0) {
-                        console.log('📝 All grades in database:');
-                        allGradesSnap.forEach((doc) => {
-                            const data = doc.data();
-                            console.log(`  - Grade ID: ${doc.id}`);
-                            console.log(`    userId: ${data.userId}`);
-                            console.log(`    grade: ${data.grade}`);
-                            console.log(`    Match current user: ${data.userId === user.uid}`);
-                        });
-                    }
-                    
-                    // Now query for this specific user's grades
-                    const gradesQuery = query(
-                        collection(db, 'grades'),
-                        where('userId', '==', user.uid)
-                    );
-                    
-                    const gradesSnap = await getDocs(gradesQuery);
-                    const gradesContainer = document.getElementById('studentGrades');
-                    
-                    console.log('✅ Grades for this user:', gradesSnap.size);
-                    
-                    if (gradesSnap.empty) {
-                        console.log('⚠️ No grades found for userId:', user.uid);
-                        gradesContainer.innerHTML = `
-                            <div style="text-align: center; padding: 3rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
-                                <p style="color: #9ca3af; font-size: 1.1rem;">No grades available yet.</p>
-                                <p style="color: #9ca3af; font-size: 0.9rem; margin-top: 0.5rem;">Request your grades using the button above.</p>
-                                <p style="color: #6b7280; font-size: 0.8rem; margin-top: 1rem; padding: 0.5rem; background: #f3f4f6; border-radius: 8px;">
-                                    Your User ID: <code>${user.uid}</code>
+                    if (latestRequest.status === 'pending') {
+                        requestBtn.disabled = true;
+                        requestBtn.textContent = 'Request Pending';
+                        requestBtn.style.background = 'var(--text-tertiary)';
+                        requestStatus.innerHTML = `
+                            <div style="background: var(--bg-light); border: 2px solid var(--warning-color); border-radius: var(--radius-sm); padding: 1rem; margin-top: 1rem;">
+                                <p style="color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                                    <img src="assets/icons/pending.svg" alt="Pending" style="width: 20px; height: 20px;">
+                                    <span>Your grade request is being processed. You'll be notified once completed.</span>
                                 </p>
                             </div>
                         `;
-                    } else {
-                        console.log('✅ Displaying grades...');
-                        gradesContainer.innerHTML = '<div class="courses-grid">';
-                        
-                        gradesSnap.forEach((doc) => {
-                            const data = doc.data();
-                            console.log('📄 Grade document:', doc.id, data);
-                            const date = data.createdAt?.toDate().toLocaleDateString() || 'Recently';
-                            
-                            let gradeStatus = 'Excellent';
-                            let gradeColor = '#10b981';
-                            
-                            const gradeValue = parseFloat(data.grade);
-                            
-                            if (gradeValue >= 90) {
-                                gradeStatus = 'Excellent';
-                                gradeColor = '#10b981';
-                            } else if (gradeValue >= 80) {
-                                gradeStatus = 'Very Good';
-                                gradeColor = '#3b82f6';
-                            } else if (gradeValue >= 75) {
-                                gradeStatus = 'Good';
-                                gradeColor = '#f59e0b';
-                            } else {
-                                gradeStatus = 'Needs Improvement';
-                                gradeColor = '#ef4444';
-                            }
-                            
-                            gradesContainer.innerHTML += `
-                                <div class="course-card" style="animation: fadeIn 0.5s ease;">
-                                    <div class="course-content">
-                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                            <h3 class="course-title">Grade Report</h3>
-                                            <span style="background: ${gradeColor}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${gradeStatus}</span>
-                                        </div>
-                                        
-                                        <div style="background: linear-gradient(135deg, rgba(139, 21, 56, 0.05), rgba(218, 165, 32, 0.05)); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
-                                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                                <span style="color: #6b7280; font-weight: 600;">Overall Grade:</span>
-                                                <span style="font-size: 2.5rem; font-weight: 800; color: ${gradeColor};">${gradeValue}%</span>
-                                            </div>
-                                        </div>
-                                        
-                                        ${data.breakdown ? `
-                                            <div style="margin-top: 1rem; padding: 1rem; background: white; border: 2px solid #f3f4f6; border-radius: 10px;">
-                                                <h4 style="color: #374151; font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">📋 Grade Breakdown:</h4>
-                                                <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.6; white-space: pre-line;">${data.breakdown}</p>
-                                            </div>
-                                        ` : ''}
-                                        
-                                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f3f4f6;">
-                                            <small style="color: #9ca3af;">📅 Submitted: ${date}</small>
-                                            ${data.submittedBy ? `<br><small style="color: #9ca3af;">👤 By: ${data.submittedBy}</small>` : ''}
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        });
-                        
-                        gradesContainer.innerHTML += '</div>';
+                    } else if (latestRequest.status === 'completed') {
+                        requestBtn.disabled = false;
+                        requestBtn.textContent = 'Request New Grade Copy';
+                        requestBtn.style.background = '';
+                        requestStatus.innerHTML = '';
                     }
-                } catch (gradeError) {
-                    console.error('❌ Error loading grades:', gradeError);
-                    console.error('Error code:', gradeError.code);
-                    console.error('Error message:', gradeError.message);
-                    
-                    const gradesContainer = document.getElementById('studentGrades');
-                    gradesContainer.innerHTML = `
-                        <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 10px; padding: 1.5rem;">
-                            <h4 style="color: #ef4444; margin-bottom: 0.5rem;">❌ Error Loading Grades</h4>
-                            <p style="color: #991b1b; font-size: 0.9rem;">Error: ${gradeError.message}</p>
-                            <p style="color: #991b1b; font-size: 0.9rem;">Code: ${gradeError.code || 'Unknown'}</p>
-                        </div>
-                    `;
                 }
-        
-                // ===== CHECK GRADE REQUEST STATUS =====
-                console.log('\n📝 Checking grade request status...');
-                try {
-                    const requestQuery = query(
-                        collection(db, 'gradeRequests'),
-                        where('userId', '==', user.uid),
-                        orderBy('requestedAt', 'desc'),
-                        limit(1)
-                    );
-                    
-                    const requestSnap = await getDocs(requestQuery);
-                    const requestBtn = document.getElementById('requestGradeBtn');
-                    const requestStatus = document.getElementById('requestStatus');
-                    
-                    console.log('✅ Grade requests found:', requestSnap.size);
-                    
-                    if (!requestSnap.empty) {
-                        const latestRequest = requestSnap.docs[0].data();
-                        console.log('📋 Latest request:', latestRequest);
-                        
-                        if (latestRequest.status === 'pending') {
-                            requestBtn.disabled = true;
-                            requestBtn.textContent = 'Request Pending';
-                            requestBtn.style.background = '#9ca3af';
-                            requestStatus.innerHTML = `
-                                <div style="background: #fffbeb; border: 2px solid #fbbf24; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
-                                    <p style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
-                                        <span style="font-size: 1.5rem;">⏳</span>
-                                        <span>Your grade request is being processed. You'll be notified once completed.</span>
-                                    </p>
-                                </div>
-                            `;
-                        } else if (latestRequest.status === 'completed') {
-                            requestBtn.disabled = false;
-                            requestBtn.textContent = 'Request New Grade Copy';
-                            requestBtn.style.background = '';
-                            requestStatus.innerHTML = '';
-                        }
-                    } else {
-                        console.log('ℹ️ No grade requests yet');
-                    }
-                } catch (requestError) {
-                    console.error('❌ Error checking grade request:', requestError);
-                }
-        
-                // ===== LOAD SCHEDULE =====
-                console.log('\n📅 Loading schedule...');
-                try {
-                    const scheduleSnap = await getDocs(collection(db, 'schedule'));
-                    const scheduleContainer = document.getElementById('studentSchedule');
-                    
-                    console.log('✅ Schedule documents found:', scheduleSnap.size);
-                    
-                    if (scheduleSnap.empty) {
-                        scheduleContainer.innerHTML = '<p style="color: #9ca3af;">No schedule available yet</p>';
-                    } else {
-                        const scheduleDoc = scheduleSnap.docs[0];
-                        const scheduleData = scheduleDoc.data();
-                        console.log('📋 Schedule data:', scheduleData);
-                        
-                        if (scheduleData.imageUrl) {
-                            console.log('🖼️ Loading image from:', scheduleData.imageUrl);
-                            scheduleContainer.innerHTML = `
-                                <div style="position: relative;">
-                                    <img src="${scheduleData.imageUrl}" 
-                                         style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" 
-                                         alt="Class Schedule"
-                                         onload="console.log('✅ Schedule image loaded successfully')"
-                                         onerror="console.error('❌ Failed to load schedule image'); this.parentElement.innerHTML='<p style=color:#ef4444;>❌ Error loading schedule image. Check console.</p>'">
-                                    <p style="color: #6b7280; font-size: 0.875rem; margin-top: 0.5rem; text-align: center;">
-                                        Uploaded: ${scheduleData.uploadedAt?.toDate().toLocaleDateString() || 'Recently'}
-                                    </p>
-                                </div>
-                            `;
-                        } else {
-                            console.error('❌ Schedule data missing imageUrl');
-                            scheduleContainer.innerHTML = '<p style="color: #ef4444;">Schedule data incomplete (no image URL)</p>';
-                        }
-                    }
-                } catch (scheduleError) {
-                    console.error('❌ Error loading schedule:', scheduleError);
-                    document.getElementById('studentSchedule').innerHTML = 
-                        `<p style="color: #ef4444;">Error loading schedule: ${scheduleError.message}</p>`;
-                }
+
+                // Load schedule
+                const scheduleSnap = await getDocs(collection(db, 'schedule'));
+                const scheduleContainer = document.getElementById('studentSchedule');
                 
-                console.log('\n=== ✅ STUDENT DATA LOADING COMPLETE ===\n');
+                if (scheduleSnap.empty) {
+                    scheduleContainer.innerHTML = '<p style="color: var(--text-tertiary);">No schedule available yet</p>';
+                } else {
+                    const scheduleDoc = scheduleSnap.docs[0];
+                    const scheduleData = scheduleDoc.data();
+                    
+                    if (scheduleData.imageUrl) {
+                        scheduleContainer.innerHTML = `
+                            <img src="${scheduleData.imageUrl}" 
+                                 style="max-width: 100%; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);" 
+                                 alt="Class Schedule"
+                                 onload="console.log('Schedule image loaded successfully')"
+                                 onerror="this.parentElement.innerHTML='<p style=color:var(--error-color);>Error loading schedule image.</p>'">
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-top: 0.5rem; text-align: center;">
+                                Uploaded: ${scheduleData.uploadedAt?.toDate().toLocaleDateString() || 'Recently'}
+                            </p>
+                        `;
+                    } else {
+                        scheduleContainer.innerHTML = '<p style="color: var(--error-color);">Schedule data incomplete</p>';
+                    }
+                }
                 
             } catch (error) {
-                console.error('\n❌❌❌ CRITICAL ERROR IN loadStudentData ❌❌❌');
-                console.error('Error:', error);
-                console.error('Error code:', error.code);
-                console.error('Error message:', error.message);
-                console.error('Full error object:', error);
-                
-                if (error.code === 'permission-denied') {
-                    alert('⚠️ Permission denied. Please check Firebase security rules in console.');
-                } else if (error.code === 'failed-precondition') {
-                    alert('⚠️ Database index required. Check Firebase console for details.');
-                }
+                console.error('Error loading student data:', error);
+                showNotification('Error loading data. Please refresh the page.', 'error');
             }
         }
 
-            // Request grade - make sure this is INSIDE the <script type="module"> section
-            window.requestGrade = async function() {
-                const user = auth.currentUser;
-                if (!user) {
-                    console.error('❌ No user logged in');
-                    return;
-                }
-            
-                console.log('📝 Requesting grade for user:', user.uid);
-            
-                try {
-                    const gradeRequestData = {
-                        userId: user.uid,
-                        studentName: user.displayName || user.email.split('@')[0],
-                        studentEmail: user.email,
-                        status: 'pending',
-                        requestedAt: serverTimestamp()
-                    };
-                    
-                    console.log('📤 Sending grade request:', gradeRequestData);
-                    
-                    const docRef = await addDoc(collection(db, 'gradeRequests'), gradeRequestData);
-                    
-                    console.log('✅ Grade request created with ID:', docRef.id);
-            
-                    showNotification('Grade request submitted successfully!', 'success');
-                    
-                    // Update UI
-                    const requestBtn = document.getElementById('requestGradeBtn');
-                    const requestStatus = document.getElementById('requestStatus');
-                    requestBtn.disabled = true;
-                    requestBtn.textContent = 'Request Pending';
-                    requestBtn.style.background = '#9ca3af';
-                    requestStatus.innerHTML = `
-                        <div style="background: #fffbeb; border: 2px solid #fbbf24; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
-                            <p style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 1.5rem;">⏳</span>
-                                <span>Your grade request is being processed. You'll be notified once completed.</span>
-                            </p>
-                        </div>
-                    `;
-                    
-                    // Reload the grade request status
-                    loadStudentData(user);
-                } catch (error) {
-                    console.error('❌ Error requesting grade:', error);
-                    console.error('Error code:', error.code);
-                    console.error('Error message:', error.message);
-                    showNotification('Error submitting request: ' + error.message, 'error');
-                }
-            };
+        window.requestGrade = async function() {
+            const user = auth.currentUser;
+            if (!user) {
+                console.error('No user logged in');
+                return;
+            }
 
-        // Update profile
+            try {
+                const gradeRequestData = {
+                    userId: user.uid,
+                    studentName: user.displayName || user.email.split('@')[0],
+                    studentEmail: user.email,
+                    status: 'pending',
+                    requestedAt: serverTimestamp()
+                };
+                
+                await addDoc(collection(db, 'gradeRequests'), gradeRequestData);
+                showNotification('Grade request submitted successfully!', 'success');
+                
+                const requestBtn = document.getElementById('requestGradeBtn');
+                const requestStatus = document.getElementById('requestStatus');
+                requestBtn.disabled = true;
+                requestBtn.textContent = 'Request Pending';
+                requestBtn.style.background = 'var(--text-tertiary)';
+                requestStatus.innerHTML = `
+                    <div style="background: var(--bg-light); border: 2px solid var(--warning-color); border-radius: var(--radius-sm); padding: 1rem; margin-top: 1rem;">
+                        <p style="color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                            <img src="assets/icons/pending.svg" alt="Pending" style="width: 20px; height: 20px;">
+                            <span>Your grade request is being processed. You'll be notified once completed.</span>
+                        </p>
+                    </div>
+                `;
+                
+                loadStudentData(user);
+            } catch (error) {
+                console.error('Error requesting grade:', error);
+                showNotification('Error submitting request: ' + error.message, 'error');
+            }
+        };
+
         window.updateProfile = async function() {
             const user = auth.currentUser;
             if (!user) return;
@@ -1618,7 +1575,6 @@
 
         function showAuthForm() {
             document.getElementById('authContainer').style.display = 'block';
-            document.getElementById('authContainer').classList.add('active');
             document.getElementById('userDashboard').classList.remove('active');
         }
 
@@ -1674,88 +1630,66 @@
             
             if (input.type === 'password') {
                 input.type = 'text';
-                button.textContent = '🙈';
+                button.querySelector('img').src = 'assets/icons/eye-off.svg';
             } else {
                 input.type = 'password';
-                button.textContent = '👁️';
+                button.querySelector('img').src = 'assets/icons/eye.svg';
             }
         }
 
-        // Dashboard Navigation
         function showSection(sectionId) {
-            // Remove active class from all nav links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
             
-            // Add active class to clicked nav link
             event.target.classList.add('active');
             
-            // Hide all content sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
             
-            // Show selected section
             document.getElementById(sectionId).classList.add('active');
         }
 
-        // Notification styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: -100px;
-                right: 20px;
-                min-width: 320px;
-                max-width: 500px;
-                background: white;
-                border-radius: 12px;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-                padding: 1.25rem;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 1rem;
-                z-index: 10000;
-                transition: all 0.3s ease;
-                border-left: 4px solid;
-            }
-            .notification.show { top: 20px; }
-            .notification-success { border-left-color: #10b981; }
-            .notification-error { border-left-color: #ef4444; }
-            .notification-content { display: flex; align-items: center; gap: 0.75rem; flex: 1; }
-            .notification-icon { 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                width: 32px; 
-                height: 32px; 
-                border-radius: 50%; 
-                font-size: 1.25rem; 
-                font-weight: bold;
-                color: white;
-            }
-            .notification-success .notification-icon { background: #10b981; }
-            .notification-error .notification-icon { background: #ef4444; }
-            .notification-message { color: #374151; font-size: 0.95rem; }
-            .notification-close {
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                color: #9ca3af;
-                cursor: pointer;
-                padding: 0;
-                width: 28px;
-                height: 28px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-            }
-            .notification-close:hover { background: rgba(0,0,0,0.05); color: #374151; }
-        `;
-        document.head.appendChild(style);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some sample icons for demonstration
+            // In production, replace these with actual SVG files
+            const icons = [
+                'assets/icons/eye.svg',
+                'assets/icons/eye-off.svg',
+                'assets/icons/google.svg',
+                'assets/icons/dashboard.svg',
+                'assets/icons/courses.svg',
+                'assets/icons/assignments.svg',
+                'assets/icons/grades.svg',
+                'assets/icons/schedule.svg',
+                'assets/icons/settings.svg',
+                'assets/icons/support.svg',
+                'assets/icons/logout.svg',
+                'assets/icons/code.svg',
+                'assets/icons/web.svg',
+                'assets/icons/database.svg',
+                'assets/icons/ai.svg',
+                'assets/icons/urgent.svg',
+                'assets/icons/announcement.svg',
+                'assets/icons/pending.svg',
+                'assets/icons/grades-empty.svg'
+            ];
+            
+            // Create icon placeholders if images don't exist
+            icons.forEach(icon => {
+                const img = new Image();
+                img.onerror = function() {
+                    // Replace broken image with text placeholder
+                    const imgs = document.querySelectorAll(`img[src="${icon}"]`);
+                    imgs.forEach(img => {
+                        const alt = img.alt || 'Icon';
+                        img.outerHTML = `<div style="width: ${img.width || 20}px; height: ${img.height || 20}px; background: var(--border-light); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-tertiary);">${alt.charAt(0)}</div>`;
+                    });
+                };
+                img.src = icon;
+            });
+        });
     </script>
 </body>
 </html>
