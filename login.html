@@ -1539,6 +1539,58 @@
             }
         }
 
+            // Request grade - make sure this is INSIDE the <script type="module"> section
+            window.requestGrade = async function() {
+                const user = auth.currentUser;
+                if (!user) {
+                    console.error('❌ No user logged in');
+                    return;
+                }
+            
+                console.log('📝 Requesting grade for user:', user.uid);
+            
+                try {
+                    const gradeRequestData = {
+                        userId: user.uid,
+                        studentName: user.displayName || user.email.split('@')[0],
+                        studentEmail: user.email,
+                        status: 'pending',
+                        requestedAt: serverTimestamp()
+                    };
+                    
+                    console.log('📤 Sending grade request:', gradeRequestData);
+                    
+                    const docRef = await addDoc(collection(db, 'gradeRequests'), gradeRequestData);
+                    
+                    console.log('✅ Grade request created with ID:', docRef.id);
+            
+                    showNotification('Grade request submitted successfully!', 'success');
+                    
+                    // Update UI
+                    const requestBtn = document.getElementById('requestGradeBtn');
+                    const requestStatus = document.getElementById('requestStatus');
+                    requestBtn.disabled = true;
+                    requestBtn.textContent = 'Request Pending';
+                    requestBtn.style.background = '#9ca3af';
+                    requestStatus.innerHTML = `
+                        <div style="background: #fffbeb; border: 2px solid #fbbf24; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
+                            <p style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">⏳</span>
+                                <span>Your grade request is being processed. You'll be notified once completed.</span>
+                            </p>
+                        </div>
+                    `;
+                    
+                    // Reload the grade request status
+                    loadStudentData(user);
+                } catch (error) {
+                    console.error('❌ Error requesting grade:', error);
+                    console.error('Error code:', error.code);
+                    console.error('Error message:', error.message);
+                    showNotification('Error submitting request: ' + error.message, 'error');
+                }
+            };
+
         // Update profile
         window.updateProfile = async function() {
             const user = auth.currentUser;
