@@ -513,6 +513,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    margin-top: 80px;
 }
 
 .dark-theme .dashboard-sidebar {
@@ -640,6 +641,8 @@ body {
     padding: 2rem;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+    margin-top: 80px;
+    height: fit-content;
 }
 
 .dark-theme .dashboard-main {

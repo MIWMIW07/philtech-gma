@@ -1397,9 +1397,15 @@
                         <span class="input-icon"></span>
                         <select class="form-control" id="signupProgram" required>
                             <option value="" disabled selected>Select your program</option>
+                            <option value="" disabled>College Programs</option>
                             <option value="BTVTED">Bachelor of Technical Vocational Teacher Education</option>
                             <option value="BSCS">BS Computer Science</option>
                             <option value="BSOA">BS Office Administration</option>
+                            <option value="" disabled>SHS Strands</option>
+                            <option value="HUMSS">Humanities and Social Sciences</option>
+                            <option value="ABM">Accountancy, Business and Management</option>
+                            <option value="ICT">Information and Communication Technology</option>
+                            <option value="HE">Home Economics</option>
                         </select>
                     </div>
                 </div>
@@ -1909,7 +1915,9 @@
                         announcementsContainer.innerHTML = `
                             <div class="announcements-container">
                                 <div style="text-align: center; padding: 2rem;">
-                                    <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-tertiary);">📢</div>
+                                    <div class="announcement-icon">
+                                        <img src="1.png" alt="Announcement" style="width: 24px; height: 24px;">
+                                    </div>
                                     <p style="color: var(--text-tertiary);">No announcements yet</p>
                                 </div>
                             </div>
@@ -1923,7 +1931,9 @@
                         const time = data.createdAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '';
                         announcementsContainer.innerHTML += `
                             <div class="announcement-item">
-                                <div class="announcement-icon">📢</div>
+                                <div class="announcement-icon">
+                                    <img src="1.png" alt="Announcement" style="width: 24px; height: 24px;">
+                                </div>
                                 <div class="announcement-content">
                                     <h4>${data.title || 'Announcement'}</h4>
                                     <p>${data.content || 'No content'}</p>
@@ -1952,7 +1962,9 @@
                         allAnnouncementsContainer.innerHTML = `
                             <div class="announcements-container">
                                 <div style="text-align: center; padding: 3rem;">
-                                    <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-tertiary);">📢</div>
+                                    <div class="announcement-icon">
+                                        <img src="1.png" alt="Announcement" style="width: 24px; height: 24px;">
+                                    </div>
                                     <p style="color: var(--text-tertiary);">No announcements available yet.</p>
                                     <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 0.5rem;">Check back later for updates from the administration.</p>
                                 </div>
@@ -1967,7 +1979,9 @@
                         const time = data.createdAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '';
                         allAnnouncementsContainer.innerHTML += `
                             <div class="announcement-item">
-                                <div class="announcement-icon">📢</div>
+                                <div class="announcement-icon">
+                                    <img src="1.png" alt="Announcement" style="width: 24px; height: 24px;">
+                                </div>
                                 <div class="announcement-content">
                                     <h4>${data.title || 'Announcement'}</h4>
                                     <p>${data.content || 'No content'}</p>
