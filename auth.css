@@ -1,0 +1,24 @@
+/* auth.css - Login/Signup specific styles */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #F9FAFB 0%, #FDF5E6 100%);
+}
+
+.dark-theme .auth-page {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2a1e 100%);
+}
+
+/* Responsive adjustments for auth pages */
+@media (max-width: 480px) {
+    .auth-page {
+        padding: 10px;
+    }
+    
+    .auth-layout {
+        border-radius: var(--radius-md);
+    }
+}

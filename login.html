@@ -452,7 +452,7 @@
 
         .dashboard-container {
             display: grid;
-            grid-template-columns: 250px 1fr;
+            grid-template-columns: 300px 1fr 250px; /* Wider sidebar */
             gap: 2rem;
             min-height: 100vh;
         }
@@ -460,31 +460,34 @@
         /* ===== SIDEBAR ===== */
         .dashboard-sidebar {
             background: var(--bg-white);
-            padding: 2rem 1rem;
+            padding: 1.5rem;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
             height: fit-content;
             position: sticky;
             top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .user-profile {
             text-align: center;
             padding-bottom: 1.5rem;
             border-bottom: 2px solid var(--border-light);
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
         }
 
         .user-avatar {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--bg-white);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: 600;
             margin: 0 auto 1rem;
             border: 4px solid var(--bg-white);
@@ -492,15 +495,48 @@
         }
 
         .user-profile h3 {
-            font-size: 1rem;
+            font-size: 1.25rem;
             color: var(--text-primary);
-            margin-bottom: 0.25rem;
-            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .user-profile p {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--text-tertiary);
+        }
+
+        /* Student Credentials Section */
+        .student-credentials {
+            background: var(--bg-lighter);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .credential-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .credential-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .credential-item h5 {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .credential-item p {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         /* ===== NAVIGATION ===== */
@@ -621,129 +657,21 @@
             margin-bottom: 1rem;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-lighter);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .deadline-item {
+        /* Announcements Section Styles */
+        .announcements-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-lighter);
-            border-radius: var(--radius-sm);
-            margin-bottom: 0.75rem;
-            border-left: 4px solid var(--warning-color);
-            transition: var(--transition);
-        }
-
-        .deadline-item:hover {
-            transform: translateX(5px);
-            background: var(--bg-light);
-        }
-
-        .deadline-item.urgent {
-            border-left-color: var(--error-color);
-            background: rgba(239, 68, 68, 0.05);
-        }
-
-        .deadline-content h4 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-            font-weight: 600;
-        }
-
-        .deadline-content p {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .deadline-time {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            text-align: right;
-        }
-
-        .activity-feed {
-            margin-top: 2rem;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-weight: 600;
-            flex-shrink: 0;
+            margin-bottom: 1.5rem;
         }
 
-        .activity-content {
-            flex: 1;
+        .announcements-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 700;
         }
 
-        .activity-content h4 {
-            font-size: 0.95rem;
-            margin-bottom: 0.25rem;
-            font-weight: 600;
-        }
-
-        .activity-content p {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .activity-time {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-        }
-
-        /* ===== ANNOUNCEMENTS ===== */
-        .announcements {
+        .announcements-container {
             background: #FFFBEB;
             border-left: 4px solid var(--warning-color);
             padding: 1.5rem;
@@ -764,45 +692,90 @@
         }
 
         .announcement-icon {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--warning-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
 
         .announcement-content h4 {
             color: var(--text-primary);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .announcement-content p {
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
         }
 
         .announcement-date {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--text-tertiary);
-            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* ===== GRID LAYOUTS ===== */
-        .grid {
-            display: grid;
-            gap: 1.5rem;
+        /* Schedule Section Styles */
+        .schedule-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .grid-cols-2 {
-            grid-template-columns: repeat(2, 1fr);
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
         }
 
-        .grid-cols-3 {
-            grid-template-columns: repeat(3, 1fr);
+        .schedule-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 700;
         }
 
-        .grid-cols-4 {
-            grid-template-columns: repeat(4, 1fr);
+        .schedule-image-container {
+            background: var(--bg-lighter);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .schedule-image-container img {
+            max-width: 100%;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .schedule-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .schedule-upload-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         /* ===== COURSE CARDS ===== */
@@ -974,6 +947,12 @@
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 250px 1fr 200px;
+            }
+        }
+
         @media (max-width: 768px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
@@ -1001,10 +980,6 @@
             .grid-cols-2,
             .grid-cols-3,
             .grid-cols-4 {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1071,7 +1046,7 @@
                 <div class="form-group">
                     <label for="loginEmail">Email or Username</label>
                     <div class="input-group">
-                        <span class="input-icon">📧</span>
+                        <span class="input-icon"></span>
                         <input 
                             type="text" 
                             class="form-control" 
@@ -1085,7 +1060,7 @@
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
                     <div class="input-group">
-                        <span class="input-icon">🔒</span>
+                        <span class="input-icon"></span>
                         <input 
                             type="password" 
                             class="form-control" 
@@ -1143,422 +1118,229 @@
     </div>
 
     <!-- User Dashboard -->
-    <div class="dashboard" id="userDashboard">
-        <div class="dashboard-container">
-            <!-- Sidebar -->
-            <aside class="dashboard-sidebar">
-                <div class="user-profile">
-                    <div class="user-avatar" id="userAvatar">G</div>
-                    <h3 id="userName">Gabriel Vargas Israel</h3>
-                    <p id="userEmail">learsi.gabriel07@gmail.com</p>
-                    <div style="margin-top: 1rem; padding: 0.5rem; background: var(--primary-light); border-radius: var(--radius-sm);">
-                        <p style="font-size: 0.75rem; color: var(--primary-color); font-weight: 600;">
-                            Student ID: PHIL-2024-001
-                        </p>
+<div class="student-dashboard" id="userDashboard" style="display: none;">
+    <!-- Dashboard Header -->
+    <header class="dashboard-header" id="studentHeader">
+        <div class="dashboard-logo">
+            <img src="logo.jpg" alt="PHILTECH Logo" 
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyMCIgZmlsbD0iIzgzMDAwMCIvPjx0ZXh0IHg9IjIwIiB5PSIyNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UDwvdGV4dD48L3N2Zz4='">
+            <h2>PHIL<span class="primary">TECH</span></h2>
+        </div>
+        
+        <nav class="dashboard-nav" id="dashboardNav">
+            <a href="#" class="active" onclick="showSection('overview'); return false;">
+                <span class="material-icons-sharp">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" onclick="showSection('grades'); return false;">
+                <span class="material-icons-sharp">grade</span>
+                <span>Grades</span>
+            </a>
+            <a href="#" onclick="showSection('timetable'); return false;">
+                <span class="material-icons-sharp">today</span>
+                <span>Schedule</span>
+            </a>
+            <a href="#" onclick="showSection('announcements'); return false;">
+                <span class="material-icons-sharp">announcement</span>
+                <span>Announcements</span>
+            </a>
+            <a href="#" onclick="showSection('profile'); return false;">
+                <span class="material-icons-sharp">person</span>
+                <span>Profile</span>
+            </a>
+        </nav>
+        
+        <button id="mobile-menu-btn" onclick="toggleSidebar()">
+            <span class="material-icons-sharp">menu</span>
+        </button>
+        
+        <div class="theme-toggler" id="themeToggler">
+            <span class="material-icons-sharp active">light_mode</span>
+            <span class="material-icons-sharp">dark_mode</span>
+        </div>
+    </header>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Profile Card -->
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <div class="avatar-placeholder" id="userAvatar">G</div>
+                </div>
+                <div class="profile-info">
+                    <h3 class="user-name">Gabriel</h3>
+                    <p class="user-email">learsi.gabriel07@gmail.com</p>
+                </div>
+                
+                <!-- Student Credentials -->
+                <div class="student-credentials">
+                    <div class="credential-item">
+                        <h5>Student ID</h5>
+                        <p id="studentId">PHIL-2024-001</p>
+                    </div>
+                    <div class="credential-item">
+                        <h5>Program</h5>
+                        <p id="studentProgram">Computer Science</p>
+                    </div>
+                    <div class="credential-item">
+                        <h5>Year Level</h5>
+                        <p id="studentYear">3rd Year</p>
+                    </div>
+                    <div class="credential-item">
+                        <h5>Academic Status</h5>
+                        <p id="studentStatus" style="color: var(--success-color);">Regular</p>
+                    </div>
+                    <div class="credential-item">
+                        <h5>Admission Date</h5>
+                        <p id="admissionDate">August 2024</p>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Logout Button -->
+            <button class="logout-btn" onclick="handleLogout()" style="margin-top: auto; padding: 1rem; background: var(--error-color); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span class="material-icons-sharp">logout</span>
+                <span>Logout</span>
+            </button>
+        </aside>
 
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a class="nav-link active" onclick="showSection('overview')">
-                            <span style="font-size: 1.2rem;">📊</span>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('courses')">
-                            <span style="font-size: 1.2rem;">📚</span>
-                            <span>My Courses</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('assignments')">
-                            <span style="font-size: 1.2rem;">📝</span>
-                            <span>Assignments</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('grades')">
-                            <span style="font-size: 1.2rem;">🏆</span>
-                            <span>My Grades</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('schedule')">
-                            <span style="font-size: 1.2rem;">📅</span>
-                            <span>Schedule</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="showSection('profile')">
-                            <span style="font-size: 1.2rem;">⚙️</span>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                </ul>
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <div class="content-section active" id="overview">
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <h2>Welcome, <span id="welcomeName">Gabriel</span>!</h2>
+                </div>
 
-                <button class="btn btn-danger" onclick="handleLogout()" style="width: 100%; margin-top: 2rem;">
-                    <span style="font-size: 1.2rem;">🚪</span>
-                    <span>Logout</span>
-                </button>
-            </aside>
-
-            <!-- Main Content -->
-            <main class="dashboard-main">
-                <!-- Overview Section -->
-                <div class="content-section active" id="overview">
-                    <div class="welcome-card">
-                        <h2>Welcome Back, <span id="welcomeName">Gabriel</span>! 👋</h2>
-                        <p>Ready to continue your learning journey? You have 3 pending assignments and 2 new announcements.</p>
-                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                            <button class="course-action" style="background: white; color: var(--primary-color);">View Schedule</button>
-                            <button class="course-action" style="background: rgba(255,255,255,0.2); border: 2px solid white;">Check Assignments</button>
-                        </div>
+                <!-- Announcements Section with Header -->
+                <div class="announcements-header">
+                    <h2>Latest Announcements</h2>
+                    <button onclick="showSection('announcements')" style="background: none; border: 2px solid var(--primary-color); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;">
+                        View All
+                    </button>
+                </div>
+                
+                <div id="recentAnnouncements">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading announcements...</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Stats Grid -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" style="color: var(--primary-color);">4</div>
-                            <div class="stat-label">Active Courses</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" style="color: var(--success-color);">85%</div>
-                            <div class="stat-label">Overall Average</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" style="color: var(--warning-color);">3</div>
-                            <div class="stat-label">Pending Assignments</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" style="color: var(--info-color);">12</div>
-                            <div class="stat-label">Days to Finals</div>
-                        </div>
+            <!-- Grades Section -->
+            <div class="content-section" id="grades">
+                <div class="section-header">
+                    <h1>My Grades</h1>
+                    <p>View and request your academic performance</p>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h2>Request Grade Copy</h2>
+                    <p class="text-muted" style="margin-bottom: 1.5rem;">Request an official copy of your grades from the administration</p>
+                    <button onclick="requestGrade()" id="requestGradeBtn" class="btn btn-primary">
+                        Request Grade Copy
+                    </button>
+                    <div id="requestStatus" style="margin-top: 1rem;"></div>
+                </div>
+
+                <div id="gradeRecords">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading grades...</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Upcoming Deadlines -->
-                    <div class="card" style="margin-bottom: 2rem;">
-                        <h3 class="card-title">
-                            <span style="font-size: 1.2rem;">⏰</span>
-                            Upcoming Deadlines
-                        </h3>
-                        <div class="deadline-item urgent">
-                            <div class="deadline-content">
-                                <h4>Database Design Project</h4>
-                                <p>Data Structures & Algorithms</p>
-                            </div>
-                            <div class="deadline-time">
-                                Due in 2 days<br>
-                                <span style="color: var(--error-color); font-weight: 600;">URGENT</span>
-                            </div>
-                        </div>
-                        <div class="deadline-item">
-                            <div class="deadline-content">
-                                <h4>Web Development Assignment</h4>
-                                <p>Responsive Design Implementation</p>
-                            </div>
-                            <div class="deadline-time">
-                                Due in 5 days
-                            </div>
-                        </div>
-                        <div class="deadline-item">
-                            <div class="deadline-content">
-                                <h4>Algorithm Analysis Report</h4>
-                                <p>Data Structures & Algorithms</p>
-                            </div>
-                            <div class="deadline-time">
-                                Due in 7 days
-                            </div>
-                        </div>
+            <!-- Timetable/Schedule Section -->
+            <div class="content-section" id="timetable">
+                <div class="section-header">
+                    <h1>Class Schedule</h1>
+                    <p>View current and previous schedules</p>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <h2>Current Schedule</h2>
+                        <button onclick="refreshSchedule()" style="background: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;">
+                            Refresh
+                        </button>
                     </div>
-
-                    <!-- Announcements & Recent Activity -->
-                    <div class="grid grid-cols-2">
-                        <!-- Announcements -->
-                        <div class="card">
-                            <h3 class="card-title">
-                                <span style="font-size: 1.2rem;">📢</span>
-                                Recent Announcements
-                            </h3>
-                            <div id="studentAnnouncements">
-                                <div class="announcement-item">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: 600; font-size: 1.2rem;">
-                                        📢
-                                    </div>
-                                    <div class="announcement-content">
-                                        <h4>Midterm Exam Schedule</h4>
-                                        <p>The midterm examination schedule has been posted. Please check your student portal for details.</p>
-                                        <span class="announcement-date">December 10, 2024</span>
-                                    </div>
-                                </div>
-                                <div class="announcement-item">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: 600; font-size: 1.2rem;">
-                                        📢
-                                    </div>
-                                    <div class="announcement-content">
-                                        <h4>Holiday Break Notice</h4>
-                                        <p>Classes will resume on January 6, 2025. Enjoy your holiday break!</p>
-                                        <span class="announcement-date">December 5, 2024</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recent Activity -->
-                        <div class="card">
-                            <h3 class="card-title">
-                                <span style="font-size: 1.2rem;">📈</span>
-                                Recent Activity
-                            </h3>
-                            <div class="activity-feed">
-                                <div class="activity-item">
-                                    <div class="activity-icon">
-                                        ✓
-                                    </div>
-                                    <div class="activity-content">
-                                        <h4>Submitted Assignment</h4>
-                                        <p>Web Development Fundamentals - Responsive Design</p>
-                                        <div class="activity-time">2 hours ago</div>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon">
-                                        📚
-                                    </div>
-                                    <div class="activity-content">
-                                        <h4>Completed Module</h4>
-                                        <p>Data Structures - Binary Trees & Graphs</p>
-                                        <div class="activity-time">Yesterday</div>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon">
-                                        💬
-                                    </div>
-                                    <div class="activity-content">
-                                        <h4>Posted in Discussion</h4>
-                                        <p>Database Management Systems Forum</p>
-                                        <div class="activity-time">2 days ago</div>
-                                    </div>
-                                </div>
-                            </div>
+                    
+                    <div id="scheduleContent">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Loading schedules...</p>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Courses Section -->
-                <div class="content-section" id="courses">
-                    <div class="dashboard-header">
-                        <h2>My Courses</h2>
-                        <p>Continue your learning journey</p>
-                    </div>
-
-                    <div class="grid grid-cols-2">
-                        <div class="course-card">
-                            <div class="course-thumbnail">
-                                <div style="font-size: 2rem; color: white;">💻</div>
-                            </div>
-                            <div class="course-content">
-                                <span class="course-badge">In Progress</span>
-                                <h3 class="course-title">Data Structures & Algorithms</h3>
-                                <p class="course-description">Learn fundamental concepts of DSA including arrays, linked lists, trees, and sorting algorithms.</p>
-                                <div class="course-meta">
-                                    <div class="course-progress">
-                                        <small>Progress: 65%</small>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 65%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-thumbnail">
-                                <div style="font-size: 2rem; color: white;">🌐</div>
-                            </div>
-                            <div class="course-content">
-                                <span class="course-badge">In Progress</span>
-                                <h3 class="course-title">Web Development Fundamentals</h3>
-                                <p class="course-description">HTML, CSS, JavaScript basics and responsive design principles.</p>
-                                <div class="course-meta">
-                                    <div class="course-progress">
-                                        <small>Progress: 80%</small>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 80%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-thumbnail">
-                                <div style="font-size: 2rem; color: white;">🗄️</div>
-                            </div>
-                            <div class="course-content">
-                                <span class="course-badge">In Progress</span>
-                                <h3 class="course-title">Database Management Systems</h3>
-                                <p class="course-description">SQL and database design principles, normalization, and query optimization.</p>
-                                <div class="course-meta">
-                                    <div class="course-progress">
-                                        <small>Progress: 45%</small>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 45%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Continue Learning</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-thumbnail">
-                                <div style="font-size: 2rem; color: white;">🤖</div>
-                            </div>
-                            <div class="course-content">
-                                <span class="course-badge">Not Started</span>
-                                <h3 class="course-title">Introduction to AI</h3>
-                                <p class="course-description">Artificial Intelligence fundamentals, machine learning basics, and neural networks.</p>
-                                <div class="course-meta">
-                                    <div class="course-progress">
-                                        <small>Progress: 0%</small>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 0%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Course</button>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Announcements Section -->
+            <div class="content-section" id="announcements">
+                <div class="section-header">
+                    <h1>Announcements</h1>
+                    <p>Latest updates from administration</p>
                 </div>
 
-                <!-- Assignments Section -->
-                <div class="content-section" id="assignments">
-                    <div class="dashboard-header">
-                        <h2>Assignments & Tasks</h2>
-                        <p>Keep track of your pending work</p>
-                    </div>
-
-                    <div class="announcements" style="background: #FEF2F2; border-left-color: var(--error-color);">
-                        <h3 class="card-title">Urgent Assignments</h3>
-                        <div class="announcement-item">
-                            <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); display: flex; align-items: center; justify-content: center; color: var(--error-color); font-weight: 600; font-size: 1.2rem;">
-                                ⚠️
-                            </div>
-                            <div class="announcement-content">
-                                <h4>Database Design Project</h4>
-                                <p>Due in 2 days - December 15, 2024</p>
-                                <button class="course-action" style="margin-top: 0.5rem;">Submit Assignment</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 2rem;">
-                        <h3 class="card-title">All Assignments</h3>
-                        <div class="grid grid-cols-2">
-                            <div class="course-card">
-                                <div class="course-content">
-                                    <span class="course-badge" style="background: rgba(239, 68, 68, 0.1); color: var(--error-color);">Pending</span>
-                                    <h3 class="course-title">Algorithm Analysis Report</h3>
-                                    <p class="course-description">Data Structures & Algorithms</p>
-                                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">Due: December 20, 2024</p>
-                                    <button class="course-action" style="width: 100%; margin-top: 1rem;">Start Working</button>
-                                </div>
-                            </div>
-
-                            <div class="course-card">
-                                <div class="course-content">
-                                    <span class="course-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">Completed</span>
-                                    <h3 class="course-title">Responsive Website Project</h3>
-                                    <p class="course-description">Web Development Fundamentals</p>
-                                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">Submitted: December 1, 2024</p>
-                                    <button class="course-action" style="width: 100%; margin-top: 1rem; background: var(--success-color);">View Grade</button>
-                                </div>
-                            </div>
-                        </div>
+                <div id="allAnnouncements">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading announcements...</p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Grades Section -->
-                <div class="content-section" id="grades">
-                    <div class="dashboard-header">
-                        <h2>My Grades</h2>
-                        <p>Request and view your academic performance</p>
-                    </div>
-
-                    <div class="card" style="background: var(--bg-light); margin-bottom: 2rem;">
-                        <h3 class="card-title">Request Grade Copy</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Click the button below to request a copy of your grades from the admin. You will be notified once your request is processed.</p>
-                        <button class="course-action" onclick="requestGrade()" id="requestGradeBtn">Request Grade Copy</button>
-                        <div id="requestStatus" style="margin-top: 1rem;"></div>
-                    </div>
-
-                    <h3 class="card-title">My Grade Records</h3>
-                    <div id="studentGrades">
-                        <p style="color: var(--text-tertiary); text-align: center; padding: 2rem;">No grades available yet. Request your grades above.</p>
-                    </div>
+            <!-- Profile Section -->
+            <div class="content-section" id="profile">
+                <div class="section-header">
+                    <h1>Profile Settings</h1>
+                    <p>Manage your account information</p>
                 </div>
 
-                <!-- Schedule Section -->
-                <div class="content-section" id="schedule">
-                    <div class="dashboard-header">
-                        <h2>Class Schedule</h2>
-                        <p>View your weekly timetable</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="card">
+                        <h2>Personal Information</h2>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Full Name</label>
+                            <input type="text" id="profileName" class="form-control" placeholder="Your full name">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label>Email Address</label>
+                            <input type="email" id="profileEmail" class="form-control" placeholder="your.email@example.com" readonly>
+                        </div>
+                        <button onclick="updateProfile()" class="btn btn-primary">
+                            Save Changes
+                        </button>
                     </div>
 
                     <div class="card">
-                        <div id="studentSchedule">
-                            <div style="padding: 2rem; text-align: center;">
-                                <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color);">📅</div>
-                                <h3 style="margin-bottom: 1rem;">Weekly Schedule</h3>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
-                                    <div class="stat-card">
-                                        <div class="stat-value" style="color: var(--primary-color);">Mon</div>
-                                        <div class="stat-label">9:00 AM - 11:00 AM<br>Data Structures</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-value" style="color: var(--info-color);">Wed</div>
-                                        <div class="stat-label">1:00 PM - 3:00 PM<br>Web Development</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-value" style="color: var(--success-color);">Fri</div>
-                                        <div class="stat-label">10:00 AM - 12:00 PM<br>Database Systems</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <h2>Account Security</h2>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label>Current Password</label>
+                            <input type="password" id="currentPassword" class="form-control" placeholder="Current password">
                         </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label>New Password</label>
+                            <input type="password" id="newPassword" class="form-control" placeholder="New password">
+                        </div>
+                        <button onclick="changePassword()" class="btn btn-primary" style="background: var(--warning-color);">
+                            Change Password
+                        </button>
                     </div>
                 </div>
+            </div>
+        </main>
 
-                <!-- Profile/Settings Section -->
-                <div class="content-section" id="profile">
-                    <div class="dashboard-header">
-                        <h2>Account Settings</h2>
-                        <p>Manage your profile information</p>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="card-title">Profile Information</h3>
-                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                            <div>
-                                <label style="display: block; color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Full Name</label>
-                                <input type="text" class="form-control" id="profileName" placeholder="Your Name">
-                            </div>
-                            <div>
-                                <label style="display: block; color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Email Address</label>
-                                <input type="email" class="form-control" id="profileEmail" placeholder="your.email@example.com" readonly>
-                            </div>
-                            <button class="course-action" style="width: fit-content; padding: 0.875rem 2rem;" onclick="updateProfile()">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            </main>
+        <!-- Right Sidebar - Removed Quick Stats and Recent Activity -->
+        <div class="dashboard-right" style="display: none;">
+            <!-- Empty - Removed as requested -->
         </div>
     </div>
+</div>
 
     <!-- Signup Form (Hidden by default) -->
     <div class="auth-layout" id="signupLayout" style="display: none;">
@@ -1584,7 +1366,7 @@
                 <div class="form-group">
                     <label for="signupName">Full Name</label>
                     <div class="input-group">
-                        <span class="input-icon">👤</span>
+                        <span class="input-icon"></span>
                         <input 
                             type="text" 
                             class="form-control" 
@@ -1598,7 +1380,7 @@
                 <div class="form-group">
                     <label for="signupEmail">Email Address</label>
                     <div class="input-group">
-                        <span class="input-icon">📧</span>
+                        <span class="input-icon"></span>
                         <input 
                             type="email" 
                             class="form-control" 
@@ -1608,11 +1390,24 @@
                         >
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="signupProgram">Program</label>
+                    <div class="input-group">
+                        <span class="input-icon"></span>
+                        <select class="form-control" id="signupProgram" required>
+                            <option value="" disabled selected>Select your program</option>
+                            <option value="BTVTED">Bachelor of Technical Vocational Teacher Education</option>
+                            <option value="BSCS">BS Computer Science</option>
+                            <option value="BSOA">BS Office Administration</option>
+                        </select>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
                     <div class="input-group">
-                        <span class="input-icon">🔒</span>
+                        <span class="input-icon"></span>
                         <input 
                             type="password" 
                             class="form-control" 
@@ -1633,7 +1428,7 @@
                 <div class="form-group">
                     <label for="signupConfirmPassword">Confirm Password</label>
                     <div class="input-group">
-                        <span class="input-icon">🔒</span>
+                        <span class="input-icon"></span>
                         <input 
                             type="password" 
                             class="form-control" 
@@ -1693,7 +1488,7 @@
             <div class="form-group">
                 <label for="resetEmail">Email Address</label>
                 <div class="input-group">
-                    <span class="input-icon">📧</span>
+                    <span class="input-icon"></span>
                     <input 
                         type="email" 
                         class="form-control" 
@@ -1728,7 +1523,10 @@
             GoogleAuthProvider,
             signInWithPopup,
             sendPasswordResetEmail,
-            updateProfile
+            updateProfile,
+            updatePassword,
+            reauthenticateWithCredential,
+            EmailAuthProvider
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { 
             getFirestore, 
@@ -1741,8 +1539,15 @@
             limit,
             setDoc,
             doc,
-            serverTimestamp
+            serverTimestamp,
+            getDoc
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { 
+            getStorage, 
+            ref, 
+            uploadBytes, 
+            getDownloadURL 
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyCeZi1JCg8Lrq7PYkE-pZ5R7CmWi3-Sf7E",
@@ -1754,10 +1559,40 @@
             measurementId: "G-NK2YTBYFYB"
         };
 
-        const app = initializeApp(firebaseConfig);
+        const app = initializeApp(firebaseConfig);  // MUST BE FIRST!
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);  // NOW this works - app is defined
         const googleProvider = new GoogleAuthProvider();
+
+        window.auth = auth;
+        window.db = db;
+        window.storage = storage;  // Now storage is properly initialized
+        window.serverTimestamp = serverTimestamp;
+        window.firebaseAuth = {
+            signOut: signOut,
+            updateProfile: updateProfile,
+            updatePassword: updatePassword,
+            reauthenticateWithCredential: reauthenticateWithCredential,
+            EmailAuthProvider: EmailAuthProvider
+        };
+        window.firebaseFirestore = {
+            collection: collection,
+            addDoc: addDoc,
+            getDocs: getDocs,
+            query: query,
+            where: where,
+            orderBy: orderBy,
+            limit: limit,
+            setDoc: setDoc,
+            doc: doc,
+            getDoc: getDoc
+        };
+        window.firebaseStorage = {
+            ref: ref,
+            uploadBytes: uploadBytes,
+            getDownloadURL: getDownloadURL
+        };
 
         window.handleLogin = async (e) => {
             e.preventDefault();
@@ -1808,6 +1643,7 @@
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const program = document.getElementById('signupProgram').value;
             const btn = document.getElementById('signupBtn');
 
             if (password !== confirmPassword) {
@@ -1827,11 +1663,20 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 await updateProfile(userCredential.user, { displayName: name });
                 
+                // Generate student ID
+                const studentId = `PHIL-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+                
                 await setDoc(doc(db, 'users', userCredential.user.uid), {
                     displayName: name,
                     email: email,
+                    program: program,
+                    studentId: studentId,
+                    yearLevel: '1st Year',
+                    admissionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
+                    academicStatus: 'Regular',
                     createdAt: serverTimestamp(),
-                    role: 'student'
+                    role: 'student',
+                    status: 'active'
                 });
                 
                 showNotification('Account created successfully!', 'success');
@@ -1856,11 +1701,33 @@
 
         window.handleLogout = async () => {
             try {
+                // First hide the dashboard completely
+                const dashboard = document.getElementById('userDashboard');
+                if (dashboard) {
+                    dashboard.style.display = 'none';
+                }
+                
+                // Clear any dashboard content
+                document.querySelectorAll('.student-dashboard').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Sign out from Firebase
                 await signOut(auth);
+                
+                // Show login form
+                document.getElementById('authLayout').style.display = 'grid';
+                document.getElementById('signupLayout').style.display = 'none';
+                
+                // Clear form fields
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                
                 showNotification('Logged out successfully!', 'success');
-                showAuthForm();
+                
             } catch (error) {
                 showNotification('Error logging out. Please try again.', 'error');
+                console.error('Logout error:', error);
             }
         };
 
@@ -1940,53 +1807,179 @@
         function showDashboard(user) {
             document.getElementById('authLayout').style.display = 'none';
             document.getElementById('signupLayout').style.display = 'none';
-            document.getElementById('userDashboard').classList.add('active');
             
-            const name = user.displayName || user.email.split('@')[0];
-            document.getElementById('userName').textContent = name;
-            document.getElementById('welcomeName').textContent = name;
-            document.getElementById('userEmail').textContent = user.email;
-            document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
-            document.getElementById('profileName').value = user.displayName || '';
-            document.getElementById('profileEmail').value = user.email;
+            // Show UMS dashboard
+            const dashboard = document.getElementById('userDashboard');
+            if (dashboard) {
+                dashboard.style.display = 'block';
+                dashboard.classList.add('active');
+
+                document.body.style.background = '';
+                document.body.classList.add('dashboard-active');
+                
+                // Update user info immediately
+                const name = user.displayName || user.email.split('@')[0];
+                const nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
+                
+                // Update all name elements
+                document.querySelectorAll('.user-name, #welcomeName').forEach(el => {
+                    el.textContent = nameCapitalized;
+                });
+                
+                // Update email
+                document.querySelectorAll('.user-email, #profileEmail').forEach(el => {
+                    el.textContent = user.email;
+                    if (el.tagName === 'INPUT') {
+                        el.value = user.email;
+                    }
+                });
+                
+                // Update avatar
+                const avatar = document.getElementById('userAvatar');
+                if (avatar) {
+                    avatar.textContent = name.charAt(0).toUpperCase();
+                }
+                
+                // Update profile name field
+                const profileNameInput = document.getElementById('profileName');
+                if (profileNameInput) {
+                    profileNameInput.value = nameCapitalized;
+                }
+                
+                // Load user details from Firestore
+                loadUserDetails(user.uid);
+                
+                // Initialize dashboard after a short delay
+                setTimeout(() => {
+                    if (typeof initDashboard === 'function') {
+                        initDashboard();
+                    }
+                    
+                    // Load student data
+                    if (typeof loadStudentData === 'function') {
+                        loadStudentData(user);
+                    }
+                }, 300);
+            }
+        }
+        
+        async function loadUserDetails(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    
+                    // Update credential fields
+                    const fields = {
+                        'studentId': userData.studentId,
+                        'studentProgram': userData.program,
+                        'studentYear': userData.yearLevel,
+                        'studentStatus': userData.academicStatus,
+                        'admissionDate': userData.admissionDate
+                    };
+                    
+                    Object.entries(fields).forEach(([fieldId, value]) => {
+                        const element = document.getElementById(fieldId);
+                        if (element && value) {
+                            element.textContent = value;
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading user details:', error);
+            }
         }
 
         async function loadStudentData(user) {
             try {
-                // Load announcements
-                const announcementsQuery = query(
+                console.log('Loading student data for:', user.email);
+                
+                // Load announcements for overview (limit to 3)
+                const recentAnnouncementsQuery = query(
                     collection(db, 'announcements'),
                     orderBy('createdAt', 'desc'),
-                    limit(5)
+                    limit(3)
                 );
-                const announcementsSnap = await getDocs(announcementsQuery);
-                const announcementsContainer = document.getElementById('studentAnnouncements');
+                const recentAnnouncementsSnap = await getDocs(recentAnnouncementsQuery);
                 
-                if (announcementsSnap.empty) {
-                    announcementsContainer.innerHTML = `
-                        <div style="text-align: center; padding: 2rem;">
-                            <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-tertiary);">📢</div>
-                            <p style="color: var(--text-tertiary);">No announcements yet</p>
-                        </div>
-                    `;
-                } else {
-                    announcementsContainer.innerHTML = '';
-                    announcementsSnap.forEach((doc) => {
+                const announcementsContainer = document.getElementById('recentAnnouncements');
+                
+                if (recentAnnouncementsSnap.empty) {
+                    if (announcementsContainer) {
+                        announcementsContainer.innerHTML = `
+                            <div class="announcements-container">
+                                <div style="text-align: center; padding: 2rem;">
+                                    <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-tertiary);">📢</div>
+                                    <p style="color: var(--text-tertiary);">No announcements yet</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else if (announcementsContainer) {
+                    announcementsContainer.innerHTML = '<div class="announcements-container">';
+                    recentAnnouncementsSnap.forEach((doc) => {
                         const data = doc.data();
                         const date = data.createdAt?.toDate().toLocaleDateString() || 'Just now';
+                        const time = data.createdAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '';
                         announcementsContainer.innerHTML += `
                             <div class="announcement-item">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: 600; font-size: 1.2rem;">
-                                    📢
-                                </div>
+                                <div class="announcement-icon">📢</div>
                                 <div class="announcement-content">
-                                    <h4>${data.title}</h4>
-                                    <p>${data.content}</p>
-                                    <span class="announcement-date">${date}</span>
+                                    <h4>${data.title || 'Announcement'}</h4>
+                                    <p>${data.content || 'No content'}</p>
+                                    <span class="announcement-date">
+                                        <span class="material-icons-sharp" style="font-size: 1rem;">calendar_today</span>
+                                        ${date} at ${time}
+                                    </span>
                                 </div>
                             </div>
                         `;
                     });
+                    announcementsContainer.innerHTML += '</div>';
+                }
+
+                // Load all announcements for announcements section
+                const allAnnouncementsQuery = query(
+                    collection(db, 'announcements'),
+                    orderBy('createdAt', 'desc')
+                );
+                const allAnnouncementsSnap = await getDocs(allAnnouncementsQuery);
+                
+                const allAnnouncementsContainer = document.getElementById('allAnnouncements');
+                
+                if (allAnnouncementsSnap.empty) {
+                    if (allAnnouncementsContainer) {
+                        allAnnouncementsContainer.innerHTML = `
+                            <div class="announcements-container">
+                                <div style="text-align: center; padding: 3rem;">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-tertiary);">📢</div>
+                                    <p style="color: var(--text-tertiary);">No announcements available yet.</p>
+                                    <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 0.5rem;">Check back later for updates from the administration.</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else if (allAnnouncementsContainer) {
+                    allAnnouncementsContainer.innerHTML = '<div class="announcements-container">';
+                    allAnnouncementsSnap.forEach((doc) => {
+                        const data = doc.data();
+                        const date = data.createdAt?.toDate().toLocaleDateString() || 'Just now';
+                        const time = data.createdAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '';
+                        allAnnouncementsContainer.innerHTML += `
+                            <div class="announcement-item">
+                                <div class="announcement-icon">📢</div>
+                                <div class="announcement-content">
+                                    <h4>${data.title || 'Announcement'}</h4>
+                                    <p>${data.content || 'No content'}</p>
+                                    <span class="announcement-date">
+                                        <span class="material-icons-sharp" style="font-size: 1rem;">calendar_today</span>
+                                        ${date} at ${time}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    allAnnouncementsContainer.innerHTML += '</div>';
                 }
 
                 // Load grades
@@ -1996,18 +1989,20 @@
                 );
                 
                 const gradesSnap = await getDocs(gradesQuery);
-                const gradesContainer = document.getElementById('studentGrades');
+                const gradesContainer = document.getElementById('gradeRecords');
                 
                 if (gradesSnap.empty) {
-                    gradesContainer.innerHTML = `
-                        <div style="text-align: center; padding: 3rem;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-tertiary);">📊</div>
-                            <p style="color: var(--text-tertiary);">No grades available yet.</p>
-                            <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 0.5rem;">Request your grades using the button above.</p>
-                        </div>
-                    `;
-                } else {
-                    gradesContainer.innerHTML = '<div class="grid grid-cols-2">';
+                    if (gradesContainer) {
+                        gradesContainer.innerHTML = `
+                            <div style="text-align: center; padding: 3rem;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-tertiary);">📊</div>
+                                <p style="color: var(--text-tertiary);">No grades available yet.</p>
+                                <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 0.5rem;">Request your grades using the button above.</p>
+                            </div>
+                        `;
+                    }
+                } else if (gradesContainer) {
+                    gradesContainer.innerHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">';
                     
                     gradesSnap.forEach((doc) => {
                         const data = doc.data();
@@ -2016,7 +2011,7 @@
                         let gradeStatus = 'Excellent';
                         let gradeColor = '#10B981';
                         
-                        const gradeValue = parseFloat(data.grade);
+                        const gradeValue = parseFloat(data.grade) || 0;
                         
                         if (gradeValue >= 90) {
                             gradeStatus = 'Excellent';
@@ -2036,21 +2031,21 @@
                             <div class="course-card">
                                 <div class="course-content">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <h3 class="course-title">Grade Report</h3>
+                                        <h3 class="course-title">${data.subject || 'Grade Report'}</h3>
                                         <span style="background: ${gradeColor}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${gradeStatus}</span>
                                     </div>
                                     
                                     <div style="background: var(--primary-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
                                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                                            <span style="color: var(--text-secondary); font-weight: 600;">Overall Grade:</span>
+                                            <span style="color: var(--text-secondary); font-weight: 600;">Grade:</span>
                                             <span style="font-size: 2.5rem; font-weight: 800; color: ${gradeColor};">${gradeValue}%</span>
                                         </div>
                                     </div>
                                     
-                                    ${data.breakdown ? `
+                                    ${data.remarks ? `
                                         <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-light); border-radius: var(--radius-sm);">
-                                            <h4 style="color: var(--text-primary); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Grade Breakdown:</h4>
-                                            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">${data.breakdown}</p>
+                                            <h4 style="color: var(--text-primary); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Remarks:</h4>
+                                            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">${data.remarks}</p>
                                         </div>
                                     ` : ''}
                                     
@@ -2082,55 +2077,78 @@
                     const latestRequest = requestSnap.docs[0].data();
                     
                     if (latestRequest.status === 'pending') {
-                        requestBtn.disabled = true;
-                        requestBtn.textContent = 'Request Pending';
-                        requestBtn.style.background = 'var(--text-tertiary)';
-                        requestStatus.innerHTML = `
-                            <div style="background: var(--bg-light); border: 2px solid var(--warning-color); border-radius: var(--radius-sm); padding: 1rem; margin-top: 1rem;">
-                                <p style="color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-                                    <span style="font-size: 1.2rem;">⏳</span>
-                                    <span>Your grade request is being processed. You'll be notified once completed.</span>
-                                </p>
-                            </div>
-                        `;
+                        if (requestBtn) {
+                            requestBtn.disabled = true;
+                            requestBtn.textContent = 'Request Pending';
+                            requestBtn.style.background = 'var(--text-tertiary)';
+                        }
+                        if (requestStatus) {
+                            requestStatus.innerHTML = `
+                                <div style="background: var(--bg-light); border: 2px solid var(--warning-color); border-radius: var(--radius-sm); padding: 1rem; margin-top: 1rem;">
+                                    <p style="color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                                        <span style="font-size: 1.2rem;">⏳</span>
+                                        <span>Your grade request is being processed. You'll be notified once completed.</span>
+                                    </p>
+                                </div>
+                            `;
+                        }
                     } else if (latestRequest.status === 'completed') {
-                        requestBtn.disabled = false;
-                        requestBtn.textContent = 'Request New Grade Copy';
-                        requestBtn.style.background = '';
-                        requestStatus.innerHTML = '';
+                        if (requestBtn) {
+                            requestBtn.disabled = false;
+                            requestBtn.textContent = 'Request New Grade Copy';
+                            requestBtn.style.background = '';
+                        }
+                        if (requestStatus) {
+                            requestStatus.innerHTML = '';
+                        }
                     }
                 }
 
-                // Load schedule
-                const scheduleSnap = await getDocs(collection(db, 'schedule'));
-                const scheduleContainer = document.getElementById('studentSchedule');
+                // Load schedules - FIXED: Get all schedules, not just one
+                const scheduleQuery = query(
+                    collection(db, 'schedule'),
+                    orderBy('uploadedAt', 'desc')
+                );
+                const scheduleSnap = await getDocs(scheduleQuery);
+                const scheduleContainer = document.getElementById('scheduleContent');
                 
                 if (scheduleSnap.empty) {
-                    scheduleContainer.innerHTML = `
-                        <div style="padding: 2rem; text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-tertiary);">📅</div>
-                            <p style="color: var(--text-tertiary);">No schedule available yet</p>
-                        </div>
-                    `;
-                } else {
-                    const scheduleDoc = scheduleSnap.docs[0];
-                    const scheduleData = scheduleDoc.data();
-                    
-                    if (scheduleData.imageUrl) {
+                    if (scheduleContainer) {
                         scheduleContainer.innerHTML = `
-                            <img src="${scheduleData.imageUrl}" 
-                                 style="max-width: 100%; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);" 
-                                 alt="Class Schedule"
-                                 onload="console.log('Schedule image loaded successfully')"
-                                 onerror='this.parentElement.innerHTML=\"<p style=color:var(--error-color);>Error loading schedule image.</p>\"'>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-top: 0.5rem; text-align: center;">
-                                Uploaded: ${scheduleData.uploadedAt?.toDate().toLocaleDateString() || 'Recently'}
-                            </p>
+                            <div style="text-align: center; padding: 3rem;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-tertiary);">📅</div>
+                                <p style="color: var(--text-tertiary);">No schedule available yet</p>
+                                <p style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 0.5rem;">The administration will upload schedules soon.</p>
+                            </div>
                         `;
-                    } else {
-                        scheduleContainer.innerHTML = '<p style="color: var(--error-color);">Schedule data incomplete</p>';
                     }
+                } else if (scheduleContainer) {
+                    scheduleContainer.innerHTML = '';
+                    scheduleSnap.forEach((doc) => {
+                        const data = doc.data();
+                        const uploadedDate = data.uploadedAt?.toDate().toLocaleDateString() || 'Recently';
+                        const uploadedTime = data.uploadedAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '';
+                        
+                        scheduleContainer.innerHTML += `
+                            <div class="schedule-image-container">
+                                <img src="${data.imageUrl}" 
+                                    alt="Class Schedule"
+                                    style="max-width: 100%; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);"
+                                    onload="console.log('Schedule image loaded successfully')"
+                                    onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNGM0Y0RjYiLz48dGV4dCB4PSIyMDAiIHk9IjE1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNkI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5TY2hlZHVsZSBJbWFnZSBMb2FkIEVycm9yPC90ZXh0Pjwvc3ZnPg=='">
+                                <div class="schedule-info">
+                                    <span class="schedule-upload-date">
+                                        <span class="material-icons-sharp" style="font-size: 1rem; vertical-align: middle;">upload</span>
+                                        Uploaded: ${uploadedDate} at ${uploadedTime}
+                                    </span>
+                                    ${data.title ? `<span style="color: var(--primary-color); font-weight: 600;">${data.title}</span>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
                 }
+                
+                console.log('Student data loaded successfully');
                 
             } catch (error) {
                 console.error('Error loading student data:', error);
@@ -2188,17 +2206,62 @@
                 await updateProfile(user, { displayName: newName });
                 await setDoc(doc(db, 'users', user.uid), {
                     displayName: newName,
-                    email: user.email,
                     updatedAt: serverTimestamp()
                 }, { merge: true });
 
                 showNotification('Profile updated successfully!', 'success');
-                document.getElementById('userName').textContent = newName;
-                document.getElementById('welcomeName').textContent = newName;
+                document.querySelectorAll('.user-name, #welcomeName').forEach(el => {
+                    el.textContent = newName;
+                });
                 document.getElementById('userAvatar').textContent = newName.charAt(0).toUpperCase();
             } catch (error) {
                 console.error('Error updating profile:', error);
                 showNotification('Error updating profile', 'error');
+            }
+        };
+
+        window.changePassword = async function() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+
+            if (!currentPassword || !newPassword) {
+                showNotification('Please fill in both password fields', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showNotification('New password must be at least 6 characters', 'error');
+                return;
+            }
+
+            try {
+                // Reauthenticate user
+                const credential = EmailAuthProvider.credential(user.email, currentPassword);
+                await reauthenticateWithCredential(user, credential);
+                
+                // Update password
+                await updatePassword(user, newPassword);
+                
+                showNotification('Password changed successfully!', 'success');
+                
+                // Clear password fields
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                
+            } catch (error) {
+                console.error('Error changing password:', error);
+                showNotification(getErrorMessage(error.code), 'error');
+            }
+        };
+
+        window.refreshSchedule = function() {
+            const user = auth.currentUser;
+            if (user) {
+                loadStudentData(user);
+                showNotification('Schedule refreshed!', 'success');
             }
         };
 
@@ -2216,7 +2279,9 @@
                 'auth/weak-password': 'Password is too weak.',
                 'auth/invalid-email': 'Invalid email address.',
                 'auth/popup-closed-by-user': 'Sign-in popup was closed.',
-                'auth/network-request-failed': 'Network error. Check your connection.'
+                'auth/network-request-failed': 'Network error. Check your connection.',
+                'auth/requires-recent-login': 'Please log in again to change your password.',
+                'auth/wrong-password': 'Current password is incorrect.'
             };
             return messages[code] || 'An error occurred. Please try again.';
         }
@@ -2267,12 +2332,14 @@
         };
 
         window.showSection = function(sectionId) {
-            document.querySelectorAll('.nav-link').forEach(link => {
+            // Update navigation links
+            document.querySelectorAll('.nav-link, .dashboard-nav a').forEach(link => {
                 link.classList.remove('active');
             });
             
             event.target.classList.add('active');
             
+            // Update content sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
@@ -2280,62 +2347,52 @@
             document.getElementById(sectionId).classList.add('active');
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Replace broken images with emoji placeholders
-            const icons = [
-                'assets/icons/dashboard.svg',
-                'assets/icons/courses.svg',
-                'assets/icons/assignments.svg',
-                'assets/icons/grades.svg',
-                'assets/icons/schedule.svg',
-                'assets/icons/settings.svg',
-                'assets/icons/logout.svg',
-                'assets/icons/code.svg',
-                'assets/icons/web.svg',
-                'assets/icons/database.svg',
-                'assets/icons/ai.svg',
-                'assets/icons/urgent.svg',
-                'assets/icons/announcement.svg',
-                'assets/icons/pending.svg',
-                'assets/icons/grades-empty.svg'
-            ];
-            
-            icons.forEach(icon => {
-                const img = new Image();
-                img.onerror = function() {
-                    const imgs = document.querySelectorAll(`img[src="${icon}"]`);
-                    imgs.forEach(img => {
-                        img.style.display = 'none';
-                        const emoji = getEmojiForIcon(icon);
-                        img.parentElement.innerHTML = `<span style="font-size: 1.2rem;">${emoji}</span>` + img.parentElement.innerHTML;
-                    });
-                };
-                img.src = icon;
-            });
-
-            function getEmojiForIcon(icon) {
-                const emojiMap = {
-                    'dashboard': '📊',
-                    'courses': '📚',
-                    'assignments': '📝',
-                    'grades': '🏆',
-                    'schedule': '📅',
-                    'settings': '⚙️',
-                    'logout': '🚪',
-                    'code': '💻',
-                    'web': '🌐',
-                    'database': '🗄️',
-                    'ai': '🤖',
-                    'urgent': '⚠️',
-                    'announcement': '📢',
-                    'pending': '⏳',
-                    'grades-empty': '📊'
-                };
-                
-                const key = icon.split('/').pop().replace('.svg', '');
-                return emojiMap[key] || '📄';
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('dashboardSidebar');
+            if (sidebar.style.display === 'none') {
+                sidebar.style.display = 'flex';
+            } else {
+                sidebar.style.display = 'none';
             }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme toggler
+            const themeToggler = document.getElementById('themeToggler');
+            if (themeToggler) {
+                themeToggler.addEventListener('click', function() {
+                    const icons = themeToggler.querySelectorAll('.material-icons-sharp');
+                    icons.forEach(icon => {
+                        icon.classList.toggle('active');
+                    });
+                    
+                    // Toggle dark mode
+                    document.body.classList.toggle('dark-mode');
+                });
+            }
+            
+            // Handle mobile menu
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            if (mobileMenuBtn && window.innerWidth <= 768) {
+                const sidebar = document.getElementById('dashboardSidebar');
+                if (sidebar) {
+                    sidebar.style.display = 'none';
+                }
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const sidebar = document.getElementById('dashboardSidebar');
+                if (window.innerWidth > 768 && sidebar) {
+                    sidebar.style.display = 'flex';
+                }
+            });
         });
     </script>
+    <!-- Add CSS and JS links -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link rel="stylesheet" href="student-dashboard.css">
+        <script src="student-dashboard.js"></script>
+        <link rel="stylesheet" href="auth.css">
 </body>
 </html>
